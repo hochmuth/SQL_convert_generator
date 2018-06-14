@@ -3,7 +3,7 @@
     Prerequisites:
         Files SQL_convert_into_console.py and SQL_fields.py need to be in the same folder as the data files.
         Data files need to be in csv format.
-        Uncoverted ('00_') tables must already have been imported in the database. This is a convert script, not an import script.
+        Uncoverted ('00_') tables must be already imported in the database.
         
     Notes:
         Separator and filetype can be set below.
@@ -71,5 +71,4 @@ for file in file_list:
 
 # Close the output file
 output_file.close()     
-        
 
