@@ -11,64 +11,85 @@
 import glob
 import SQL_fields as fields
 
+# Parameters
 filetype = '.csv'
 separator = '|'
+out_file_name = 'sql_convert_all.sql'
 
-output_file = open('sql_convert_all.sql', 'w', encoding='utf-8-sig')
-file_list = []
-
-# Print first message.
-output_file.write('PRINT \'---CONVERTING TABLES---\'\n')
-output_file.write('PRINT \'-----------------------\'\n'+'\n'+'\n')
-
-for filename in glob.glob('*'+filetype):    
-    # TO DO: some tables have longer name. A conditional to the rescue?
-    #filename = filename[-8:]
-    file_list.append(filename)
-    
-# Reads through the files and selects only headers, then divides them into column names based on selected separator
-for file in file_list:
-    temp_file = open(file, 'r', encoding='utf-8-sig')
-        # Take the first line, separate into field names, remove newlines etc.
-    column_names = temp_file.readline().split(separator)
-    column_names[-1] = column_names[-1].strip()
-    
-    # Produce the SQL statement
-    output_file.write('\n')
-    output_file.write('PRINT \''+file[:-4]+'\'\n')
-    output_file.write('IF OBJECT_ID(\'['+file[:-4]+']\') IS NOT NULL DROP TABLE ['+file[:-4]+']\n')
-    output_file.write('SELECT\n')
-    
-    # Main conditional. Fields.dates/fields.decimals contain the date/decimal fields to convert.
-    for column in column_names:
-        
-        # If it's the last column, there shouldn't be a trailing comma.
-        if column == column_names[-1]:
-            if column in (fields.dates):
-                output_file.write('CASE ['+column+'] WHEN \'00000000\' THEN NULL ELSE CONVERT(DATE, ['+column+'], 101) END AS ['+file[:-4]+'_'+column+']\n')
-                break
-            elif column in (fields.decimals):
-                output_file.write('CASE WHEN CHARINDEX(\'-\', ['+column+']) > 0 THEN CONVERT(DECIMAL(15,2), SUBSTRING(['+column+'], CHARINDEX(\'-\', ['+column+']), LEN(['+column+'])) + SUBSTRING(['+column+'], 0, CHARINDEX(\'-\', ['+column+']))) ELSE CONVERT(DECIMAL(15,2), ['+column+']) END AS ['+file[:-4]+'_'+column+']\n')
-                break
-            else:
-                output_file.write('LTRIM(RTRIM(['+column+'])) AS ['+file[:-4]+'_'+column+']\n')
-                break
-        # All other columns except the last one have the trailing comma.    
-        else:
-            if column in (fields.dates):
-                output_file.write('CASE ['+column+'] WHEN \'00000000\' THEN NULL ELSE CONVERT(DATE, ['+column+'], 101) END AS ['+file[:-4]+'_'+column+'],\n')
-            elif column in (fields.decimals):
-                output_file.write('CASE WHEN CHARINDEX(\'-\', ['+column+']) > 0 THEN CONVERT(DECIMAL(15,2), SUBSTRING(['+column+'], CHARINDEX(\'-\', ['+column+']), LEN(['+column+'])) + SUBSTRING(['+column+'], 0, CHARINDEX(\'-\', ['+column+']))) ELSE CONVERT(DECIMAL(15,2), ['+column+']) END AS ['+file[:-4]+'_'+column+'],\n')
-            else:
-                output_file.write('LTRIM(RTRIM(['+column+'])) AS ['+file[:-4]+'_'+column+'],\n')
+class Convertor:
+    def __init__(self, file_list, out_file, separator):
+        self.file_list = file_list
+        self.output_file = out_file
+        self.separator = separator
                 
-    output_file.write('INTO ['+file[:-4]+']\n')    
-    output_file.write('FROM [00_'+file[:-4]+']\n')
-    output_file.write('\n'+'\n')
+    def generate_script(self):
+        # Print first message.
+        self.output_file.write('PRINT \'---CONVERTING TABLES---\'\n')
+        self.output_file.write('PRINT \'-----------------------\'\n'+'\n'+'\n')        
+        
+        # Reads through the files and selects only headers, then divides them into column names based on selected separator
+        for file in self.file_list:
+            temp_file = open(file, 'r', encoding='utf-8-sig')
+                # Take the first line, separate into field names, remove newlines etc.
+            column_names = temp_file.readline().split(self.separator)
+            column_names[-1] = column_names[-1].strip()
+            
+            # Produce the SQL statement
+            self.output_file.write('\n')
+            self.output_file.write('PRINT \''+file[:-4]+'\'\n')
+            self.output_file.write('IF OBJECT_ID(\'['+file[:-4]+']\') IS NOT NULL DROP TABLE ['+file[:-4]+']\n')
+            self.output_file.write('SELECT\n')
+            
+            # Main conditional. Fields.dates/fields.decimals contain the date/decimal fields to convert.
+            for column in column_names:
+                
+                # If it's the last column, there shouldn't be a trailing comma.
+                if column == column_names[-1]:
+                    if column in (fields.dates):
+                        self.output_file.write('    CASE ['+column+'] WHEN \'00000000\' THEN NULL ELSE CONVERT(DATE, ['+column+'], 101) END AS ['+file[:-4]+'_'+column+']\n')
+                        break
+                    elif column in (fields.decimals):
+                        self.output_file.write('    CASE WHEN CHARINDEX(\'-\', ['+column+']) > 0 THEN CONVERT(DECIMAL(15,2), SUBSTRING(['+column+'], CHARINDEX(\'-\', ['+column+']), LEN(['+column+'])) + SUBSTRING(['+column+'], 0, CHARINDEX(\'-\', ['+column+']))) ELSE CONVERT(DECIMAL(15,2), ['+column+']) END AS ['+file[:-4]+'_'+column+']\n')
+                        break
+                    else:
+                        self.output_file.write('    LTRIM(RTRIM(['+column+'])) AS ['+file[:-4]+'_'+column+']\n')
+                        break
+                # All other columns except the last one have the trailing comma.    
+                else:
+                    if column in (fields.dates):
+                        self.output_file.write('    CASE ['+column+'] WHEN \'00000000\' THEN NULL ELSE CONVERT(DATE, ['+column+'], 101) END AS ['+file[:-4]+'_'+column+'],\n')
+                    elif column in (fields.decimals):
+                        self.output_file.write('    CASE WHEN CHARINDEX(\'-\', ['+column+']) > 0 THEN CONVERT(DECIMAL(15,2), SUBSTRING(['+column+'], CHARINDEX(\'-\', ['+column+']), LEN(['+column+'])) + SUBSTRING(['+column+'], 0, CHARINDEX(\'-\', ['+column+']))) ELSE CONVERT(DECIMAL(15,2), ['+column+']) END AS ['+file[:-4]+'_'+column+'],\n')
+                    else:
+                        self.output_file.write('    LTRIM(RTRIM(['+column+'])) AS ['+file[:-4]+'_'+column+'],\n')
+                        
+            self.output_file.write('INTO ['+file[:-4]+']\n')    
+            self.output_file.write('FROM [00_'+file[:-4]+']\n')
+            self.output_file.write('\n'+'\n') 
+        return self.output_file
     
-    # Close the file
-    temp_file.close()
 
-# Close the output file
-output_file.close()     
+def main():         
+    # Open the output file
+    output = open(out_file_name, 'w', encoding='utf-8-sig')
+    
+    # Read filenames from the directory you're in
+    file_list = []   
+    for filename in glob.glob('*'+filetype):    
+        file_list.append(filename)
+          
+    # Generate SQL script    
+    SqlConvertor = Convertor(file_list, output, separator)
+    SqlConvertor.generate_script()
+
+    # Close the output file
+    output.close()     
+    
+if __name__ == "__main__":
+    main()
+    
+# TO DO:
+#   Two more classes that would work the same way but create import statements instead of converts. 
+#   SqlImporter
+#   SqlBulkInserter
 
