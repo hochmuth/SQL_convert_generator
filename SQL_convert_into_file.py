@@ -16,14 +16,18 @@ filetype = '.csv'
 separator = '|'
 out_file_name = 'sql_convert_all.sql'
 
-class TableCreator:
+class ScriptGenerator:
     def __init__(self, file_list, out_file, separator):
         self.file_list = file_list
         self.output_file = out_file
         self.separator = separator
         
+    def script_beginning(self):
+        self.output_file.write('USE []\nGO\nSET ANSI_NULLS ON\nGO\nSET QUOTED_IDENTIFIER ON\nGO\nCREATE PROCEDURE [dbo].[import_data]\n    @path VARCHAR(MAX)=\'\', -- Path needs to be added with a trailing backslash\n    @extension VARCHAR(4)=\''+filetype+'\'\nAS\nBEGIN\n\n')
+        
     def create_tables(self):
         # Print first message.
+        self.output_file.write('PRINT \'---------------------\'\n')
         self.output_file.write('PRINT \'---CREATING TABLES---\'\n')
         self.output_file.write('PRINT \'---------------------\'\n'+'\n'+'\n') 
         
@@ -56,12 +60,6 @@ class TableCreator:
         
         return self.output_file
         
-class BulkInserter:
-    def __init__(self, file_list, out_file, separator):
-        self.file_list = file_list
-        self.output_file = out_file
-        self.separator = separator
-        
     def generate_insert(self):
         # Print first message.
         self.output_file.write('PRINT \'---INSERTING DATA INTO TABLES---\'\n')
@@ -84,15 +82,10 @@ class BulkInserter:
         
         self.output_file.write('\n\n')
         return self.output_file        
-
-class Convertor:
-    def __init__(self, file_list, out_file, separator):
-        self.file_list = file_list
-        self.output_file = out_file
-        self.separator = separator
                 
     def generate_script(self):
         # Print first message.
+        self.output_file.write('PRINT \'-----------------------\'\n')
         self.output_file.write('PRINT \'---CONVERTING TABLES---\'\n')
         self.output_file.write('PRINT \'-----------------------\'\n'+'\n'+'\n')        
         
@@ -137,6 +130,12 @@ class Convertor:
             self.output_file.write('\n'+'\n') 
         return self.output_file
     
+    def script_end(self):
+        self.output_file.write('PRINT\'------------------------------------\'\n')
+        self.output_file.write('PRINT\'Data import and conversions finished\'\n')
+        self.output_file.write('PRINT\'------------------------------------\'\n')
+        self.output_file.write('END')
+    
 
 def main():         
     # Open the output file
@@ -148,21 +147,17 @@ def main():
         file_list.append(filename)
           
     # Initialize the objects
-    SqlBulkInserter = BulkInserter(file_list, output, separator)
-    SqlTableCreator = TableCreator(file_list, output, separator)
-    SqlConvertor = Convertor(file_list, output, separator)
+    SqlScriptGenerator = ScriptGenerator(file_list, output, separator)
     
-    # Generate SQL script  
-    SqlTableCreator.create_tables()
-    SqlBulkInserter.generate_insert()
-    SqlConvertor.generate_script()
+    # Generate SQL script
+    SqlScriptGenerator.script_beginning()
+    SqlScriptGenerator.create_tables()
+    SqlScriptGenerator.generate_insert()
+    SqlScriptGenerator.generate_script()
+    SqlScriptGenerator.script_end()
 
     # Close the output file
     output.close()     
     
 if __name__ == "__main__":
     main()
-    
-# TO DO:
-# Initial statements
-
