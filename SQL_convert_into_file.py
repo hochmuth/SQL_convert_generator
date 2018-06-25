@@ -78,7 +78,7 @@ class ScriptGenerator:
             
             # Produce the SQL statement
             self.output_file.write('\n')
-            self.output_file.write('SET @sql = \'BULK INSERT [00_'+file[:-4]+'] FROM \'\'\' + @path + \''+file[:-4]+'\' + @extension + \'\'\' + WITH \' + @InsertParam; EXEC (@sql); SELECT @count = COUNT(*) FROM [00_'+file[:-4]+']; PRINT \'[00_'+file[:-4]+']: \' + @count + \' lines inserted\'')
+            self.output_file.write('SET @sql = \'BULK INSERT [00_'+file[:-4]+'] FROM \'\'\' + @path + \''+file[:-4]+'\' + @extension + \'\'\' WITH \' + @InsertParam; EXEC (@sql); SELECT @count = COUNT(*) FROM [00_'+file[:-4]+']; PRINT \'[00_'+file[:-4]+']: \' + @count + \' lines inserted\'')
         
         self.output_file.write('\n\n')
         return self.output_file        
