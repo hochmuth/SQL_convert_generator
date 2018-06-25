@@ -16,6 +16,75 @@ filetype = '.csv'
 separator = '|'
 out_file_name = 'sql_convert_all.sql'
 
+class TableCreator:
+    def __init__(self, file_list, out_file, separator):
+        self.file_list = file_list
+        self.output_file = out_file
+        self.separator = separator
+        
+    def create_tables(self):
+        # Print first message.
+        self.output_file.write('PRINT \'---CREATING TABLES---\'\n')
+        self.output_file.write('PRINT \'---------------------\'\n'+'\n'+'\n') 
+        
+        # Reads through the files and selects only headers, then divides them into column names based on selected separator
+        for file in self.file_list:
+            temp_file = open(file, 'r', encoding='utf-8-sig')
+                # Take the first line, separate into field names, remove newlines etc.
+            column_names = temp_file.readline().split(self.separator)
+            column_names[-1] = column_names[-1].strip()
+            
+            # Produce the SQL statement
+            self.output_file.write('\n')
+            self.output_file.write('PRINT \''+file[:-4]+'\'\n')
+            self.output_file.write('IF OBJECT_ID(\'[00_'+file[:-4]+']\') IS NOT NULL DROP TABLE [00_'+file[:-4]+']\n')
+            self.output_file.write('IF OBJECT_ID(\'[00_'+file[:-4]+']\') IS NULL CREATE TABLE [00_'+file[:-4]+'] (\n')
+            
+            
+            # Main conditional. Fields.dates/fields.decimals contain the date/decimal fields to convert.
+            for column in column_names:
+                
+                 # If it's the last column, there shouldn't be a trailing comma.
+                if column == column_names[-1]:                    
+                    self.output_file.write('    ['+column+'] VARCHAR(MAX)\n')
+                    self.output_file.write(')\n')
+                # All other columns except the last one have the trailing comma.    
+                else:
+                    self.output_file.write('    ['+column+'] VARCHAR(MAX),\n')                    
+
+            self.output_file.write('\n'+'\n') 
+        
+        return self.output_file
+        
+class BulkInserter:
+    def __init__(self, file_list, out_file, separator):
+        self.file_list = file_list
+        self.output_file = out_file
+        self.separator = separator
+        
+    def generate_insert(self):
+        # Print first message.
+        self.output_file.write('PRINT \'---INSERTING DATA INTO TABLES---\'\n')
+        self.output_file.write('PRINT \'--------------------------------\'\n'+'\n'+'\n')
+        self.output_file.write('DECLARE @InsertParam VARCHAR(MAX)\n')
+        self.output_file.write('DECLARE @sql VARCHAR(MAX)\n')
+        self.output_file.write('DECLARE @count VARCHAR(MAX)\n')
+        self.output_file.write('SET @InsertParam = \'(FIRSTROW = 2, FIELDTERMINATOR = \'\''+self.separator+'\'\', ROWTERMINATOR = \'\'\\n\'\', CODEPAGE = \'\'ACP\'\', DATAFILETYPE = \'\'widechar\'\', TABLOCK)\'\n\n')
+        
+        # Reads through the files and selects only headers, then divides them into column names based on selected separator
+        for file in self.file_list:
+            temp_file = open(file, 'r', encoding='utf-8-sig')
+                # Take the first line, separate into field names, remove newlines etc.
+            column_names = temp_file.readline().split(self.separator)
+            column_names[-1] = column_names[-1].strip()
+            
+            # Produce the SQL statement
+            self.output_file.write('\n')
+            self.output_file.write('SET @sql = \'BULK INSERT [00_'+file[:-4]+'] FROM \'\'\' + @path + \''+file[:-4]+'\' + @extension + \'\'\' + WITH \' + @InsertParam; EXEC (@sql); SELECT @count = COUNT(*) FROM [00_'+file[:-4]+']; PRINT \'[00_'+file[:-4]+']: \' + @count + \' lines inserted\'')
+        
+        self.output_file.write('\n\n')
+        return self.output_file        
+
 class Convertor:
     def __init__(self, file_list, out_file, separator):
         self.file_list = file_list
@@ -78,8 +147,14 @@ def main():
     for filename in glob.glob('*'+filetype):    
         file_list.append(filename)
           
-    # Generate SQL script    
+    # Initialize the objects
+    SqlBulkInserter = BulkInserter(file_list, output, separator)
+    SqlTableCreator = TableCreator(file_list, output, separator)
     SqlConvertor = Convertor(file_list, output, separator)
+    
+    # Generate SQL script  
+    SqlTableCreator.create_tables()
+    SqlBulkInserter.generate_insert()
     SqlConvertor.generate_script()
 
     # Close the output file
@@ -89,7 +164,5 @@ if __name__ == "__main__":
     main()
     
 # TO DO:
-#   Two more classes that would work the same way but create import statements instead of converts. 
-#   SqlImporter
-#   SqlBulkInserter
+# Initial statements
 
