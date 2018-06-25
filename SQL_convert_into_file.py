@@ -6,7 +6,7 @@
         Uncoverted ('00_') tables must be already imported in the database.
         
     Notes:
-        Separator and filetype can be set below.
+        Separator and filetype can be set below.        
 '''
 import glob
 import SQL_fields as fields
@@ -41,7 +41,7 @@ class ScriptGenerator:
             
             # Produce the SQL statement
             self.output_file.write('\n')
-            self.output_file.write('PRINT \''+file[:-4]+'\'\n')
+            self.output_file.write('PRINT \'[00_'+file[:-4]+']\'\n')
             self.output_file.write('IF OBJECT_ID(\'[00_'+file[:-4]+']\') IS NOT NULL DROP TABLE [00_'+file[:-4]+']\n')
             self.output_file.write('IF OBJECT_ID(\'[00_'+file[:-4]+']\') IS NULL CREATE TABLE [00_'+file[:-4]+'] (\n')
             
@@ -51,11 +51,11 @@ class ScriptGenerator:
                 
                  # If it's the last column, there shouldn't be a trailing comma.
                 if column == column_names[-1]:                    
-                    self.output_file.write('    ['+column+'] VARCHAR(MAX)\n')
+                    self.output_file.write('    ['+column+'] NVARCHAR(MAX)\n')
                     self.output_file.write(')\n')
                 # All other columns except the last one have the trailing comma.    
                 else:
-                    self.output_file.write('    ['+column+'] VARCHAR(MAX),\n')                    
+                    self.output_file.write('    ['+column+'] NVARCHAR(MAX),\n')                    
 
             self.output_file.write('\n'+'\n') 
         
@@ -68,7 +68,7 @@ class ScriptGenerator:
         self.output_file.write('DECLARE @InsertParam VARCHAR(MAX)\n')
         self.output_file.write('DECLARE @sql VARCHAR(MAX)\n')
         self.output_file.write('DECLARE @count VARCHAR(MAX)\n')
-        self.output_file.write('SET @InsertParam = \'(FIRSTROW = 2, FIELDTERMINATOR = \'\''+self.separator+'\'\', ROWTERMINATOR = \'\'\\n\'\', CODEPAGE = \'\'ACP\'\', DATAFILETYPE = \'\'char\'\', TABLOCK)\'\n\n')
+        self.output_file.write('SET @InsertParam = \'(FIRSTROW = 2, FIELDTERMINATOR = \'\''+self.separator+'\'\', ROWTERMINATOR = \'\'\\n\'\', CODEPAGE = \'\'ACP\'\', DATAFILETYPE = \'\'widechar\'\', TABLOCK)\'\n\n')
         
         # Reads through the files and selects only headers, then divides them into column names based on selected separator
         for file in self.file_list:
