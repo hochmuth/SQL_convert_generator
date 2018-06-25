@@ -8,7 +8,7 @@ Place the two files ('SQL_convert_into_file.py' and 'SQL_fields.py') into the fo
 
 Note:
 
-The resulting SQL script uses Bulk Insert that for some reason require your files to be encoded as Big Endian. For that reason I'm attaching a small PowerShell script that converts your text files to BE.
+The resulting SQL script uses Bulk Insert that for some reason require your files to be encoded as Big Endian. For that reason I'm attaching a small PowerShell script that converts your text files to BE. (However, the Python scripts expects Unicode.)
 
 Files:
 
