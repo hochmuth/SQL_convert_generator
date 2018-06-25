@@ -24,6 +24,7 @@ class ScriptGenerator:
         
     def script_beginning(self):
         self.output_file.write('USE []\nGO\nSET ANSI_NULLS ON\nGO\nSET QUOTED_IDENTIFIER ON\nGO\nCREATE PROCEDURE [dbo].[import_data]\n    @path VARCHAR(MAX)=\'\', -- Path needs to be added with a trailing backslash\n    @extension VARCHAR(4)=\''+filetype+'\'\nAS\nBEGIN\n\n')
+        return self.output_file
         
     def create_tables(self):
         # Print first message.
@@ -67,7 +68,7 @@ class ScriptGenerator:
         self.output_file.write('DECLARE @InsertParam VARCHAR(MAX)\n')
         self.output_file.write('DECLARE @sql VARCHAR(MAX)\n')
         self.output_file.write('DECLARE @count VARCHAR(MAX)\n')
-        self.output_file.write('SET @InsertParam = \'(FIRSTROW = 2, FIELDTERMINATOR = \'\''+self.separator+'\'\', ROWTERMINATOR = \'\'\\n\'\', CODEPAGE = \'\'ACP\'\', DATAFILETYPE = \'\'widechar\'\', TABLOCK)\'\n\n')
+        self.output_file.write('SET @InsertParam = \'(FIRSTROW = 2, FIELDTERMINATOR = \'\''+self.separator+'\'\', ROWTERMINATOR = \'\'\\n\'\', CODEPAGE = \'\'ACP\'\', DATAFILETYPE = \'\'char\'\', TABLOCK)\'\n\n')
         
         # Reads through the files and selects only headers, then divides them into column names based on selected separator
         for file in self.file_list:
@@ -135,6 +136,8 @@ class ScriptGenerator:
         self.output_file.write('PRINT\'Data import and conversions finished\'\n')
         self.output_file.write('PRINT\'------------------------------------\'\n')
         self.output_file.write('END')
+        
+        return self.output_file
     
 
 def main():         
