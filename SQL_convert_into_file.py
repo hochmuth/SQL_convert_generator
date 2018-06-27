@@ -34,7 +34,7 @@ class ScriptGenerator:
         
         # Reads through the files and selects only headers, then divides them into column names based on selected separator
         for file in self.file_list:
-            temp_file = open(file, 'r', encoding='utf-8-sig')
+            temp_file = open(file, 'r', encoding='utf-16-be')
                 # Take the first line, separate into field names, remove newlines etc.
             column_names = temp_file.readline().split(self.separator)
             column_names[-1] = column_names[-1].strip()
@@ -63,6 +63,7 @@ class ScriptGenerator:
         
     def generate_insert(self):
         # Print first message.
+        self.output_file.write('PRINT \'--------------------------------\'\n')
         self.output_file.write('PRINT \'---INSERTING DATA INTO TABLES---\'\n')
         self.output_file.write('PRINT \'--------------------------------\'\n'+'\n'+'\n')
         self.output_file.write('DECLARE @InsertParam VARCHAR(MAX)\n')
@@ -72,7 +73,7 @@ class ScriptGenerator:
         
         # Reads through the files and selects only headers, then divides them into column names based on selected separator
         for file in self.file_list:
-            temp_file = open(file, 'r', encoding='utf-8-sig')
+            temp_file = open(file, 'r', encoding='utf-16-be')
                 # Take the first line, separate into field names, remove newlines etc.
             column_names = temp_file.readline().split(self.separator)
             column_names[-1] = column_names[-1].strip()
@@ -92,7 +93,7 @@ class ScriptGenerator:
         
         # Reads through the files and selects only headers, then divides them into column names based on selected separator
         for file in self.file_list:
-            temp_file = open(file, 'r', encoding='utf-8-sig')
+            temp_file = open(file, 'r', encoding='utf-16-be')
                 # Take the first line, separate into field names, remove newlines etc.
             column_names = temp_file.readline().split(self.separator)
             column_names[-1] = column_names[-1].strip()
@@ -142,7 +143,7 @@ class ScriptGenerator:
 
 def main():         
     # Open the output file
-    output = open(out_file_name, 'w', encoding='utf-8-sig')
+    output = open(out_file_name, 'w', encoding='utf-16-be')
     
     # Read filenames from the directory you're in
     file_list = []   
