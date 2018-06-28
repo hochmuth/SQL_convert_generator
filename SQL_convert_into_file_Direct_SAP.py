@@ -6,7 +6,7 @@
         Uncoverted ('00_') tables must be already imported in the database.
         
     Notes:
-        Separator and filetype can be set below.        
+        Separator, encryption, and filetype can be set below.        
 '''
 import glob
 import SQL_fields as fields
