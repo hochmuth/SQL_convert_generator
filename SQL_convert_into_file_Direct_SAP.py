@@ -15,6 +15,7 @@ import SQL_fields as fields
 filetype = '.csv'
 separator = '|'
 out_file_name = 'sql_convert_all.sql'
+enc = 'utf-16-be'
 
 class ScriptGenerator:
     def __init__(self, file_list, out_file, separator):
@@ -34,7 +35,7 @@ class ScriptGenerator:
         
         # Reads through the files and selects only headers, then divides them into column names based on selected separator
         for file in self.file_list:
-            temp_file = open(file, 'r', encoding='utf-16-be')
+            temp_file = open(file, 'r', encoding=enc)
                 # Take the first line, separate into field names, remove newlines etc.
             column_names = temp_file.readline().split(self.separator)
             column_names[-1] = column_names[-1].strip()
@@ -74,7 +75,7 @@ class ScriptGenerator:
         
         # Reads through the files and selects only headers, then divides them into column names based on selected separator
         for file in self.file_list:
-            temp_file = open(file, 'r', encoding='utf-16-be')
+            temp_file = open(file, 'r', encoding=enc)
                 # Take the first line, separate into field names, remove newlines etc.
             column_names = temp_file.readline().split(self.separator)
             column_names[-1] = column_names[-1].strip()
@@ -94,7 +95,7 @@ class ScriptGenerator:
         
         # Reads through the files and selects only headers, then divides them into column names based on selected separator
         for file in self.file_list:
-            temp_file = open(file, 'r', encoding='utf-16-be')
+            temp_file = open(file, 'r', encoding=enc)
                 # Take the first line, separate into field names, remove newlines etc.
             column_names = temp_file.readline().split(self.separator)
             column_names[-1] = column_names[-1].strip()
@@ -145,7 +146,7 @@ class ScriptGenerator:
 
 def main():         
     # Open the output file
-    output = open(out_file_name, 'w', encoding='utf-16-be')
+    output = open(out_file_name, 'w', encoding=enc)
     
     # Read filenames from the directory you're in
     file_list = []   
