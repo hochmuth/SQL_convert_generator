@@ -75,9 +75,6 @@ class ScriptGenerator:
         # Reads through the files and selects only headers, then divides them into column names based on selected separator
         for file in self.file_list:
             temp_file = open(file, 'r', encoding=enc)
-                # Take the first line, separate into field names, remove newlines etc.
-            column_names = temp_file.readline().split(self.separator)
-            column_names[-1] = column_names[-1].strip()
             
             # Produce the SQL statement
             self.output_file.write('\n')
