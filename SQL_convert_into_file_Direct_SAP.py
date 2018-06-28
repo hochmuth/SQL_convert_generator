@@ -6,7 +6,7 @@
         Uncoverted ('00_') tables must be already imported in the database.
         
     Notes:
-        Separator, encryption, and filetype can be set below.        
+        Separator and filetype can be set below.        
 '''
 import glob
 import SQL_fields as fields
@@ -38,8 +38,8 @@ class ScriptGenerator:
             temp_file = open(file, 'r', encoding=enc)
                 # Take the first line, separate into field names, remove newlines etc.
             column_names = temp_file.readline().split(self.separator)
-            column_names[-1] = column_names[-1].strip()
-            
+            column_names = [column.strip() for column in column_names]
+                        
             # Produce the SQL statement
             self.output_file.write('\n')
             self.output_file.write('PRINT \'[00_'+file[:-4]+']\'\n')
@@ -49,8 +49,7 @@ class ScriptGenerator:
             
             # Main conditional. Fields.dates/fields.decimals contain the date/decimal fields to convert.
             for column in column_names[1:-1]:
-                column = column.strip()
-                
+                                
                  # If it's the last column, there shouldn't be a trailing comma.
                 if column == column_names[-2]:                    
                     self.output_file.write('    ['+column+'] NVARCHAR(MAX)\n')
@@ -76,9 +75,6 @@ class ScriptGenerator:
         # Reads through the files and selects only headers, then divides them into column names based on selected separator
         for file in self.file_list:
             temp_file = open(file, 'r', encoding=enc)
-                # Take the first line, separate into field names, remove newlines etc.
-            column_names = temp_file.readline().split(self.separator)
-            column_names[-1] = column_names[-1].strip()
             
             # Produce the SQL statement
             self.output_file.write('\n')
@@ -98,7 +94,7 @@ class ScriptGenerator:
             temp_file = open(file, 'r', encoding=enc)
                 # Take the first line, separate into field names, remove newlines etc.
             column_names = temp_file.readline().split(self.separator)
-            column_names[-1] = column_names[-1].strip()
+            column_names = [column.strip() for column in column_names]
             
             # Produce the SQL statement
             self.output_file.write('\n')
