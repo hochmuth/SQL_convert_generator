@@ -39,6 +39,8 @@ class ScriptGenerator:
                 # Take the first line, separate into field names, remove newlines etc.
             column_names = temp_file.readline().split(self.separator)
             column_names = [column.strip() for column in column_names]
+            column_names[0] = 'Column_01'
+            column_names[-1] = 'Column_02'
                         
             # Produce the SQL statement
             self.output_file.write('\n')
@@ -48,10 +50,10 @@ class ScriptGenerator:
             
             
             # Main conditional. Fields.dates/fields.decimals contain the date/decimal fields to convert.
-            for column in column_names[1:-1]:
+            for column in column_names:
                                 
                  # If it's the last column, there shouldn't be a trailing comma.
-                if column == column_names[-2]:                    
+                if column == column_names[-1]:                    
                     self.output_file.write('    ['+column+'] NVARCHAR(MAX)\n')
                     self.output_file.write(')\n')
                 # All other columns except the last one have the trailing comma.    
