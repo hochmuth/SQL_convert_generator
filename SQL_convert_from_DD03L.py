@@ -12,11 +12,14 @@ import pandas as pd
 
 # Parameters
 filetype = 'csv'
-delim = '¬'
+delim = '|'
 out_file_name = 'sql_convert_all.sql'
 enc = 'utf_8-sig'
 path = os.path.abspath("DD03L.csv")
-delim = '¬'
+
+# SAP datatypes we want to convert
+dates = ['DATS']
+decimals = ['DEC', 'CURR', 'QUAN', 'FLTP']
 
 
 class DataTypeSearcher:
@@ -29,8 +32,7 @@ class DataTypeSearcher:
         self.field_types = dd03l.loc[:, ['TABNAME', 'FIELDNAME', 'DATATYPE']]
         
     def get_field_type(self, table_name, field_name):
-        field_type = self.field_types[(self.field_types.TABNAME == table_name) & (self.field_types.FIELDNAME == field_name)]
-        dtype = field_type['DATATYPE'].item()
+        dtype = self.field_types[(self.field_types.TABNAME == table_name) & (self.field_types.FIELDNAME == field_name)]['DATATYPE'].values[0]        
         return dtype
     
 
@@ -91,8 +93,7 @@ class ScriptGenerator:
         
         # Reads through the files and selects only headers, then divides them into column names based on selected separator
         for file in self.file_list:
-            #temp_file = open(file, 'r', encoding=enc)
-            
+                        
             # Produce the SQL statement
             self.output_file.write('\n')
             self.output_file.write('SET @sql = \'BULK INSERT [00_'+file[:-4]+'] FROM \'\'\' + @path + \''+file[:-4]+'\' + @extension + \'\'\' WITH \' + @InsertParam; EXEC (@sql); SELECT @count = COUNT(*) FROM [00_'+file[:-4]+']; PRINT \'[00_'+file[:-4]+']: \' + @count + \' lines inserted\'')
@@ -100,7 +101,7 @@ class ScriptGenerator:
         self.output_file.write('\n\n')
         return self.output_file        
                 
-    def generate_script(self):
+    def generate_converts(self, DD03L):
         # Print first message.
         self.output_file.write('PRINT \'-----------------------\'\n')
         self.output_file.write('PRINT \'---CONVERTING TABLES---\'\n')
@@ -125,15 +126,14 @@ class ScriptGenerator:
             # TO DO:
             # add the Searcher Here
             # take filename, field name as args
-                
-                
+                dtype = DD03L.get_field_type(file[:-4], column)
                 
                 # If it's the last column, there shouldn't be a trailing comma.
                 if column == column_names[-1]:
-                    if column in (fields.dates):
+                    if dtype in (dates):
                         self.output_file.write('    CASE ['+column+'] WHEN \'00000000\' THEN NULL ELSE CONVERT(DATE, ['+column+'], 101) END AS ['+file[:-4]+'_'+column+']\n')
                         break
-                    elif column in (fields.decimals):
+                    elif dtype in (decimals):
                         self.output_file.write('    CASE WHEN CHARINDEX(\'-\', ['+column+']) > 0 THEN CONVERT(DECIMAL(15,2), SUBSTRING(['+column+'], CHARINDEX(\'-\', ['+column+']), LEN(['+column+'])) + SUBSTRING(['+column+'], 0, CHARINDEX(\'-\', ['+column+']))) ELSE CONVERT(DECIMAL(15,2), ['+column+']) END AS ['+file[:-4]+'_'+column+']\n')
                         break
                     else:
@@ -141,14 +141,14 @@ class ScriptGenerator:
                         break
                 # All other columns except the last one have the trailing comma.    
                 else:
-                    if column in (fields.dates):
+                    if dtype in (dates):
                         self.output_file.write('    CASE ['+column+'] WHEN \'00000000\' THEN NULL ELSE CONVERT(DATE, ['+column+'], 101) END AS ['+file[:-4]+'_'+column+'],\n')
-                    elif column in (fields.decimals):
+                    elif dtype in (decimals):
                         self.output_file.write('    CASE WHEN CHARINDEX(\'-\', ['+column+']) > 0 THEN CONVERT(DECIMAL(15,2), SUBSTRING(['+column+'], CHARINDEX(\'-\', ['+column+']), LEN(['+column+'])) + SUBSTRING(['+column+'], 0, CHARINDEX(\'-\', ['+column+']))) ELSE CONVERT(DECIMAL(15,2), ['+column+']) END AS ['+file[:-4]+'_'+column+'],\n')
                     else:
                         self.output_file.write('    LTRIM(RTRIM(['+column+'])) AS ['+file[:-4]+'_'+column+'],\n')
                         
-            self.output_file.write('INTO ['+file[:-4]+']\n')    
+            self.output_file.write('INTO ['+file[:-4]+']\n')
             self.output_file.write('FROM [00_'+file[:-4]+']\n')
             self.output_file.write('\n'+'\n') 
         return self.output_file
@@ -174,7 +174,7 @@ def main():
     # Parse the DD03L for fields and data types
     Searcher = DataTypeSearcher(path=path)
     Searcher.parse_DD03L()
-    print(Searcher.get_field_type(table_name='MSEG', field_name='MATNR'))
+    #print(Searcher.get_field_type(table_name='MSEG', field_name='MATNR'))
          
     # Initialize the objects
     SqlScriptGenerator = ScriptGenerator(file_list, output, delim)
@@ -183,7 +183,7 @@ def main():
     SqlScriptGenerator.script_beginning()
     SqlScriptGenerator.create_tables()
     SqlScriptGenerator.generate_insert()
-    SqlScriptGenerator.generate_script()
+    SqlScriptGenerator.generate_converts(Searcher)
     SqlScriptGenerator.script_end()
 
     # Close the output file
