@@ -11,11 +11,11 @@ import glob
 import pandas as pd
 
 # Parameters
-filetype = 'csv'
 delim = '|'
-out_file_name = 'sql_convert_all.sql'
 enc = 'utf_8-sig'
+filetype = 'csv'
 path = os.path.abspath("DD03L.csv")
+out_file_name = 'sql_convert_all.sql'
 
 # SAP datatypes we want to convert
 dates = ['DATS']
@@ -24,12 +24,13 @@ decimals = ['DEC', 'CURR', 'QUAN', 'FLTP']
 
 class DataTypeSearcher:
     def __init__(self, path):
-        self.path = path
-        self.field_types= pd.DataFrame()
+        self.path = path        
+        self.field_types= pd.DataFrame(index=['TABNAME', 'FIELDNAME', 'DATATYPE'])
     
     def parse_DD03L(self):
         dd03l = pd.read_csv(path, delimiter=delim, header=0, engine='python', encoding=enc)
         self.field_types = dd03l.loc[:, ['TABNAME', 'FIELDNAME', 'DATATYPE']]
+        del dd03l
         
     def get_field_type(self, table_name, field_name):
         dtype = self.field_types[(self.field_types.TABNAME == table_name) & (self.field_types.FIELDNAME == field_name)]['DATATYPE'].values[0]        
@@ -123,9 +124,7 @@ class ScriptGenerator:
             # Main conditional. Fields.dates/fields.decimals contain the date/decimal fields to convert.
             for column in column_names:
                 
-            # TO DO:
-            # add the Searcher Here
-            # take filename, field name as args
+                # Get the datatype from the DD03L table
                 dtype = DD03L.get_field_type(file[:-4], column)
                 
                 # If it's the last column, there shouldn't be a trailing comma.
@@ -172,10 +171,9 @@ def main():
         file_list.append(filename)
     
     # Parse the DD03L for fields and data types
-    Searcher = DataTypeSearcher(path=path)
+    Searcher = DataTypeSearcher(path)
     Searcher.parse_DD03L()
-    #print(Searcher.get_field_type(table_name='MSEG', field_name='MATNR'))
-         
+             
     # Initialize the objects
     SqlScriptGenerator = ScriptGenerator(file_list, output, delim)
     
