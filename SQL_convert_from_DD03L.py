@@ -12,10 +12,11 @@ import pandas as pd
 
 # Parameters
 delim = '|'
-enc = 'utf_8-sig'
+enc = 'utf_16_be'
 filetype = 'csv'
 path = os.path.abspath("DD03L.csv")
-out_file_name = 'sql_convert_all.sql'
+out_file_name = 'sql_import_all.sql'
+log_file_name = 'sql_log.txt'
 
 # SAP datatypes we want to convert
 dates = ['DATS']
@@ -25,10 +26,10 @@ decimals = ['DEC', 'CURR', 'QUAN', 'FLTP']
 class DataTypeSearcher:
     def __init__(self, path):
         self.path = path        
-        self.field_types= pd.DataFrame(index=['TABNAME', 'FIELDNAME', 'DATATYPE'])
+        self.field_types= pd.DataFrame()
     
     def parse_DD03L(self):
-        dd03l = pd.read_csv(path, delimiter=delim, header=0, engine='python', encoding=enc)
+        dd03l = pd.read_csv(path, delimiter=delim, header=0, dtype=str, encoding=enc)
         self.field_types = dd03l.loc[:, ['TABNAME', 'FIELDNAME', 'DATATYPE']]
         del dd03l
         
@@ -38,9 +39,10 @@ class DataTypeSearcher:
     
 
 class ScriptGenerator:
-    def __init__(self, file_list, out_file, separator):
+    def __init__(self, file_list, out_file, log_file, separator):
         self.file_list = file_list
         self.output_file = out_file
+        self.log_file = log_file
         self.separator = separator
         
     def script_beginning(self):
@@ -106,7 +108,9 @@ class ScriptGenerator:
         # Print first message.
         self.output_file.write('PRINT \'-----------------------\'\n')
         self.output_file.write('PRINT \'---CONVERTING TABLES---\'\n')
-        self.output_file.write('PRINT \'-----------------------\'\n'+'\n'+'\n')        
+        self.output_file.write('PRINT \'-----------------------\'\n'+'\n'+'\n')
+
+        self.log_file.write('SQL FIELD TYPES'+'\n'+'\n')        
         
         # Reads through the files and selects only headers, then divides them into column names based on selected separator
         for file in self.file_list:
@@ -120,12 +124,21 @@ class ScriptGenerator:
             self.output_file.write('PRINT \''+file[:-4]+'\'\n')
             self.output_file.write('IF OBJECT_ID(\'['+file[:-4]+']\') IS NOT NULL DROP TABLE ['+file[:-4]+']\n')
             self.output_file.write('SELECT\n')
+            self.log_file.write(file[:-4]+':'+'\n')
             
             # Main conditional. Fields.dates/fields.decimals contain the date/decimal fields to convert.
             for column in column_names:
                 
-                # Get the datatype from the DD03L table
-                dtype = DD03L.get_field_type(file[:-4], column)
+                # Get the datatype from the DD03L table                
+                dtype = ''
+                try:
+                    dtype = DD03L.get_field_type(str(file[:-4]), str(column))
+                except:
+                    dtype = 'N/A'
+                
+                # Write the field and file type into the log file
+                
+                self.log_file.write('Table: '+file[:-4]+'    Field: '+column+' DType: '+dtype+'\n')
                 
                 # If it's the last column, there shouldn't be a trailing comma.
                 if column == column_names[-1]:
@@ -149,8 +162,9 @@ class ScriptGenerator:
                         
             self.output_file.write('INTO ['+file[:-4]+']\n')
             self.output_file.write('FROM [00_'+file[:-4]+']\n')
-            self.output_file.write('\n'+'\n') 
-        return self.output_file
+            self.output_file.write('\n'+'\n')            
+            self.log_file.write('\n'+'\n')
+        return self.output_file, self.log_file
     
     def script_end(self):
         self.output_file.write('PRINT\'------------------------------------\'\n')
@@ -164,6 +178,7 @@ class ScriptGenerator:
 def main():         
     # Open the output file
     output = open(out_file_name, 'w', encoding=enc)
+    log = open(log_file_name, 'w', encoding=enc)
     
     # Read filenames from the directory you're in
     file_list = []   
@@ -175,7 +190,7 @@ def main():
     Searcher.parse_DD03L()
              
     # Initialize the objects
-    SqlScriptGenerator = ScriptGenerator(file_list, output, delim)
+    SqlScriptGenerator = ScriptGenerator(file_list, output, log, delim)
     
     # Generate SQL script
     SqlScriptGenerator.script_beginning()
@@ -184,8 +199,9 @@ def main():
     SqlScriptGenerator.generate_converts(Searcher)
     SqlScriptGenerator.script_end()
 
-    # Close the output file
-    output.close()     
+    # Close the output files
+    output.close()
+    log.close()     
     
 if __name__ == "__main__":
     main()
