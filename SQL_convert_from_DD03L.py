@@ -1,10 +1,11 @@
-''' Parses through all files in a folder, extracts headers, and creates an SQL convert script.
-    Prerequisites:
-        Files SQL_convert_into_console.py and SQL_fields.py need to be in the same folder as the data files.
-        Data files need to be in csv format.
+''' Parses through all files in a folder, extracts headers, and creates an SQL import/convert script.
+    Prerequisites:        
+        Data files need to be in csv format and need to have the same encoding.
+        Fieldnames have to be in the first row.    
+        For the time being, the script needs to be run from the same directory the files are in.
         
     Notes:
-        Separator, filetype, and encryption can be set below.        
+        Delimiter, filetype, encoding, and names of the output and the log file can be set below.        
 '''
 import os
 import glob
