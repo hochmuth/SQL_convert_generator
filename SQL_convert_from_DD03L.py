@@ -2,7 +2,7 @@
     Prerequisites:        
         Data files need to be in csv format and need to have the same encoding.
         Fieldnames have to be in the first row.    
-        For the time being, the script needs to be run from the same directory the files are in.
+        Path can be set in the parameters (without the trailing backslash).
         
     Notes:
         Delimiter, filetype, encoding, and names of the output and the log file can be set below.        
@@ -15,6 +15,7 @@ import pandas as pd
 delim = '|'
 enc = 'utf_16_be'
 filetype = 'csv'
+data_dir = 'c:\\temp_DATA\CEZ\python'
 path = os.path.abspath("DD03L.csv")
 out_file_name = 'sql_import_all.sql'
 log_file_name = 'sql_log.txt'
@@ -47,7 +48,7 @@ class ScriptGenerator:
         self.separator = separator
         
     def script_beginning(self):
-        self.output_file.write('USE []\nGO\nSET ANSI_NULLS ON\nGO\nSET QUOTED_IDENTIFIER ON\nGO\nCREATE PROCEDURE [dbo].[import_data]\n    @path VARCHAR(MAX)=\'\', -- Path needs to be added with a trailing backslash\n    @extension VARCHAR(4)=\''+filetype+'\'\nAS\nBEGIN\n\n')
+        self.output_file.write('USE []\nGO\nSET ANSI_NULLS ON\nGO\nSET QUOTED_IDENTIFIER ON\nGO\nCREATE PROCEDURE [dbo].[import_data]\n    @path VARCHAR(MAX)=\'\', -- Path needs to be added with a trailing backslash\n    @extension VARCHAR(4)=\'.'+filetype+'\'\nAS\nBEGIN\n\n')
         return self.output_file
         
     def create_tables(self):
@@ -62,12 +63,13 @@ class ScriptGenerator:
                 # Take the first line, separate into field names, remove newlines etc.
             column_names = temp_file.readline().split(self.separator)
             column_names[-1] = column_names[-1].strip()
+            table = os.path.basename(file[:-4])
             
             # Produce the SQL statement
             self.output_file.write('\n')
-            self.output_file.write('PRINT \'[00_'+file[:-4]+']\'\n')
-            self.output_file.write('IF OBJECT_ID(\'[00_'+file[:-4]+']\') IS NOT NULL DROP TABLE [00_'+file[:-4]+']\n')
-            self.output_file.write('IF OBJECT_ID(\'[00_'+file[:-4]+']\') IS NULL CREATE TABLE [00_'+file[:-4]+'] (\n')
+            self.output_file.write('PRINT \'[00_'+table+']\'\n')
+            self.output_file.write('IF OBJECT_ID(\'[00_'+table+']\') IS NOT NULL DROP TABLE [00_'+table+']\n')
+            self.output_file.write('IF OBJECT_ID(\'[00_'+table+']\') IS NULL CREATE TABLE [00_'+table+'] (\n')
             
             
             # Main conditional. Fields.dates/fields.decimals contain the date/decimal fields to convert.
@@ -97,13 +99,14 @@ class ScriptGenerator:
         
         # Reads through the files and selects only headers, then divides them into column names based on selected separator
         for file in self.file_list:
+            table = os.path.basename(file[:-4])
                         
             # Produce the SQL statement
             self.output_file.write('\n')
-            self.output_file.write('SET @sql = \'BULK INSERT [00_'+file[:-4]+'] FROM \'\'\' + @path + \''+file[:-4]+'\' + @extension + \'\'\' WITH \' + @InsertParam; EXEC (@sql); SELECT @count = COUNT(*) FROM [00_'+file[:-4]+']; PRINT \'[00_'+file[:-4]+']: \' + @count + \' lines inserted\'')
+            self.output_file.write('SET @sql = \'BULK INSERT [00_'+table+'] FROM \'\'\' + @path + \''+table+'\' + @extension + \'\'\' WITH \' + @InsertParam; EXEC (@sql); SELECT @count = COUNT(*) FROM [00_'+table+']; PRINT \'[00_'+table+']: \' + @count + \' lines inserted\'')
         
         self.output_file.write('\n\n')
-        return self.output_file        
+        return self.output_file     
                 
     def generate_converts(self, DD03L):
         # Print first message.
@@ -119,13 +122,14 @@ class ScriptGenerator:
                 # Take the first line, separate into field names, remove newlines etc.
             column_names = temp_file.readline().split(self.separator)
             column_names[-1] = column_names[-1].strip()
+            table = os.path.basename(file[:-4])
             
             # Produce the SQL statement
             self.output_file.write('\n')
-            self.output_file.write('PRINT \''+file[:-4]+'\'\n')
-            self.output_file.write('IF OBJECT_ID(\'['+file[:-4]+']\') IS NOT NULL DROP TABLE ['+file[:-4]+']\n')
+            self.output_file.write('PRINT \''+table+'\'\n')
+            self.output_file.write('IF OBJECT_ID(\'['+table+']\') IS NOT NULL DROP TABLE ['+table+']\n')
             self.output_file.write('SELECT\n')
-            self.log_file.write(file[:-4]+':'+'\n')
+            self.log_file.write(table+':'+'\n')
             
             # Main conditional. Fields.dates/fields.decimals contain the date/decimal fields to convert.
             for column in column_names:
@@ -133,36 +137,36 @@ class ScriptGenerator:
                 # Get the datatype from the DD03L table                
                 dtype = ''
                 try:
-                    dtype = DD03L.get_field_type(str(file[:-4]), str(column))
+                    dtype = DD03L.get_field_type(str(table), str(column))
                 except:
                     dtype = 'N/A'
                 
                 # Write the field and file type into the log file
                 
-                self.log_file.write('Table: '+file[:-4]+'    Field: '+column+' DType: '+dtype+'\n')
+                self.log_file.write('Table: '+table+'    Field: '+column+' DType: '+dtype+'\n')
                 
                 # If it's the last column, there shouldn't be a trailing comma.
                 if column == column_names[-1]:
                     if dtype in (dates):
-                        self.output_file.write('    CASE ['+column+'] WHEN \'00000000\' THEN NULL ELSE CONVERT(DATE, ['+column+'], 101) END AS ['+file[:-4]+'_'+column+']\n')
+                        self.output_file.write('    CASE ['+column+'] WHEN \'00000000\' THEN NULL ELSE CONVERT(DATE, ['+column+'], 101) END AS ['+table+'_'+column+']\n')
                         break
                     elif dtype in (decimals):
-                        self.output_file.write('    CASE WHEN CHARINDEX(\'-\', ['+column+']) > 0 THEN CONVERT(DECIMAL(15,2), SUBSTRING(['+column+'], CHARINDEX(\'-\', ['+column+']), LEN(['+column+'])) + SUBSTRING(['+column+'], 0, CHARINDEX(\'-\', ['+column+']))) ELSE CONVERT(DECIMAL(15,2), ['+column+']) END AS ['+file[:-4]+'_'+column+']\n')
+                        self.output_file.write('    CASE WHEN CHARINDEX(\'-\', ['+column+']) > 0 THEN CONVERT(DECIMAL(15,2), SUBSTRING(['+column+'], CHARINDEX(\'-\', ['+column+']), LEN(['+column+'])) + SUBSTRING(['+column+'], 0, CHARINDEX(\'-\', ['+column+']))) ELSE CONVERT(DECIMAL(15,2), ['+column+']) END AS ['+table+'_'+column+']\n')
                         break
                     else:
-                        self.output_file.write('    LTRIM(RTRIM(['+column+'])) AS ['+file[:-4]+'_'+column+']\n')
+                        self.output_file.write('    LTRIM(RTRIM(['+column+'])) AS ['+table+'_'+column+']\n')
                         break
                 # All other columns except the last one have the trailing comma.    
                 else:
                     if dtype in (dates):
-                        self.output_file.write('    CASE ['+column+'] WHEN \'00000000\' THEN NULL ELSE CONVERT(DATE, ['+column+'], 101) END AS ['+file[:-4]+'_'+column+'],\n')
+                        self.output_file.write('    CASE ['+column+'] WHEN \'00000000\' THEN NULL ELSE CONVERT(DATE, ['+column+'], 101) END AS ['+table+'_'+column+'],\n')
                     elif dtype in (decimals):
-                        self.output_file.write('    CASE WHEN CHARINDEX(\'-\', ['+column+']) > 0 THEN CONVERT(DECIMAL(15,2), SUBSTRING(['+column+'], CHARINDEX(\'-\', ['+column+']), LEN(['+column+'])) + SUBSTRING(['+column+'], 0, CHARINDEX(\'-\', ['+column+']))) ELSE CONVERT(DECIMAL(15,2), ['+column+']) END AS ['+file[:-4]+'_'+column+'],\n')
+                        self.output_file.write('    CASE WHEN CHARINDEX(\'-\', ['+column+']) > 0 THEN CONVERT(DECIMAL(15,2), SUBSTRING(['+column+'], CHARINDEX(\'-\', ['+column+']), LEN(['+column+'])) + SUBSTRING(['+column+'], 0, CHARINDEX(\'-\', ['+column+']))) ELSE CONVERT(DECIMAL(15,2), ['+column+']) END AS ['+table+'_'+column+'],\n')
                     else:
-                        self.output_file.write('    LTRIM(RTRIM(['+column+'])) AS ['+file[:-4]+'_'+column+'],\n')
+                        self.output_file.write('    LTRIM(RTRIM(['+column+'])) AS ['+table+'_'+column+'],\n')
                         
-            self.output_file.write('INTO ['+file[:-4]+']\n')
-            self.output_file.write('FROM [00_'+file[:-4]+']\n')
+            self.output_file.write('INTO ['+table+']\n')
+            self.output_file.write('FROM [00_'+table+']\n')
             self.output_file.write('\n'+'\n')            
             self.log_file.write('\n'+'\n')
         return self.output_file, self.log_file
@@ -176,16 +180,16 @@ class ScriptGenerator:
         return self.output_file
     
 
-def main():         
+def main():      
     # Open the output file
-    output = open(out_file_name, 'w', encoding=enc)
-    log = open(log_file_name, 'w', encoding=enc)
+    output = open(out_file_name, 'w', encoding='utf_8')
+    log = open(log_file_name, 'w', encoding='utf_8')
     
     # Read filenames from the directory you're in
-    file_list = []   
-    for filename in glob.glob('*.'+filetype):    
+    file_list = []
+    for filename in glob.glob(data_dir+'\*.'+filetype):    
         file_list.append(filename)
-    
+        
     # Parse the DD03L for fields and data types
     Searcher = DataTypeSearcher(path)
     Searcher.parse_DD03L()
