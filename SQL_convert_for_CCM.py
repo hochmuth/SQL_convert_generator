@@ -64,7 +64,7 @@ class ScriptGenerator:
             column_names = temp_file.readline().split(self.separator)
             column_names[-1] = column_names[-1].strip()
             table = os.path.basename(file[:-4])
-            
+                        
             # Produce the SQL statement
             self.output_file.write('\n')
             self.output_file.write('PRINT \'[00_'+table+']\'\n')
@@ -129,6 +129,7 @@ class ScriptGenerator:
             column_names[-1] = column_names[-1].strip()
             table = os.path.basename(file[:-4])
             field_name = ''
+            tab_name = table
             
             # Produce the SQL statement
             self.output_file.write('\n')
@@ -139,7 +140,9 @@ class ScriptGenerator:
             
             # Main conditional. Fields.dates/fields.decimals contain the date/decimal fields to convert.
             for column in column_names:
+                field_name = column
                 
+                # In case it's a join table:
                 if '-' in column:
                     join_split = column.split('-')
                     tab_name = join_split[0]
@@ -148,7 +151,7 @@ class ScriptGenerator:
                 # Get the datatype from the DD03L table                
                 dtype = ''
                 try:
-                    dtype = DD03L.get_field_type(str(table), str(field_name))
+                    dtype = DD03L.get_field_type(str(tab_name), str(field_name))
                 except:
                     dtype = 'N/A'
                 
