@@ -80,8 +80,9 @@ class ScriptGenerator:
                 
                 if '-' in column:
                     join_split = column.split('-')
-                    #tab_name = join_split[0]
-                    field_name = join_split[1]                    
+                    tab_name = join_split[0]
+                    field_name = join_split[1]
+                    field_name = tab_name + '_' + field_name
                 
                  # If it's the last column, there shouldn't be a trailing comma.
                 if column == column_names[-1]:                    
@@ -144,12 +145,16 @@ class ScriptGenerator:
             # Main conditional. Fields.dates/fields.decimals contain the date/decimal fields to convert.
             for column in column_names:
                 field_name = column
+                join_name = column
+                as_name = table + '_' + column
                 
                 # In case it's a join table:
                 if '-' in column:
                     join_split = column.split('-')
                     tab_name = join_split[0]
                     field_name = join_split[1]
+                    join_name = tab_name + '_' + field_name
+                    as_name = join_name
                 
                 # Get the datatype from the DD03L table                
                 dtype = ''
@@ -160,27 +165,27 @@ class ScriptGenerator:
                 
                 # Write the field and file type into the log file
                 
-                self.log_file.write('Table: '+tab_name+'    Field: '+field_name+' DType: '+dtype+'\n')
+                self.log_file.write('Table: '+tab_name+'    Field: '+join_name+' DType: '+dtype+'\n')
                 
                 # If it's the last column, there shouldn't be a trailing comma.
                 if column == column_names[-1]:
                     if dtype in (dates):
-                        self.output_file.write('    CASE ['+field_name+'] WHEN \'00000000\' THEN NULL ELSE CONVERT(DATE, ['+field_name+'], 101) END AS ['+tab_name+'_'+field_name+']\n')
+                        self.output_file.write('    CASE ['+join_name+'] WHEN \'00000000\' THEN NULL ELSE CONVERT(DATE, ['+join_name+'], 101) END AS ['+as_name+']\n')
                         break
                     elif dtype in (decimals):
-                        self.output_file.write('    CASE WHEN CHARINDEX(\'-\', ['+field_name+']) > 0 THEN CONVERT(DECIMAL(15,2), SUBSTRING(['+field_name+'], CHARINDEX(\'-\', ['+field_name+']), LEN(['+field_name+'])) + SUBSTRING(['+field_name+'], 0, CHARINDEX(\'-\', ['+field_name+']))) ELSE CONVERT(DECIMAL(15,2), ['+field_name+']) END AS ['+tab_name+'_'+field_name+']\n')
+                        self.output_file.write('    CASE WHEN CHARINDEX(\'-\', ['+join_name+']) > 0 THEN CONVERT(DECIMAL(15,2), SUBSTRING(['+join_name+'], CHARINDEX(\'-\', ['+join_name+']), LEN(['+join_name+'])) + SUBSTRING(['+join_name+'], 0, CHARINDEX(\'-\', ['+join_name+']))) ELSE CONVERT(DECIMAL(15,2), ['+join_name+']) END AS ['+as_name+']\n')
                         break
                     else:
-                        self.output_file.write('    LTRIM(RTRIM(['+field_name+'])) AS ['+tab_name+'_'+field_name+']\n')
+                        self.output_file.write('    LTRIM(RTRIM(['+join_name+'])) AS ['+as_name+']\n')
                         break
                 # All other columns except the last one have the trailing comma.    
                 else:
                     if dtype in (dates):
-                        self.output_file.write('    CASE ['+field_name+'] WHEN \'00000000\' THEN NULL ELSE CONVERT(DATE, ['+field_name+'], 101) END AS ['+tab_name+'_'+field_name+'],\n')
+                        self.output_file.write('    CASE ['+join_name+'] WHEN \'00000000\' THEN NULL ELSE CONVERT(DATE, ['+join_name+'], 101) END AS ['+as_name+'],\n')
                     elif dtype in (decimals):
-                        self.output_file.write('    CASE WHEN CHARINDEX(\'-\', ['+field_name+']) > 0 THEN CONVERT(DECIMAL(15,2), SUBSTRING(['+field_name+'], CHARINDEX(\'-\', ['+field_name+']), LEN(['+field_name+'])) + SUBSTRING(['+field_name+'], 0, CHARINDEX(\'-\', ['+field_name+']))) ELSE CONVERT(DECIMAL(15,2), ['+field_name+']) END AS ['+tab_name+'_'+field_name+'],\n')
+                        self.output_file.write('    CASE WHEN CHARINDEX(\'-\', ['+join_name+']) > 0 THEN CONVERT(DECIMAL(15,2), SUBSTRING(['+join_name+'], CHARINDEX(\'-\', ['+join_name+']), LEN(['+join_name+'])) + SUBSTRING(['+join_name+'], 0, CHARINDEX(\'-\', ['+join_name+']))) ELSE CONVERT(DECIMAL(15,2), ['+join_name+']) END AS ['+as_name+'],\n')
                     else:
-                        self.output_file.write('    LTRIM(RTRIM(['+field_name+'])) AS ['+tab_name+'_'+field_name+'],\n')
+                        self.output_file.write('    LTRIM(RTRIM(['+join_name+'])) AS ['+as_name+'],\n')
                         
             self.output_file.write('INTO ['+table+']\n')
             self.output_file.write('FROM [00_'+table+']\n')
