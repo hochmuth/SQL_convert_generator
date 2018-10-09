@@ -64,6 +64,8 @@ class ScriptGenerator:
             column_names = temp_file.readline().split(self.separator)
             column_names[-1] = column_names[-1].strip()
             table = os.path.basename(file[:-4])
+            field_name = ''
+            #tab_name = table
                         
             # Produce the SQL statement
             self.output_file.write('\n')
@@ -74,19 +76,20 @@ class ScriptGenerator:
             
             # Main conditional. Fields.dates/fields.decimals contain the date/decimal fields to convert.
             for column in column_names:
+                field_name = column
                 
                 if '-' in column:
                     join_split = column.split('-')
-                    table = join_split[0]
-                    column = join_split[1]                    
+                    #tab_name = join_split[0]
+                    field_name = join_split[1]                    
                 
                  # If it's the last column, there shouldn't be a trailing comma.
                 if column == column_names[-1]:                    
-                    self.output_file.write('    ['+column+'] NVARCHAR(MAX)\n')
+                    self.output_file.write('    ['+field_name+'] NVARCHAR(MAX)\n')
                     self.output_file.write(')\n')
                 # All other columns except the last one have the trailing comma.    
                 else:
-                    self.output_file.write('    ['+column+'] NVARCHAR(MAX),\n')                    
+                    self.output_file.write('    ['+field_name+'] NVARCHAR(MAX),\n')                    
 
             self.output_file.write('\n'+'\n') 
         
