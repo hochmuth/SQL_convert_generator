@@ -1,11 +1,18 @@
-''' Parses through all files in a folder, extracts headers, and creates an SQL import/convert script.
-    Prerequisites:        
-        Data files need to be in csv format and need to have the same encoding.
-        Fieldnames have to be in the first row.    
-        Path can be set in the parameters (without the trailing backslash).
+''' SQL Bulk Insert/Convert Generator
+    
+    Parses through all files in a folder, extracts headers, checks them against the DD03L table,
+    and generates an SQL bulk insert/convert script.
+    
+    Dependencies:
+        Pandas
+    
+    Prerequisites:
+        Data files need to be in the same format (txt or csv) and need to have the same encoding.
+        Fieldnames have to be in the first row.   
+        If you want to generate the convert statements, you also need a DD03L table with technical names in the header.
         
     Notes:
-        Delimiter, filetype, encoding, and names of the output and the log file can be set below.        
+        Delimiter, path, filetype, encoding, and names of the output and the log file can be set below.        
 '''
 import os
 import glob
