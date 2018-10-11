@@ -38,8 +38,10 @@ class DataTypeSearcher:
         self.field_types= pd.DataFrame()
     
     def parse_DD03L(self):
+        print('Reading DD03L')
         dd03l = pd.read_csv(self.path, delimiter=delim, header=0, dtype=str, encoding=enc)
         self.field_types = dd03l.loc[:, ['TABNAME', 'FIELDNAME', 'DATATYPE']]
+        print('Done')
         del dd03l
         
     def get_field_type(self, table_name, field_name):
@@ -59,7 +61,8 @@ class ScriptGenerator:
         return self.output_file
         
     def create_tables(self):
-        # Print first message.
+        print('Generating Create Table Statements')
+        # Write the first message.
         self.output_file.write('PRINT \'---------------------\'\n')
         self.output_file.write('PRINT \'---CREATING TABLES---\'\n')
         self.output_file.write('PRINT \'---------------------\'\n'+'\n'+'\n') 
@@ -100,10 +103,14 @@ class ScriptGenerator:
                     self.output_file.write('    ['+field_name+'] NVARCHAR(MAX),\n')                    
 
             self.output_file.write('\n'+'\n') 
+            print(table, ' done')        
         
-        return self.output_file
+        print('Create Table Statements Generated')
+        return self.output_file        
+        
         
     def generate_insert(self):
+        print('Generating Insert Statements')
         # Print first message.
         self.output_file.write('PRINT \'--------------------------------\'\n')
         self.output_file.write('PRINT \'---INSERTING DATA INTO TABLES---\'\n')
@@ -122,9 +129,11 @@ class ScriptGenerator:
             self.output_file.write('SET @sql = \'BULK INSERT [00_'+table+'] FROM \'\'\' + @path + \''+table+'\' + @extension + \'\'\' WITH \' + @InsertParam; EXEC (@sql); SELECT @count = COUNT(*) FROM [00_'+table+']; PRINT \'[00_'+table+']: \' + @count + \' lines inserted\'')
         
         self.output_file.write('\n\n')
+        print('Done')
         return self.output_file     
                 
     def generate_converts(self, DD03L):
+        print('Generating Convert Table Statements')
         # Print first message.
         self.output_file.write('PRINT \'-----------------------\'\n')
         self.output_file.write('PRINT \'---CONVERTING TABLES---\'\n')
@@ -198,14 +207,19 @@ class ScriptGenerator:
             self.output_file.write('FROM [00_'+table+']\n')
             self.output_file.write('\n'+'\n')            
             self.log_file.write('\n'+'\n')
+            print(table, ' done')
+            
+        print('Convert Table Statements Generated')
         return self.output_file, self.log_file
     
     def script_end(self):
+        print('Generating Closing Statements')
         self.output_file.write('PRINT\'------------------------------------\'\n')
         self.output_file.write('PRINT\'Data import and conversions finished\'\n')
         self.output_file.write('PRINT\'------------------------------------\'\n')
         self.output_file.write('END')
         
+        print('Done')
         return self.output_file
     
 
