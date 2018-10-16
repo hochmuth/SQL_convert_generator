@@ -22,8 +22,8 @@ import pandas as pd
 delim = '|'
 enc = 'utf_16_be'
 filetype = 'csv'
-data_dir = r'c:\temp_DATA\Python_Parser\oct_test\delim\delim2\converted'
-DD03l_path = r'c:\temp_DATA\Python_Parser\oct_test\DD03L.csv'
+data_dir = r'c:\temp_DATA\KraftHeinz\CCM_Monthly\Data\Converted\NA'
+DD03l_path = r'c:\temp_DATA\KraftHeinz\CCM_Monthly\Data\Converted\NA\DD03L.csv'
 out_file_name = 'sql_import_all.sql'
 log_file_name = 'sql_log.txt'
 
@@ -103,7 +103,7 @@ class ScriptGenerator:
                     self.output_file.write('    ['+field_name+'] NVARCHAR(MAX),\n')                    
 
             self.output_file.write('\n'+'\n') 
-            print(table, ' done')        
+            print(f'{table:20}', 'done')        
         
         print('Create Table Statements Generated')
         return self.output_file        
@@ -207,7 +207,7 @@ class ScriptGenerator:
             self.output_file.write('FROM [00_'+table+']\n')
             self.output_file.write('\n'+'\n')            
             self.log_file.write('\n'+'\n')
-            print(table, ' done')
+            print(f'{table:20}', 'done')
             
         print('Convert Table Statements Generated')
         return self.output_file, self.log_file
