@@ -103,7 +103,7 @@ class ScriptGenerator:
                     self.output_file.write('    ['+field_name+'] NVARCHAR(255),\n')                    
 
             self.output_file.write('\n'+'\n') 
-            print(f'{table:20}', 'done')        
+            print(f'{table:50}', 'Done')        
         
         print('Create Table Statements Generated')
         return self.output_file        
@@ -207,7 +207,7 @@ class ScriptGenerator:
             self.output_file.write('FROM [00_'+table+']\n')
             self.output_file.write('\n'+'\n')            
             self.log_file.write('\n'+'\n')
-            print(f'{table:20}', 'done')
+            print(f'{table:50}', 'Done')
             
         print('Convert Table Statements Generated')
         return self.output_file, self.log_file
@@ -249,7 +249,7 @@ def main():
 
     # Close the output files
     output.close()
-    log.close()     
+    log.close()
     
 if __name__ == "__main__":
     main()
