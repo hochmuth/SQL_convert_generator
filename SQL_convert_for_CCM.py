@@ -22,8 +22,8 @@ import pandas as pd
 delim = '|'
 enc = 'utf_16_be'
 filetype = 'csv'
-data_dir = r'c:\temp_DATA\KraftHeinz\CCM_Monthly\Data\Converted\NA'
-DD03l_path = r'c:\temp_DATA\KraftHeinz\CCM_Monthly\Data\Converted\NA\DD03L.csv'
+data_dir = r'c:\temp_DATA\KraftHeinz\CCM_Monthly\Data\Converted\EU'
+DD03l_path = r'c:\temp_DATA\KraftHeinz\CCM_Monthly\Data\Converted\EU\DD03L.csv'
 out_file_name = 'sql_import_all.sql'
 log_file_name = 'sql_log.txt'
 
@@ -96,11 +96,11 @@ class ScriptGenerator:
                 
                  # If it's the last column, there shouldn't be a trailing comma.
                 if column == column_names[-1]:                    
-                    self.output_file.write('    ['+field_name+'] NVARCHAR(MAX)\n')
+                    self.output_file.write('    ['+field_name+'] NVARCHAR(255)\n')
                     self.output_file.write(')\n')
                 # All other columns except the last one have the trailing comma.    
                 else:
-                    self.output_file.write('    ['+field_name+'] NVARCHAR(MAX),\n')                    
+                    self.output_file.write('    ['+field_name+'] NVARCHAR(255),\n')                    
 
             self.output_file.write('\n'+'\n') 
             print(f'{table:20}', 'done')        
