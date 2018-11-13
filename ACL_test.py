@@ -33,7 +33,7 @@ for column in test_df:
                         field_name += '_'
                 print('And the field name is ', field_name)
         except:
-            print(part, 'not found')
+            print(part, 'is not a table')
             pass
 
     print()
