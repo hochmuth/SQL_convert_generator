@@ -1,7 +1,9 @@
 import pandas as pd
  
-test_df = pd.read_csv('./Data/CDHDR_CDPOS_KRED.txt', sep='|', encoding='utf_16_le')
+# Test table stored in a DataFrame
+test_df = pd.read_csv('./Data/BSIK_BSAK_BKPF.txt', sep='|', encoding='utf_16_le')
 
+# DD03L table that with SAP field/table names and corresponding data types
 dd03l = pd.read_csv(r'c:\temp_DATA\KraftHeinz\CCM_Monthly\Data\Converted\EU\DD03L.csv', 
                     delimiter='|', 
                     header=0, 
@@ -27,22 +29,16 @@ for column in test_df:
             if index == 0:
                 print(part, 'is a table')
                 field_name = ''
-                for sub_index, subpart in enumerate(join_split[len(join_split)-len(join_split)+1:len(join_split)]):
+                for sub_index, subpart in enumerate(join_split[1:len(join_split)], start=1):
                     field_name += subpart                    
-                    if sub_index < len(join_split):
+                    if sub_index+1 < len(join_split):
                         field_name += '_'
                 print('And the field name is ', field_name)
-        except:
-            print(part, 'is not a table')
+            break
+        except BaseException as e:
+            print(part, 'not found')
+            print('The exception is :')
+            print(e)
             pass
 
     print()
-    
-    
-
-# Possible way of parsing instead of a for loop
-print(columns[len(columns)-len(columns)+1])
-
-
-for something in columns[1:len(columns)]:
-    print(something)
