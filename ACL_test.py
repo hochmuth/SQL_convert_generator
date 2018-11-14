@@ -1,7 +1,7 @@
 import pandas as pd
  
 # Test table stored in a DataFrame
-test_df = pd.read_csv('./Data/BSIK_BSAK_BKPF.txt', sep='|', encoding='utf_16_le')
+test_df = pd.read_csv('./Data/TEST.txt', sep='|', encoding='utf_16_le')
 
 # DD03L table that with SAP field/table names and corresponding data types
 dd03l = pd.read_csv(r'c:\temp_DATA\KraftHeinz\CCM_Monthly\Data\Converted\EU\DD03L.csv', 
@@ -18,8 +18,17 @@ print()
 for column in test_df:
     columns.append(column.strip())
     
+    if '-' in column:
+        column = column.replace('-', '_')
+    
     join_split = column.split('_')
     print(join_split)
+    
+    # In case it's just a one word, it's probably a field name
+    if len(join_split) == 1:
+        print(column, 'is only one word, so it\'s probably a field name. Look at the file name for table name.')
+        print()
+        continue
     
     for index, part in enumerate(join_split):
         dtype = ''
@@ -33,10 +42,10 @@ for column in test_df:
                     field_name += subpart                    
                     if sub_index+1 < len(join_split):
                         field_name += '_'
-                print('And the field name is ', field_name)
-            break
-        except BaseException as e1:            
-            # In case it's a V_USERNAME or other view
+                print('And the field name is probably', field_name)
+                break
+        except BaseException as e1:         
+            # In case it might be V_USERNAME or other view, try adding the first two parts
             if index == 0:                
                 if len(join_split) > 1:
                     part += '_'
@@ -49,17 +58,22 @@ for column in test_df:
                         field_name += subpart
                         if sub_index+1 < len(join_split):
                             field_name += '_'
-                    print('And the field name is ', field_name)
+                    print('And the field name is probably', field_name)
                     continue
                 except BaseException as e2:
-                    print(part, 'not found in DD03L')
-                    print('The exception is:')
+                    print('Exception 2:')
                     print(e2)
-                    
+                    try:
+                        field = str(dd03l[(dd03l.FIELDNAME == part)]['TABNAME'].values[0])
+                        print(part, 'is actually a field name')
+                        break
+                    except BaseException as e3:
+                        print('Exception 3:')
+                        print(e3)
             
-            print(part, 'not found in DD03L')
-            print('The exception is:')
+            print(part, 'not found in DD03L. In other words, no idea.')
+            print('Could', column, 'be a custom field name?')
+            print('Exception 1:')
             print(e1)
-            pass
 
     print()
