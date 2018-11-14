@@ -1,7 +1,7 @@
 import pandas as pd
  
 # Test table stored in a DataFrame
-test_df = pd.read_csv('./Data/V_USERNAME.txt', sep='|', encoding='utf_16_le')
+test_df = pd.read_csv('./Data/BSIK_BSAK_BKPF.txt', sep='|', encoding='utf_16_le')
 
 # DD03L table that with SAP field/table names and corresponding data types
 dd03l = pd.read_csv(r'c:\temp_DATA\KraftHeinz\CCM_Monthly\Data\Converted\EU\DD03L.csv', 
@@ -35,13 +35,31 @@ for column in test_df:
                         field_name += '_'
                 print('And the field name is ', field_name)
             break
-        except BaseException as e:
-            # TODO: Try concatenating first and second, then first and second and third, etc., and check the DD03L for that.
-            # If fails, then cover it as an exception.
+        except BaseException as e1:            
+            # In case it's a V_USERNAME or other view
+            if index == 0:                
+                if len(join_split) > 1:
+                    part += '_'
+                    part += join_split[1]
+                try:
+                    table = str(dd03l[(dd03l.TABNAME == part)]['TABNAME'].values[0])
+                    print(part, 'is a table')
+                    field_name = ''
+                    for sub_index, subpart in enumerate(join_split[2:len(join_split)], start=2):
+                        field_name += subpart
+                        if sub_index+1 < len(join_split):
+                            field_name += '_'
+                    print('And the field name is ', field_name)
+                    continue
+                except BaseException as e2:
+                    print(part, 'not found in DD03L')
+                    print('The exception is:')
+                    print(e2)
+                    
             
-            print(part, 'not found')
-            print('The exception is :')
-            print(e)
+            print(part, 'not found in DD03L')
+            print('The exception is:')
+            print(e1)
             pass
 
     print()
