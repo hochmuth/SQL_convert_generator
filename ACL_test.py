@@ -16,6 +16,7 @@ print('Searching for tables')
 print()
 
 for column in test_df:
+    dtype = ''    
     columns.append(column.strip())
     
     if '-' in column:
@@ -27,12 +28,12 @@ for column in test_df:
     # In case it's just a one word, it's probably a field name
     if len(join_split) == 1:
         print(column, 'is only one word, so it\'s probably a field name. Look at the file name for table name.')
+        # Search for a data type here, once we get the file name as a variable
         print()
         continue
     
     for index, part in enumerate(join_split):
-        dtype = ''
-        
+                
         try:
             table = str(dd03l[(dd03l.TABNAME == part)]['TABNAME'].values[0])
             if index == 0:
@@ -43,8 +44,14 @@ for column in test_df:
                     if sub_index+1 < len(join_split):
                         field_name += '_'
                 print('And the field name is probably', field_name)
+                # Look for the data type
+                try:
+                    dtype = str(dd03l[(dd03l.TABNAME == part) & (dd03l.FIELDNAME == field_name)]['DATATYPE'].values[0])
+                    print('The field is of a type', dtype)
+                except:
+                    print('No data type found for this field')
                 break
-        except BaseException as e1:         
+        except BaseException as e1:       
             # In case it might be V_USERNAME or other view, try adding the first two parts
             if index == 0:                
                 if len(join_split) > 1:
