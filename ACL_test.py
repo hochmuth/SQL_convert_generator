@@ -1,6 +1,16 @@
+import os
+import glob
+from datetime import datetime
+
 import pandas as pd
 
-dd03l_path = r'c:\temp_DATA\KraftHeinz\CCM_Monthly\Data\Converted\EU\DD03L.csv'
+delim = '|'
+enc = 'utf_16_le'
+filetype = 'txt'
+data_dir = r'c:\temp_DATA\Python_Parser\Update_2018_10_for_ACL\Data\subpart'
+
+
+dd03l_path = r'c:\temp_DATA\Python_Parser\DD03L\CEZ\DD03L.csv'
 dd03l_enc = 'utf_16_be'
  
 
@@ -106,24 +116,64 @@ class DataTypeSearcher:
             
         return file_name, column, dtype
     
-def main():
-    # Test table stored in a DataFrame
-    test_df = pd.read_csv('./Data/TEST.txt', sep='|', encoding='utf_16_le')
-    Searcher = DataTypeSearcher(dd03l_path, dd03l_enc)
-    file_name = 'TEST'
-    columns = []
+
+class ScriptGenerator:
     
-    for column in test_df:
-        dtype = ''    
-        columns.append(column.strip())
-                
-    for column in columns:
-        print('Searching in file ', file_name, ', column', column)
-        dtype = Searcher.get_field_type(file_name, column)
-        print('Method returned the type:', dtype)
-        print()
+    def __init__(self, Searcher, file_list, out_file, log_file, separator, encoding):
+        self.file_list = file_list
+        self.output_file = out_file
+        self.log_file = log_file
+        self.separator = separator
+        self.encoding = encoding
+        self.Searcher = Searcher
+           
+        self.internal_list = []
         
+    def read_the_headers(self):
+        
+        for file in self.file_list:
+            temp_file = open(file, 'r', encoding=self.encoding)
+            column_names = temp_file.readline().split(self.separator)
+            table = os.path.basename(file[:-4])
+            temp_list = []
+            
+            for column_name in column_names:
+                temp_tuple = tuple()
+                temp_tuple = self.Searcher.get_field_type(table, column_name.strip())
+                temp_list.append(temp_tuple)
+                print(temp_tuple)
+                
+            self.internal_list.append(temp_list)                
+        
+        print(self.internal_list)
+        
+    def script_beginning(self):
+        self.output_file.write('USE []\nGO\nSET ANSI_NULLS ON\nGO\nSET QUOTED_IDENTIFIER ON\nGO\nCREATE PROCEDURE [dbo].[import_data]\n    @path VARCHAR(MAX)=\'\', -- Path needs to be added with a trailing backslash\n    @extension VARCHAR(4)=\'.'+filetype+'\'\nAS\nBEGIN\n\n')
+        return self.output_file
+    
+
+    
+def main():
+
+    startTime = datetime.now()
+    
+    # Read filenames from a given directory you're in and store them in a list
+    file_list = []
+    for filename in glob.glob(data_dir+'\*.'+filetype):    
+        file_list.append(filename)
+    
+    
+    # Initialize the objects
+    Searcher = DataTypeSearcher(dd03l_path, dd03l_enc)
+    Generator = ScriptGenerator(Searcher, file_list, 'none', 'none', '|', enc)
+    
+    # Convert the headers into a table/field/dtype list 
+    Generator.read_the_headers()
+    
+    print('Total runtime:', datetime.now() - startTime)
+            
 if __name__ == "__main__":
-    main()         
+    main()
+            
         
         
