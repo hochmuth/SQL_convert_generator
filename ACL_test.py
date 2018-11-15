@@ -5,7 +5,7 @@ from datetime import datetime
 import pandas as pd
 
 delim = '|'
-enc = 'utf_16_le'
+enc = 'utf-16'
 filetype = 'txt'
 data_dir = r'c:\temp_DATA\Python_Parser\Update_2018_10_for_ACL\Data\subpart'
 
@@ -145,11 +145,14 @@ class ScriptGenerator:
                 
             self.internal_list.append(temp_list)                
         
-        print(self.internal_list)
+        #print(self.internal_list)
         
     def script_beginning(self):
         self.output_file.write('USE []\nGO\nSET ANSI_NULLS ON\nGO\nSET QUOTED_IDENTIFIER ON\nGO\nCREATE PROCEDURE [dbo].[import_data]\n    @path VARCHAR(MAX)=\'\', -- Path needs to be added with a trailing backslash\n    @extension VARCHAR(4)=\'.'+filetype+'\'\nAS\nBEGIN\n\n')
         return self.output_file
+    
+    def print_internal_list(self):
+        print(self.internal_list)
     
 
     
@@ -169,6 +172,7 @@ def main():
     
     # Convert the headers into a table/field/dtype list 
     Generator.read_the_headers()
+    Generator.print_internal_list()
     
     print('Total runtime:', datetime.now() - startTime)
             
