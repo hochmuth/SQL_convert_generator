@@ -80,8 +80,14 @@ class DataTypeSearcher:
                             if sub_index+1 < len(join_split):
                                 field_name += '_'
                         print('And the field name is probably', field_name)
+                        print('Looking for data type...')
                         # Look for it's data type here
-                        return table, field_name
+                        try:
+                            dtype = str(self.dd03l[(self.dd03l.TABNAME == table) & (self.dd03l.FIELDNAME == field_name)]['DATATYPE'].values[0])
+                            print('The field is of a type', dtype)
+                        except:
+                            print('No data type found for this field')
+                        return table, field_name, dtype
                     except BaseException as e2:
                         print('Exception 2:')
                         print(e2)
@@ -118,7 +124,6 @@ def main():
         print()
         
 if __name__ == "__main__":
-    main()
-            
+    main()         
         
         
