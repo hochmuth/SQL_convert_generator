@@ -40,11 +40,11 @@ class DataTypeSearcher:
                 dtype = str(self.dd03l[(self.dd03l.TABNAME == file_name) & (self.dd03l.FIELDNAME == column)]['DATATYPE'].values[0])
                 print('Found the datatype ', dtype, 'for table', file_name, 'field', column)
                 print()
-                return dtype
+                return file_name, column, dtype
             except:
                 print('Found nothing in DD03L for table', file_name, 'field', column)
                 print('Could', column, 'be a custom field name?')
-            return
+            return file_name, column, dtype
         
         for index, part in enumerate(join_split):                    
             try:
@@ -64,7 +64,7 @@ class DataTypeSearcher:
                         print('The field is of a type', dtype)
                     except:
                         print('No data type found for this field')
-                    return dtype
+                    return part, field_name, dtype
             except BaseException as e1:     
                 # In case it might be V_USERNAME or other view, try adding the first two parts
                 if index == 0:                
@@ -80,7 +80,8 @@ class DataTypeSearcher:
                             if sub_index+1 < len(join_split):
                                 field_name += '_'
                         print('And the field name is probably', field_name)
-                        continue
+                        # Look for it's data type here
+                        return table, field_name
                     except BaseException as e2:
                         print('Exception 2:')
                         print(e2)
@@ -96,9 +97,8 @@ class DataTypeSearcher:
                 print('Could', column, 'be a custom field name?')
                 print('Exception 1:')
                 print(e1)
-    
-        print()
-        return dtype
+            
+        return file_name, column, dtype
     
 def main():
     # Test table stored in a DataFrame
