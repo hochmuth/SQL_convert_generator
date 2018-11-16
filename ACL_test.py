@@ -1,17 +1,48 @@
+''' SQL Bulk Insert/Convert Generator
+    
+    Parses through all files in a folder, extracts headers, checks them against the DD03L table,
+    and generates an SQL bulk insert/convert script.
+    
+    Dependencies:
+        Pandas (tested on version 0.23.4)
+    
+    Prerequisites:
+        Data files need to be in the same format (txt or csv) and need to have the same encoding. Filenames need to 
+        be same as table names.
+        Fieldnames have to be in the first row.   
+        For generating the convert statements, you also need a DD03L table with technical names in the header.
+        
+    Parameters:
+        delim -- Delimiter used in the files.
+        enc -- Encoding of the files.
+        filetype -- Filetype of the text files.
+        data_dir -- Path to text files (needs to be written WITHOUT the trailing backslash).
+        
+        dd03l_path -- Path to the DD03L file. Needs to include the filename.
+        dd03l_enc -- Encoding of the DD03L file.
+        out_file_name -- Name of the SQL script file.
+        log_file_name -- Name of the log file.
+        out_file_enc -- Encoding of the output files.
+    
+'''
+
 import os
 import glob
 from datetime import datetime
 
 import pandas as pd
 
+# Text files 
 delim = '|'
 enc = 'utf-16'
 filetype = 'txt'
-data_dir = r'c:\temp_DATA\Python_Parser\Update_2018_10_for_ACL\Data\subpart'
+data_dir = r'c:\temp_DATA\Python_Parser\Update_2018_10_for_ACL\Data\debugging'
 
-dd03l_path = r'c:\temp_DATA\Python_Parser\DD03L\CCM_trimmed\DD03L.csv'
+# DD03L
+dd03l_path = r'c:\temp_DATA\Python_Parser\DD03L\MDLZ_ACL\DD03L.txt'
 dd03l_enc = 'utf_16_be'
 
+# Output files
 out_file_name = 'sql_import_files.sql'
 log_file_name = 'sql_log.txt'
 out_file_enc = 'utf_8'
@@ -19,8 +50,6 @@ out_file_enc = 'utf_8'
 # SAP datatypes we want to convert
 dates = ['DATS']
 decimals = ['DEC', 'CURR', 'QUAN', 'FLTP']
-
-
 
 class DataTypeSearcher:
     ''' 
@@ -207,7 +236,7 @@ class ScriptGenerator:
         # For all files
         for table_list in self.internal_list:
             fin_table = table_list[0][0]
-            last_field = table_list[-1][2]
+            last_field = table_list[-1][1] + '_' + table_list[-1][2]
             
             # SQL
             self.output_file.write('\n')
@@ -220,7 +249,7 @@ class ScriptGenerator:
                 fin_field = field_list[1] + '_' + field_list[2]
                 
                 # If it's the last column, there shouldn't be a trailing comma.
-                if fin_field == field_list[1] + '_' + last_field:
+                if fin_field == last_field:
                     self.output_file.write('    ['+fin_field+'] NVARCHAR(255)\n')
                     self.output_file.write(')\n')
                 # All columns except the last one should have the trailing comma.    
@@ -275,7 +304,7 @@ class ScriptGenerator:
         # For all files
         for table_list in self.internal_list:
             fin_table = table_list[0][0]
-            last_field = table_list[-1][2]
+            last_field = table_list[-1][1] + '_' + table_list[-1][2]
             
             self.output_file.write('\n')
             self.output_file.write('PRINT \''+fin_table+'\'\n')
@@ -292,7 +321,7 @@ class ScriptGenerator:
                 self.log_file.write('Table: '+fin_table+'    Field: '+as_field+' DType: '+fin_dtype+'\n')
                 
                 # If it's the last column, there shouldn't be a trailing comma.
-                if fin_field == field_list[1] + '_' + last_field:
+                if fin_field == last_field:
                     if fin_dtype in (dates):
                         self.output_file.write('    CASE ['+fin_field+'] WHEN \'00000000\' THEN NULL ELSE CONVERT(DATE, ['+fin_field+'], 101) END AS ['+fin_field+']\n')
                         break
@@ -375,6 +404,4 @@ def main():
             
 if __name__ == "__main__":
     main()
-            
-        
-        
+    
