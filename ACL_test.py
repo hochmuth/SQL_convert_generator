@@ -10,7 +10,11 @@ filetype = 'txt'
 data_dir = r'c:\temp_DATA\Python_Parser\Update_2018_10_for_ACL\Data\subpart'
 
 dd03l_path = r'c:\temp_DATA\Python_Parser\DD03L\CCM_trimmed\DD03L.csv'
-dd03l_enc = 'utf_16_be' 
+dd03l_enc = 'utf_16_be'
+
+out_file_name = 'sql_import_files.sql'
+log_file_name = 'sql_log.txt'
+out_file_enc = 'utf_8'
 
 
 class DataTypeSearcher:
@@ -160,10 +164,6 @@ class ScriptGenerator:
             self.internal_list.append(temp_list)                
         
         #print(self.internal_list)
-        
-    def script_beginning(self):
-        self.output_file.write('USE []\nGO\nSET ANSI_NULLS ON\nGO\nSET QUOTED_IDENTIFIER ON\nGO\nCREATE PROCEDURE [dbo].[import_data]\n    @path VARCHAR(MAX)=\'\', -- Path needs to be added with a trailing backslash\n    @extension VARCHAR(4)=\'.'+filetype+'\'\nAS\nBEGIN\n\n')
-        return self.output_file
     
     def print_internal_list(self):
         for table_list in self.internal_list:
@@ -171,9 +171,63 @@ class ScriptGenerator:
                 print('File:', field_list[0], 'Table:', field_list[1], 'Field:', field_list[2], 'Data Type:', field_list[3])
 
     
+    # Script creation methods
+    def script_beginning(self):
+        self.output_file.write('USE []\nGO\nSET ANSI_NULLS ON\nGO\nSET QUOTED_IDENTIFIER ON\nGO\nCREATE PROCEDURE [dbo].[import_data]\n    @path VARCHAR(MAX)=\'\', -- Path needs to be added with a trailing backslash\n    @extension VARCHAR(4)=\'.'+filetype+'\'\nAS\nBEGIN\n\n')
+        return self.output_file
+    
+    def create_table(self):
+        '''Generates the Create Table statements.'''
+        
+        print('Generating Create Table Statements')
+        
+        # SQL 
+        self.output_file.write('PRINT \'---------------------\'\n')
+        self.output_file.write('PRINT \'---CREATING TABLES---\'\n')
+        self.output_file.write('PRINT \'---------------------\'\n'+'\n'+'\n') 
+        
+        # Go through the files
+        for table_list in self.internal_list:
+            #print('Create table', table_list[0][0])
+            fin_table = table_list[0][0]
+            last_field = table_list[-1][2]
+           # print('Last field:', last_field)
+            
+            # SQL
+            self.output_file.write('\n')
+            self.output_file.write('PRINT \'[00_'+fin_table+']\'\n')
+            self.output_file.write('IF OBJECT_ID(\'[00_'+fin_table+']\') IS NOT NULL DROP TABLE [00_'+fin_table+']\n')
+            self.output_file.write('IF OBJECT_ID(\'[00_'+fin_table+']\') IS NULL CREATE TABLE [00_'+fin_table+'] (\n')
+            
+            # Go through the fields            
+            for field_list in table_list:
+                #print(field_list[2])
+                fin_field = field_list[2]
+                
+                # If it's the last column, there shouldn't be a trailing comma.
+                if fin_field == last_field:
+                    self.output_file.write('    ['+fin_field+'] NVARCHAR(255)\n')
+                    self.output_file.write(')\n')
+                # All other columns except the last one should have the trailing comma.    
+                else: 
+                    self.output_file.write('    ['+fin_field+'] NVARCHAR(255),\n')
+            
+            self.output_file.write('\n'+'\n')
+            print(f'{table_list[0][0]:50}', 'Done')  
+        
+        print('Create Table Statements Generated')
+        return self.output_file
+    
+    
+
+    
 def main():
 
     startTime = datetime.now()
+    
+    # Open the output files
+    output = open(out_file_name, 'w', encoding=out_file_enc)
+    log = open(log_file_name, 'w', encoding=out_file_enc)
     
     # Read filenames from a given directory you're in and store them in a list
     file_list = []
@@ -182,15 +236,22 @@ def main():
     
     # Initialize the objects
     Searcher = DataTypeSearcher(dd03l_path, dd03l_enc)
-    Generator = ScriptGenerator(Searcher, file_list, 'none', 'none', '|', enc)
+    Generator = ScriptGenerator(Searcher, file_list, output, log, '|', enc)
     
     # Convert the headers into a table/field/dtype list 
     Generator.read_the_headers()
-    Generator.print_internal_list()
+    #Generator.print_internal_list()
+    Generator.script_beginning()
+    Generator.create_table()
     
     print('Total runtime:', datetime.now() - startTime)
+    
+    # Close the output files
+    output.close()
+    log.close()
             
 if __name__ == "__main__":
-    main()          
+    main()
+            
         
         
