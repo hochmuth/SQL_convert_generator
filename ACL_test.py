@@ -32,11 +32,11 @@ from datetime import datetime
 
 import pandas as pd
 
-# Text files 
+# Text files
 delim = '|'
 enc = 'utf-16'
 filetype = 'csv'
-data_dir = r'c:\temp_DATA\Python_Parser\Update_2018_10_for_ACL\Data\SE'
+data_dir = r'c:\temp_DATA\KraftHeinz\D&E\Converter\02_encoding'
 
 # DD03L
 dd03l_path = r'c:\temp_DATA\Python_Parser\DD03L\MDLZ_ACL\DD03L.txt'
