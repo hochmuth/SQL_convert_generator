@@ -155,13 +155,15 @@ class ScriptGenerator:
         It stores the result (tuple of the lenght of 4)in an internal list to make the remaining methods run much faster.
         '''
         
+        print('Parsing the files')
+        
         # Open each file and read the header
         for file in self.file_list:
             temp_file = open(file, 'r', encoding=self.encoding)
             column_names = temp_file.readline().split(self.separator)
             table = os.path.basename(file[:-4])
             temp_list = []
-            
+                        
             # Divide the headers based on selected delimiter
             for column_name in column_names:
                 temp_tuple = tuple()
@@ -171,6 +173,7 @@ class ScriptGenerator:
             print(file, 'parsed')
             self.internal_list.append(temp_list)  
         
+        print('Done')
         print()
         return
     
@@ -349,9 +352,11 @@ def main():
     Searcher = DataTypeSearcher(dd03l_path, dd03l_enc)
     Generator = ScriptGenerator(Searcher, file_list, output, log, '|', enc)
     
-    # Convert the headers into a table/field/dtype list 
+    # Prepare the data 
     Generator.read_the_headers()
     #Generator.print_internal_list()
+    
+    # Generate the script
     Generator.script_beginning()
     Generator.create_table()
     Generator.bulk_insert()
