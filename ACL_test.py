@@ -9,10 +9,8 @@ enc = 'utf-16'
 filetype = 'txt'
 data_dir = r'c:\temp_DATA\Python_Parser\Update_2018_10_for_ACL\Data\subpart'
 
-
-dd03l_path = r'c:\temp_DATA\Python_Parser\DD03L\CEZ\DD03L.csv'
-dd03l_enc = 'utf_16_be'
- 
+dd03l_path = r'c:\temp_DATA\Python_Parser\DD03L\CCM_trimmed\DD03L.csv'
+dd03l_enc = 'utf_16_be' 
 
 
 class DataTypeSearcher:
@@ -35,6 +33,16 @@ class DataTypeSearcher:
         del dd03l_all
         
     def get_field_type(self, file_name, column):
+        '''
+        Arguments:
+            file_name -- text file name
+            column -- column from the header
+        Returns a tuple containing:
+            file name -- to keep track of it in each tuple
+            table name
+            field name
+            data type
+        '''
         dtype = ''
         
         if '-' in column:
@@ -44,37 +52,39 @@ class DataTypeSearcher:
         
         # In case it's just a one word, it's probably a field name
         if len(join_split) == 1:
-            print(column, 'is only one word, so it\'s probably a field name. Therefore, the table name should be', file_name)
+            #print(column, 'is only one word, so it\'s probably a field name. Therefore, the table name should be', file_name)
             # Search for a data type here, once we get the file name as a variable
             try:
                 dtype = str(self.dd03l[(self.dd03l.TABNAME == file_name) & (self.dd03l.FIELDNAME == column)]['DATATYPE'].values[0])
-                print('Found the datatype ', dtype, 'for table', file_name, 'field', column)
-                print()
-                return file_name, column, dtype
+                #print('Found the datatype ', dtype, 'for table', file_name, 'field', column)
+                #print()
+                return file_name, file_name, column, dtype
             except:
-                print('Found nothing in DD03L for table', file_name, 'field', column)
-                print('Could', column, 'be a custom field name?')
-            return file_name, column, dtype
+                pass
+                #print('Found nothing in DD03L for table', file_name, 'field', column)
+                #print('Could', column, 'be a custom field name?')
+            return file_name, file_name, column, dtype
         
         for index, part in enumerate(join_split):                    
             try:
                 table = str(self.dd03l[(self.dd03l.TABNAME == part)]['TABNAME'].values[0])
                 if index == 0:
-                    print(part, 'is a table')
+                    #print(part, 'is a table')
                     field_name = ''
                     for sub_index, subpart in enumerate(join_split[1:len(join_split)], start=1):
                         field_name += subpart                    
                         if sub_index+1 < len(join_split):
                             field_name += '_'
-                    print('And the field name is probably', field_name)
-                    print('Looking for data type...')
+                    #print('And the field name is probably', field_name)
+                    #print('Looking for data type...')
                     # Look for the data type
                     try:
                         dtype = str(self.dd03l[(self.dd03l.TABNAME == part) & (self.dd03l.FIELDNAME == field_name)]['DATATYPE'].values[0])
-                        print('The field is of a type', dtype)
+                        #print('The field is of a type', dtype)
                     except:
-                        print('No data type found for this field')
-                    return part, field_name, dtype
+                        pass
+                        #print('No data type found for this field')
+                    return file_name, part, field_name, dtype
             except BaseException as e1:     
                 # In case it might be V_USERNAME or other view, try adding the first two parts
                 if index == 0:                
@@ -83,38 +93,40 @@ class DataTypeSearcher:
                         part += join_split[1]
                     try:
                         table = str(self.dd03l[(self.dd03l.TABNAME == part)]['TABNAME'].values[0])
-                        print(table, 'is a table')
+                        #print(table, 'is a table')
                         field_name = ''
                         for sub_index, subpart in enumerate(join_split[2:len(join_split)], start=2):
                             field_name += subpart
                             if sub_index+1 < len(join_split):
                                 field_name += '_'
-                        print('And the field name is probably', field_name)
-                        print('Looking for data type...')
+                        #print('And the field name is probably', field_name)
+                        #print('Looking for data type...')
                         # Look for it's data type here
                         try:
                             dtype = str(self.dd03l[(self.dd03l.TABNAME == table) & (self.dd03l.FIELDNAME == field_name)]['DATATYPE'].values[0])
-                            print('The field is of a type', dtype)
+                            #print('The field is of a type', dtype)
                         except:
-                            print('No data type found for this field')
-                        return table, field_name, dtype
+                            pass
+                            #print('No data type found for this field')
+                        return file_name, table, field_name, dtype
                     except BaseException as e2:
-                        print('Exception 2:')
-                        print(e2)
+                        #print('Exception 2:')
+                        #print(e2)
                         try:
-                            field = str(self.dd03l[(self.dd03l.FIELDNAME == part)]['TABNAME'].values[0])
-                            print(field, 'is actually a field name')
+                            #field = str(self.dd03l[(self.dd03l.FIELDNAME == part)]['TABNAME'].values[0])
+                            #print(field, 'is actually a field name')
                             break
                         except BaseException as e3:
-                            print('Exception 3:')
-                            print(e3)
+                            pass
+                            #print('Exception 3:')
+                            #print(e3)
                 
-                print(part, 'not found in DD03L.')
-                print('Could', column, 'be a custom field name?')
-                print('Exception 1:')
-                print(e1)
+                #print(part, 'not found in DD03L.')
+                #print('Could', column, 'be a custom field name?')
+                #print('Exception 1:')
+                #print(e1)
             
-        return file_name, column, dtype
+        return file_name, file_name, column, dtype
     
 
 class ScriptGenerator:
@@ -142,7 +154,9 @@ class ScriptGenerator:
                 temp_tuple = self.Searcher.get_field_type(table, column_name.strip())
                 temp_list.append(temp_tuple)
                 print(temp_tuple)
-                
+            
+            #print()
+            print(file, 'parsed')
             self.internal_list.append(temp_list)                
         
         #print(self.internal_list)
@@ -152,8 +166,9 @@ class ScriptGenerator:
         return self.output_file
     
     def print_internal_list(self):
-        print(self.internal_list)
-    
+        for table_list in self.internal_list:
+            for field_list in table_list:
+                print('File:', field_list[0], 'Table:', field_list[1], 'Field:', field_list[2], 'Data Type:', field_list[3])
 
     
 def main():
@@ -163,8 +178,7 @@ def main():
     # Read filenames from a given directory you're in and store them in a list
     file_list = []
     for filename in glob.glob(data_dir+'\*.'+filetype):    
-        file_list.append(filename)
-    
+        file_list.append(filename)    
     
     # Initialize the objects
     Searcher = DataTypeSearcher(dd03l_path, dd03l_enc)
@@ -177,7 +191,6 @@ def main():
     print('Total runtime:', datetime.now() - startTime)
             
 if __name__ == "__main__":
-    main()
-            
+    main()          
         
         
