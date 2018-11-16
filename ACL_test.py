@@ -35,8 +35,8 @@ import pandas as pd
 # Text files 
 delim = '|'
 enc = 'utf-16'
-filetype = 'txt'
-data_dir = r'c:\temp_DATA\Python_Parser\Update_2018_10_for_ACL\Data\debugging'
+filetype = 'csv'
+data_dir = r'c:\temp_DATA\Python_Parser\Update_2018_10_for_ACL\Data\SE'
 
 # DD03L
 dd03l_path = r'c:\temp_DATA\Python_Parser\DD03L\MDLZ_ACL\DD03L.txt'
