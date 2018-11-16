@@ -23,6 +23,14 @@ decimals = ['DEC', 'CURR', 'QUAN', 'FLTP']
 
 
 class DataTypeSearcher:
+    ''' 
+    Determines the datatype of SAP fields by comparing field names to the DD03L table.
+    The table is stored in a Pandas DataFrame.
+    
+    Arguments:
+    path -- location of the DD03L table on disk. Needs to include the filename.
+    encoding -- encoding of the DD03L file. 
+    '''
     
     def __init__(self, path, encoding):
         self.path = path
@@ -42,103 +50,94 @@ class DataTypeSearcher:
         del dd03l_all
         
     def get_field_type(self, file_name, column):
-        '''
+        ''' 
         Arguments:
             file_name -- text file name
             column -- column from the header
         Returns a tuple containing:
-            file name -- to keep track of it in each tuple
-            table name
+            file name -- to keep track of it in each tuple (needed for SQL statements)
+            table name -- based on file name or field name
             field name
-            data type
+            data type -- if found in DD03L
         '''
         dtype = ''
         
+        # SmartExporter tables use hyphen instead of underscore
         if '-' in column:
             column = column.replace('-', '_')
         
         join_split = column.split('_')
         
-        # In case it's just a one word, it's probably a field name
+        # In case it's just a one word, assume it's a field name
         if len(join_split) == 1:
-            #print(column, 'is only one word, so it\'s probably a field name. Therefore, the table name should be', file_name)
-            # Search for a data type here, once we get the file name as a variable
             try:
                 dtype = str(self.dd03l[(self.dd03l.TABNAME == file_name) & (self.dd03l.FIELDNAME == column)]['DATATYPE'].values[0])
-                #print('Found the datatype ', dtype, 'for table', file_name, 'field', column)
-                #print()
                 return file_name, file_name, column, dtype
             except:
-                pass
-                #print('Found nothing in DD03L for table', file_name, 'field', column)
-                #print('Could', column, 'be a custom field name?')
-            return file_name, file_name, column, dtype
+                return file_name, file_name, column, dtype
         
+        # If it's more than one word, look into DD03L for the first word in DD03L
         for index, part in enumerate(join_split):                    
             try:
                 table = str(self.dd03l[(self.dd03l.TABNAME == part)]['TABNAME'].values[0])
+                # If the first word is a table, the rest is probably the field name
                 if index == 0:
-                    #print(part, 'is a table')
                     field_name = ''
                     for sub_index, subpart in enumerate(join_split[1:len(join_split)], start=1):
                         field_name += subpart                    
                         if sub_index+1 < len(join_split):
                             field_name += '_'
-                    #print('And the field name is probably', field_name)
-                    #print('Looking for data type...')
-                    # Look for the data type
+                    # Assuming the rest is a field name, look for its data type
                     try:
                         dtype = str(self.dd03l[(self.dd03l.TABNAME == part) & (self.dd03l.FIELDNAME == field_name)]['DATATYPE'].values[0])
-                        #print('The field is of a type', dtype)
                     except:
                         pass
-                        #print('No data type found for this field')
+                    # Return the full tuple, even if data type not found
                     return file_name, part, field_name, dtype
-            except BaseException as e1:     
-                # In case it might be V_USERNAME or other view, try adding the first two parts
+            # If the first word doesn't return any match in DD03L
+            except:     
+                # In case it might be V_USERNAME or other view, try adding the first two parts and look for that
                 if index == 0:                
                     if len(join_split) > 1:
                         part += '_'
                         part += join_split[1]
                     try:
                         table = str(self.dd03l[(self.dd03l.TABNAME == part)]['TABNAME'].values[0])
-                        #print(table, 'is a table')
                         field_name = ''
                         for sub_index, subpart in enumerate(join_split[2:len(join_split)], start=2):
                             field_name += subpart
                             if sub_index+1 < len(join_split):
                                 field_name += '_'
-                        #print('And the field name is probably', field_name)
-                        #print('Looking for data type...')
-                        # Look for it's data type here
+                        # Look for its data type here
                         try:
                             dtype = str(self.dd03l[(self.dd03l.TABNAME == table) & (self.dd03l.FIELDNAME == field_name)]['DATATYPE'].values[0])
-                            #print('The field is of a type', dtype)
                         except:
                             pass
-                            #print('No data type found for this field')
+                            # Return the tuple in any case
                         return file_name, table, field_name, dtype
-                    except BaseException as e2:
-                        #print('Exception 2:')
-                        #print(e2)
-                        try:
-                            #field = str(self.dd03l[(self.dd03l.FIELDNAME == part)]['TABNAME'].values[0])
-                            #print(field, 'is actually a field name')
-                            break
-                        except BaseException as e3:
-                            pass
-                            #print('Exception 3:')
-                            #print(e3)
-                
-                #print(part, 'not found in DD03L.')
-                #print('Could', column, 'be a custom field name?')
-                #print('Exception 1:')
-                #print(e1)
-            
+                    # If no match is found for the first two parts, stop searching and take the whole thing for a field name
+                    except:
+                        break
+        
+        # In case the search fails, return everything 
         return file_name, file_name, column, dtype
     
 
 class ScriptGenerator:
+    '''
+    Main class for generating an SQL create table/bulk insert/convert script.
+    Parses files in a folder, extracts the headers from the first line, separates it into field names (based on selected delimiter).
+    For each file and field it subsequently calls DataTypeSearcher.get_field_type() method.
+    Results are stored in internal_list.
+    
+    Arguments:
+    Searcher -- has to be an object of DataTypeSearcher class.
+    file_list --list of files to be parsed. Needs to include whole paths, including the filenames.
+    out_file -- open Python file for writing the generated SQL script.
+    log_file -- open Python file for writing the generated log file.
+    separator -- string containing the used delimiter.
+    encoding -- text files encoding.
+    '''
     
     def __init__(self, Searcher, file_list, out_file, log_file, separator, encoding):
         self.file_list = file_list
@@ -151,35 +150,46 @@ class ScriptGenerator:
         self.internal_list = []
         
     def read_the_headers(self):
+        '''
+        Reads the header of each file and tries to get the right table name, field name, and data type from the DD03L table.
+        It stores the result (tuple of the lenght of 4)in an internal list to make the remaining methods run much faster.
+        '''
         
+        # Open each file and read the header
         for file in self.file_list:
             temp_file = open(file, 'r', encoding=self.encoding)
             column_names = temp_file.readline().split(self.separator)
             table = os.path.basename(file[:-4])
             temp_list = []
             
+            # Divide the headers based on selected delimiter
             for column_name in column_names:
                 temp_tuple = tuple()
                 temp_tuple = self.Searcher.get_field_type(table, column_name.strip())
                 temp_list.append(temp_tuple)
-                print(temp_tuple)
-            
-            #print()
+                        
             print(file, 'parsed')
-            self.internal_list.append(temp_list)                
+            self.internal_list.append(temp_list)  
         
-        #print(self.internal_list)
+        print()
+        return
     
     def print_internal_list(self):
+        ''' Prints the internal list for debugging purposes. '''
+        
         for table_list in self.internal_list:
             for field_list in table_list:
                 print('File:', field_list[0], 'Table:', field_list[1], 'Field:', field_list[2], 'Data Type:', field_list[3])
-
+        
+        print()
+        return
     
     # Script creation methods
     def script_beginning(self):
+        '''Generates the SQL opening statements.'''
+        
         self.output_file.write('USE []\nGO\nSET ANSI_NULLS ON\nGO\nSET QUOTED_IDENTIFIER ON\nGO\nCREATE PROCEDURE [dbo].[import_data]\n    @path VARCHAR(MAX)=\'\', -- Path needs to be added with a trailing backslash\n    @extension VARCHAR(4)=\'.'+filetype+'\'\nAS\nBEGIN\n\n')
-        return self.output_file
+        return
     
     def create_table(self):
         '''Generates the Create Table statements.'''
@@ -193,10 +203,8 @@ class ScriptGenerator:
         
         # For all files
         for table_list in self.internal_list:
-            #print('Create table', table_list[0][0])
             fin_table = table_list[0][0]
             last_field = table_list[-1][2]
-           # print('Last field:', last_field)
             
             # SQL
             self.output_file.write('\n')
@@ -206,14 +214,13 @@ class ScriptGenerator:
             
             # Go through the fields       
             for field_list in table_list:
-                #print(field_list[2])
                 fin_field = field_list[1] + '_' + field_list[2]
                 
                 # If it's the last column, there shouldn't be a trailing comma.
                 if fin_field == field_list[1] + '_' + last_field:
                     self.output_file.write('    ['+fin_field+'] NVARCHAR(255)\n')
                     self.output_file.write(')\n')
-                # All other columns except the last one should have the trailing comma.    
+                # All columns except the last one should have the trailing comma.    
                 else: 
                     self.output_file.write('    ['+fin_field+'] NVARCHAR(255),\n')
             
@@ -221,7 +228,8 @@ class ScriptGenerator:
             print(f'{table_list[0][0]:50}', 'Done')  
         
         print('Create Table Statements Generated')
-        return self.output_file
+        print()
+        return
     
     def bulk_insert(self):
         '''Generates the Bulk Insert statements.'''
@@ -244,10 +252,13 @@ class ScriptGenerator:
             self.output_file.write('SET @sql = \'BULK INSERT [00_'+fin_table+'] FROM \'\'\' + @path + \''+fin_table+'\' + @extension + \'\'\' WITH \' + @InsertParam; EXEC (@sql); SELECT @count = COUNT(*) FROM [00_'+fin_table+']; PRINT \'[00_'+fin_table+']: \' + @count + \' lines inserted\'')
         
         self.output_file.write('\n\n')
+        
         print('Done')
-        return self.output_file
+        print()
+        return
     
     def convert_table(self):
+        '''Generates the Bulk Insert statements.'''
         
         print('Generating Convert Table Statements')
         
@@ -269,7 +280,7 @@ class ScriptGenerator:
             self.output_file.write('SELECT\n')
             self.log_file.write(fin_table+':'+'\n')
             
-            # For all fields
+            # For all fields in a file
             for field_list in table_list:
                 fin_field = field_list[1] + '_' + field_list[2]
                 fin_dtype = field_list[3]
@@ -277,24 +288,25 @@ class ScriptGenerator:
                 
                 self.log_file.write('Table: '+fin_table+'    Field: '+as_field+' DType: '+fin_dtype+'\n')
                 
-                 # If it's the last column, there shouldn't be a trailing comma.
+                # If it's the last column, there shouldn't be a trailing comma.
                 if fin_field == field_list[1] + '_' + last_field:
                     if fin_dtype in (dates):
-                        self.output_file.write('    CASE ['+fin_field+'] WHEN \'00000000\' THEN NULL ELSE CONVERT(DATE, ['+fin_field+'], 101) END AS ['+as_field+']\n')
+                        self.output_file.write('    CASE ['+fin_field+'] WHEN \'00000000\' THEN NULL ELSE CONVERT(DATE, ['+fin_field+'], 101) END AS ['+fin_field+']\n')
                         break
                     elif fin_dtype in (decimals):
-                        self.output_file.write('    CASE WHEN CHARINDEX(\'-\', ['+fin_field+']) > 0 THEN CONVERT(DECIMAL(15,2), SUBSTRING(['+fin_field+'], CHARINDEX(\'-\', ['+fin_field+']), LEN(['+fin_field+'])) + SUBSTRING(['+fin_field+'], 0, CHARINDEX(\'-\', ['+fin_field+']))) ELSE CONVERT(DECIMAL(15,2), ['+fin_field+']) END AS ['+as_field+']\n')
+                        self.output_file.write('    CASE WHEN CHARINDEX(\'-\', ['+fin_field+']) > 0 THEN CONVERT(DECIMAL(15,2), SUBSTRING(['+fin_field+'], CHARINDEX(\'-\', ['+fin_field+']), LEN(['+fin_field+'])) + SUBSTRING(['+fin_field+'], 0, CHARINDEX(\'-\', ['+fin_field+']))) ELSE CONVERT(DECIMAL(15,2), ['+fin_field+']) END AS ['+fin_field+']\n')
                         break
                     else:
-                        self.output_file.write('    LTRIM(RTRIM(['+fin_field+'])) AS ['+as_field+']\n')
+                        self.output_file.write('    LTRIM(RTRIM(['+fin_field+'])) AS ['+fin_field+']\n')
                         break
+                # All columns except the last one have the trailing comma.
                 else:
                     if fin_dtype in (dates):
-                        self.output_file.write('    CASE ['+fin_field+'] WHEN \'00000000\' THEN NULL ELSE CONVERT(DATE, ['+fin_field+'], 101) END AS ['+as_field+'],\n')
+                        self.output_file.write('    CASE ['+fin_field+'] WHEN \'00000000\' THEN NULL ELSE CONVERT(DATE, ['+fin_field+'], 101) END AS ['+fin_field+'],\n')
                     elif fin_dtype in (decimals):
-                        self.output_file.write('    CASE WHEN CHARINDEX(\'-\', ['+fin_field+']) > 0 THEN CONVERT(DECIMAL(15,2), SUBSTRING(['+fin_field+'], CHARINDEX(\'-\', ['+fin_field+']), LEN(['+fin_field+'])) + SUBSTRING(['+fin_field+'], 0, CHARINDEX(\'-\', ['+fin_field+']))) ELSE CONVERT(DECIMAL(15,2), ['+fin_field+']) END AS ['+as_field+'],\n')
+                        self.output_file.write('    CASE WHEN CHARINDEX(\'-\', ['+fin_field+']) > 0 THEN CONVERT(DECIMAL(15,2), SUBSTRING(['+fin_field+'], CHARINDEX(\'-\', ['+fin_field+']), LEN(['+fin_field+'])) + SUBSTRING(['+fin_field+'], 0, CHARINDEX(\'-\', ['+fin_field+']))) ELSE CONVERT(DECIMAL(15,2), ['+fin_field+']) END AS ['+fin_field+'],\n')
                     else:
-                        self.output_file.write('    LTRIM(RTRIM(['+fin_field+'])) AS ['+as_field+'],\n')
+                        self.output_file.write('    LTRIM(RTRIM(['+fin_field+'])) AS ['+fin_field+'],\n')
             
             self.output_file.write('INTO ['+fin_table+']\n')
             self.output_file.write('FROM [00_'+fin_table+']\n')
@@ -303,10 +315,12 @@ class ScriptGenerator:
             print(f'{fin_table:50}', 'Done')
             
         print('Convert Table Statements Generated')
-        return self.output_file, self.log_file
+        print()
+        return
     
     def script_end(self):
         '''Generate the closing statements.'''
+        
         print('Generating Closing Statements')
         self.output_file.write('PRINT\'------------------------------------\'\n')
         self.output_file.write('PRINT\'Data import and conversions finished\'\n')
@@ -314,10 +328,12 @@ class ScriptGenerator:
         self.output_file.write('END')
         
         print('Done')
-        return self.output_file
+        print()
+        return
             
 def main():
-
+    
+    # Keep track of time
     startTime = datetime.now()
     
     # Open the output files
@@ -343,6 +359,10 @@ def main():
     Generator.script_end()
     
     print('Total runtime:', datetime.now() - startTime)
+    
+    # Clean-up
+    del Searcher
+    del Generator
     
     # Close the output files
     output.close()
