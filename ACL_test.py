@@ -218,7 +218,28 @@ class ScriptGenerator:
         print('Create Table Statements Generated')
         return self.output_file
     
-    
+    def bulk_insert(self):
+        '''Generates the Bulk Insert statements.'''
+        
+        print('Generating Insert Statements')
+        
+        self.output_file.write('PRINT \'--------------------------------\'\n')
+        self.output_file.write('PRINT \'---INSERTING DATA INTO TABLES---\'\n')
+        self.output_file.write('PRINT \'--------------------------------\'\n'+'\n'+'\n')
+        self.output_file.write('DECLARE @InsertParam VARCHAR(MAX)\n')
+        self.output_file.write('DECLARE @sql VARCHAR(MAX)\n')
+        self.output_file.write('DECLARE @count VARCHAR(MAX)\n')
+        self.output_file.write('SET @InsertParam = \'(FIRSTROW = 2, FIELDTERMINATOR = \'\''+self.separator+'\'\', ROWTERMINATOR = \'\'\\n\'\', CODEPAGE = \'\'ACP\'\', DATAFILETYPE = \'\'widechar\'\', TABLOCK)\'\n\n')
+        
+        for table_list in self.internal_list:
+            fin_table = table_list[0][0]
+            
+            self.output_file.write('\n')
+            self.output_file.write('SET @sql = \'BULK INSERT [00_'+fin_table+'] FROM \'\'\' + @path + \''+fin_table+'\' + @extension + \'\'\' WITH \' + @InsertParam; EXEC (@sql); SELECT @count = COUNT(*) FROM [00_'+fin_table+']; PRINT \'[00_'+fin_table+']: \' + @count + \' lines inserted\'')
+        
+        self.output_file.write('\n\n')
+        print('Done')
+        return self.output_file
 
     
 def main():
@@ -243,6 +264,7 @@ def main():
     #Generator.print_internal_list()
     Generator.script_beginning()
     Generator.create_table()
+    Generator.bulk_insert()
     
     print('Total runtime:', datetime.now() - startTime)
     
