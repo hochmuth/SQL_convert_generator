@@ -16,6 +16,11 @@ out_file_name = 'sql_import_files.sql'
 log_file_name = 'sql_log.txt'
 out_file_enc = 'utf_8'
 
+# SAP datatypes we want to convert
+dates = ['DATS']
+decimals = ['DEC', 'CURR', 'QUAN', 'FLTP']
+
+
 
 class DataTypeSearcher:
     
@@ -186,7 +191,7 @@ class ScriptGenerator:
         self.output_file.write('PRINT \'---CREATING TABLES---\'\n')
         self.output_file.write('PRINT \'---------------------\'\n'+'\n'+'\n') 
         
-        # Go through the files
+        # For all files
         for table_list in self.internal_list:
             #print('Create table', table_list[0][0])
             fin_table = table_list[0][0]
@@ -199,13 +204,13 @@ class ScriptGenerator:
             self.output_file.write('IF OBJECT_ID(\'[00_'+fin_table+']\') IS NOT NULL DROP TABLE [00_'+fin_table+']\n')
             self.output_file.write('IF OBJECT_ID(\'[00_'+fin_table+']\') IS NULL CREATE TABLE [00_'+fin_table+'] (\n')
             
-            # Go through the fields            
+            # Go through the fields       
             for field_list in table_list:
                 #print(field_list[2])
-                fin_field = field_list[2]
+                fin_field = field_list[1] + '_' + field_list[2]
                 
                 # If it's the last column, there shouldn't be a trailing comma.
-                if fin_field == last_field:
+                if fin_field == field_list[1] + '_' + last_field:
                     self.output_file.write('    ['+fin_field+'] NVARCHAR(255)\n')
                     self.output_file.write(')\n')
                 # All other columns except the last one should have the trailing comma.    
@@ -231,6 +236,7 @@ class ScriptGenerator:
         self.output_file.write('DECLARE @count VARCHAR(MAX)\n')
         self.output_file.write('SET @InsertParam = \'(FIRSTROW = 2, FIELDTERMINATOR = \'\''+self.separator+'\'\', ROWTERMINATOR = \'\'\\n\'\', CODEPAGE = \'\'ACP\'\', DATAFILETYPE = \'\'widechar\'\', TABLOCK)\'\n\n')
         
+        # For all files
         for table_list in self.internal_list:
             fin_table = table_list[0][0]
             
@@ -240,8 +246,76 @@ class ScriptGenerator:
         self.output_file.write('\n\n')
         print('Done')
         return self.output_file
-
     
+    def convert_table(self):
+        
+        print('Generating Convert Table Statements')
+        
+         # Opening statements
+        self.output_file.write('PRINT \'-----------------------\'\n')
+        self.output_file.write('PRINT \'---CONVERTING TABLES---\'\n')
+        self.output_file.write('PRINT \'-----------------------\'\n'+'\n'+'\n')
+
+        self.log_file.write('SQL FIELD TYPES'+'\n'+'\n')  
+        
+        # For all files
+        for table_list in self.internal_list:
+            fin_table = table_list[0][0]
+            last_field = table_list[-1][2]
+            
+            self.output_file.write('\n')
+            self.output_file.write('PRINT \''+fin_table+'\'\n')
+            self.output_file.write('IF OBJECT_ID(\'['+fin_table+']\') IS NOT NULL DROP TABLE ['+fin_table+']\n')
+            self.output_file.write('SELECT\n')
+            self.log_file.write(fin_table+':'+'\n')
+            
+            # For all fields
+            for field_list in table_list:
+                fin_field = field_list[1] + '_' + field_list[2]
+                fin_dtype = field_list[3]
+                as_field = field_list[1] + '_' + fin_field
+                
+                self.log_file.write('Table: '+fin_table+'    Field: '+as_field+' DType: '+fin_dtype+'\n')
+                
+                 # If it's the last column, there shouldn't be a trailing comma.
+                if fin_field == field_list[1] + '_' + last_field:
+                    if fin_dtype in (dates):
+                        self.output_file.write('    CASE ['+fin_field+'] WHEN \'00000000\' THEN NULL ELSE CONVERT(DATE, ['+fin_field+'], 101) END AS ['+as_field+']\n')
+                        break
+                    elif fin_dtype in (decimals):
+                        self.output_file.write('    CASE WHEN CHARINDEX(\'-\', ['+fin_field+']) > 0 THEN CONVERT(DECIMAL(15,2), SUBSTRING(['+fin_field+'], CHARINDEX(\'-\', ['+fin_field+']), LEN(['+fin_field+'])) + SUBSTRING(['+fin_field+'], 0, CHARINDEX(\'-\', ['+fin_field+']))) ELSE CONVERT(DECIMAL(15,2), ['+fin_field+']) END AS ['+as_field+']\n')
+                        break
+                    else:
+                        self.output_file.write('    LTRIM(RTRIM(['+fin_field+'])) AS ['+as_field+']\n')
+                        break
+                else:
+                    if fin_dtype in (dates):
+                        self.output_file.write('    CASE ['+fin_field+'] WHEN \'00000000\' THEN NULL ELSE CONVERT(DATE, ['+fin_field+'], 101) END AS ['+as_field+'],\n')
+                    elif fin_dtype in (decimals):
+                        self.output_file.write('    CASE WHEN CHARINDEX(\'-\', ['+fin_field+']) > 0 THEN CONVERT(DECIMAL(15,2), SUBSTRING(['+fin_field+'], CHARINDEX(\'-\', ['+fin_field+']), LEN(['+fin_field+'])) + SUBSTRING(['+fin_field+'], 0, CHARINDEX(\'-\', ['+fin_field+']))) ELSE CONVERT(DECIMAL(15,2), ['+fin_field+']) END AS ['+as_field+'],\n')
+                    else:
+                        self.output_file.write('    LTRIM(RTRIM(['+fin_field+'])) AS ['+as_field+'],\n')
+            
+            self.output_file.write('INTO ['+fin_table+']\n')
+            self.output_file.write('FROM [00_'+fin_table+']\n')
+            self.output_file.write('\n'+'\n')            
+            self.log_file.write('\n'+'\n')
+            print(f'{fin_table:50}', 'Done')
+            
+        print('Convert Table Statements Generated')
+        return self.output_file, self.log_file
+    
+    def script_end(self):
+        '''Generate the closing statements.'''
+        print('Generating Closing Statements')
+        self.output_file.write('PRINT\'------------------------------------\'\n')
+        self.output_file.write('PRINT\'Data import and conversions finished\'\n')
+        self.output_file.write('PRINT\'------------------------------------\'\n')
+        self.output_file.write('END')
+        
+        print('Done')
+        return self.output_file
+            
 def main():
 
     startTime = datetime.now()
@@ -265,6 +339,8 @@ def main():
     Generator.script_beginning()
     Generator.create_table()
     Generator.bulk_insert()
+    Generator.convert_table()
+    Generator.script_end()
     
     print('Total runtime:', datetime.now() - startTime)
     
