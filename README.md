@@ -1,20 +1,20 @@
 # SQL convert generator
 
-A simple python tool for creating SQL convert statements for SAP tables.
+A simple python tool for creating SQL create table/bulk insert/convert statements for SAP tables.
 
-How it works:
+It parses through text files stored in one folder, reads the headers, and compares the field names against the DD03L table to determine data types. If successful, the SQL import procedure is generated as a separate file. It also creates a log file with recognized data types.
 
-Place the two files ('SQL_convert_into_file.py' and 'SQL_fields.py') into the folder with the text files you want to import and run the  'SQL_convert_into_file.py' using Python/Anaconda/etc. It parses through the files, selecting headers, splitting them into column names, and finally generates a SQL script that you can run on the SQL server to import your data.
+The code is written for Python 3.6.
 
-Note:
+Dependencies:
+Pandas (tested on version 0.23.4)
 
-The resulting SQL script uses Bulk Insert that for some reason require your files to be encoded as Big Endian. For that reason I'm attaching a small PowerShell script that converts your text files to BE. (However, the Python scripts expects Unicode.)
+Requirements:
+- The SAP text files need to be in the form of standardized, clean data, with headers in the first row (headers need to have technical names - BUKRS, ERDAT, etc.). 
+- Same encoding must be used for all text files.
+- All files need to have the same extension (tested on txt and csv).
+- If possible, the file name should be identical to the table name (i.e. the MKPF table should be stored in a MKPF.csv file). Joined tables are not required to follow this rule.
 
-Files:
 
-SQL_convert_into_file.py - main logic.
 
-SQL_fields.py - contains two lists - dates and decimals. Each contains SAP filenames that need to be converted to date/decimal. This works, because as far as I know, the same field names always belong to the same data type, no matter what table they're in. 
-
-all_files_to_BE.ps1 - converts all files in the directory to Big Endian (see note above). Simply run it via PowerShell.
 
