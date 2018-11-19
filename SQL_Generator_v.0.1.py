@@ -36,10 +36,10 @@ import pandas as pd
 delim = '|'
 enc = 'utf-16'
 filetype = 'csv'
-data_dir = r'c:\temp_DATA\KraftHeinz\D&E\Converter\02_encoding'
+data_dir = r'c:\temp_DATA\KraftHeinz\CCM_Monthly\Data\Converted\EU'
 
 # DD03L
-dd03l_path = r'c:\temp_DATA\Python_Parser\DD03L\MDLZ_ACL\DD03L.txt'
+dd03l_path = r'c:\temp_DATA\Python_Parser\DD03L\CCM_trimmed\DD03L.txt'
 dd03l_enc = 'utf_16_be'
 
 # Output files
@@ -65,16 +65,20 @@ class DataTypeSearcher:
         self.path = path
         self.encoding = encoding
         self.dd03l = pd.DataFrame()
+        self.dd03l_all = pd.DataFrame()
         
         # Read the DD03L table and store it inside a DataFrame
         print('Reading DD03L')
-        dd03l_all = pd.read_csv(self.path, 
-                                delimiter='|', 
-                                header=0, 
-                                dtype=str, 
-                                encoding=self.encoding)
-        self.dd03l = dd03l_all.loc[:, ['TABNAME', 'FIELDNAME', 'DATATYPE']]
-        print('Done')
+        try:
+            dd03l_all = pd.read_csv(self.path, 
+                                    delimiter='|', 
+                                    header=0, 
+                                    dtype=str, 
+                                    encoding=self.encoding)
+            self.dd03l = dd03l_all.loc[:, ['TABNAME', 'FIELDNAME', 'DATATYPE']]
+            print('Done')
+        except:            
+            raise RuntimeError('Problem reading DD03L')
         print()
         del dd03l_all
         
