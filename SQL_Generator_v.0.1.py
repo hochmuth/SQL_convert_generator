@@ -2,6 +2,7 @@
     
     Parses through all files in a folder, extracts headers, checks them against the DD03L table,
     and generates an SQL bulk insert/convert script.
+    Works for files downloaded through SmartExporter and ACL.
     
     Dependencies:
         Pandas (tested on version 0.23.4)
@@ -32,14 +33,15 @@ from datetime import datetime
 
 import pandas as pd
 
+# PARAMETERS
 # Text files
 delim = '|'
 enc = 'utf-16'
 filetype = 'csv'
-data_dir = r'c:\temp_DATA\KraftHeinz\CCM_Monthly\Data\Converted\EU'
+data_dir = r'c:\temp_DATA\KraftHeinz\D&E\Converter\02_encoding'
 
 # DD03L
-dd03l_path = r'c:\temp_DATA\Python_Parser\DD03L\CCM_trimmed\DD03L.txt'
+dd03l_path = r'c:\temp_DATA\Python_Parser\DD03L\MDLZ_ACL\DD03L.txt'
 dd03l_enc = 'utf_16_be'
 
 # Output files
@@ -173,19 +175,21 @@ class ScriptGenerator:
     '''
     
     def __init__(self, Searcher, file_list, out_file, log_file, separator, encoding):
+        self.Searcher = Searcher
         self.file_list = file_list
         self.output_file = out_file
         self.log_file = log_file
         self.separator = separator
-        self.encoding = encoding
-        self.Searcher = Searcher
-           
+        self.encoding = encoding        
+        
+        # List for storing the data type tuples
         self.internal_list = []
         
     def read_the_headers(self):
         '''
         Reads the header of each file and tries to get the right table name, field name, and data type from the DD03L table.
-        It stores the result (tuple of the lenght of 4)in an internal list to make the remaining methods run much faster.
+        It stores the result (tuple of the lenght of 4) in the internal list to make the remaining methods run much faster
+        (no need to parse DD03L every time).
         '''
         
         print('Parsing the files')
@@ -197,7 +201,7 @@ class ScriptGenerator:
             table = os.path.basename(file[:-4])
             temp_list = []
                         
-            # Divide the headers based on selected delimiter
+            # Divide the headers based on selected delimiter and search for data types
             for column_name in column_names:
                 temp_tuple = tuple()
                 temp_tuple = self.Searcher.get_field_type(table, column_name.strip())
