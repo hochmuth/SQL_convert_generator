@@ -1,0 +1,5 @@
+USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root         1  0.0  0.0   8304   128 ?        Ss   17:03   0:00 /init ro
+root         3  0.0  0.0   8308    96 tty1     Ss   17:03   0:00 /init ro
+marvin       4  0.0  0.0  16928  3592 tty1     S    17:03   0:00 -bash
+marvin      34  0.0  0.0  17380  1916 tty1     R    20:21   0:00 ps aux
