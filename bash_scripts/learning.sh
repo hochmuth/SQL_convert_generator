@@ -25,3 +25,7 @@ echo $PATH
 set -x		#turn tracing on
 who | wc -l
 set +x		# turn tracing off
+
+# GREP
+
+who | grep marvin
