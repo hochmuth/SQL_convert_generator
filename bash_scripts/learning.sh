@@ -29,3 +29,16 @@ set +x		# turn tracing off
 # GREP
 
 who | grep marvin
+
+# CUT
+# Selects only the first and fifth field from the passwd file, finds the line with my username and prints only the first five matches
+cut -d : -f 1,5 /etc/passwd | grep es579dx | head -n 5
+
+#list only permissions
+ls -l | cut -c 1-10
+
+#AWK
+#print username and full name from the passwd file
+
+awk -F: '{ print "User", $1, "is really", $5 }' /etc/passwd
+
