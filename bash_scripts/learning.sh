@@ -34,11 +34,33 @@ who | grep marvin
 # Selects only the first and fifth field from the passwd file, finds the line with my username and prints only the first five matches
 cut -d : -f 1,5 /etc/passwd | grep es579dx | head -n 5
 
-#list only permissions
+# list only permissions
 ls -l | cut -c 1-10
 
-#AWK
+# AWK
 #print username and full name from the passwd file
 
 awk -F: '{ print "User", $1, "is really", $5 }' /etc/passwd
 
+# SORT
+# sort passwd by username, desc
+sort -t: -k1,1 /etc/passwd
+
+# UNIQ
+# removes duplicates
+sort /etc/passwd | uniq
+
+# count unique sorted records
+sort /etc/passwd | uniq -c
+
+# show only duplicates
+sort /etc/passwd | uniq -d
+
+# show only unique records
+sort /etc/passwd | uniq -u
+
+# COUNT
+
+echo Testing one two three | wc -c # count bytes
+echo Testing one two three | wc -l # count lines
+echo Testing one two three | wc -w # count words
