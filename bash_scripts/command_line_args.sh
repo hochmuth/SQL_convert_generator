@@ -7,7 +7,7 @@ echo was the second argument given? ${2:-no} # if null, prints 'no'
 
 echo total number of args is $#
 
-if  [ $# == 0 ]
+if  [ $# == 0 ] 
 then
 	echo no arguments given
 	echo setting my own arguments
@@ -20,6 +20,7 @@ then
 	for i in "$*"
 	do
 		echo i is $i
+	done
 	for i in "$@"
 	do echo i is $i
 	done
@@ -29,4 +30,6 @@ then
 	do 
 		echo i is $i
 	done
-fi
+fi 
+
+
