@@ -64,3 +64,23 @@ sort /etc/passwd | uniq -u
 echo Testing one two three | wc -c # count bytes
 echo Testing one two three | wc -l # count lines
 echo Testing one two three | wc -w # count words
+
+# READONLY
+hours_per_day = 24
+readonly hours_per_day # makes the variable read-only
+
+# EXPORT
+# adds new variables into the environment
+export PATH
+export -p # prints the current environment
+
+# UNSET removes variables and functions from the running shell
+who_is_on () {
+	who | awk '{ print $1 }' | sort -u
+}
+unset -f who_is_on
+
+# VARIABLES
+reminder="Time to go to the dentist!"
+echo $reminder
+echo _${reminder}_
