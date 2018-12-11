@@ -84,3 +84,7 @@ unset -f who_is_on
 reminder="Time to go to the dentist!"
 echo $reminder
 echo _${reminder}_
+
+# BASENAME
+# returns filename stripped of path, etc.
+basename /etc/passwd
