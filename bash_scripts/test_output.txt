@@ -1,0 +1,2 @@
+processes.txt:2:root         1  0.0  0.0   8304   128 ?        Ss   17:03   0:00 /init ro
+processes.txt:3:root         3  0.0  0.0   8308    96 tty1     Ss   17:03   0:00 /init ro

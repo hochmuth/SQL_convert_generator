@@ -88,3 +88,8 @@ echo _${reminder}_
 # BASENAME
 # returns filename stripped of path, etc.
 basename /etc/passwd
+
+# COMPARING FILES
+# cmp file1 file2	# silent
+# diff file1 file2	# shows the differences
+
