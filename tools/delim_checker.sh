@@ -27,7 +27,8 @@ echo >> $log_file
 
 # Main loop
 for f in "${DIRECTORY}/"*."${extension}"
-do
+do	
+	echo "Processing $(basename "$f") file"
 	echo "Processing $(basename "$f") file" >> $log_file
 	csvclean -e $encoding -d $delim --quoting 3 --dry-run $f >> $log_file	
 	echo >> $log_file
