@@ -38,10 +38,10 @@ import pandas as pd
 delim = '|'
 enc = 'utf-16'
 filetype = 'csv'
-data_dir = r'c:\temp_DATA\Python_Parser\TEMP\CCM\02_encoding\subset'
+data_dir = r''
 
 # DD03L
-dd03l_path = r'c:\temp_DATA\Python_Parser\DD03L\MDLZ_ACL\DD03L.txt'
+dd03l_path = r''
 dd03l_enc = 'utf_16_be'
 
 # Output files
@@ -337,7 +337,7 @@ class ScriptGenerator:
                         self.output_file.write('    CASE ['+fin_field+'] WHEN \'00000000\' THEN NULL ELSE CONVERT(DATE, ['+fin_field+'], 101) END AS ['+fin_field+']\n')
                         break
                     elif fin_dtype in (decimals):
-                        self.output_file.write('    CASE WHEN CHARINDEX(\'-\', ['+fin_field+']) > 0 THEN CONVERT(DECIMAL(15,2), SUBSTRING(['+fin_field+'], CHARINDEX(\'-\', ['+fin_field+']), LEN(['+fin_field+'])) + SUBSTRING(['+fin_field+'], 0, CHARINDEX(\'-\', ['+fin_field+']))) ELSE CONVERT(DECIMAL(15,2), ['+fin_field+']) END AS ['+fin_field+']\n')
+                        self.output_file.write('    CASE WHEN CHARINDEX(\'-\', ['+fin_field+']) > 0 THEN CONVERT(DECIMAL(16,3), SUBSTRING(['+fin_field+'], CHARINDEX(\'-\', ['+fin_field+']), LEN(['+fin_field+'])) + SUBSTRING(['+fin_field+'], 0, CHARINDEX(\'-\', ['+fin_field+']))) ELSE CONVERT(DECIMAL(16,3), ['+fin_field+']) END AS ['+fin_field+']\n')
                         break
                     else:
                         self.output_file.write('    LTRIM(RTRIM(['+fin_field+'])) AS ['+fin_field+']\n')
@@ -347,7 +347,7 @@ class ScriptGenerator:
                     if fin_dtype in (dates):
                         self.output_file.write('    CASE ['+fin_field+'] WHEN \'00000000\' THEN NULL ELSE CONVERT(DATE, ['+fin_field+'], 101) END AS ['+fin_field+'],\n')
                     elif fin_dtype in (decimals):
-                        self.output_file.write('    CASE WHEN CHARINDEX(\'-\', ['+fin_field+']) > 0 THEN CONVERT(DECIMAL(15,2), SUBSTRING(['+fin_field+'], CHARINDEX(\'-\', ['+fin_field+']), LEN(['+fin_field+'])) + SUBSTRING(['+fin_field+'], 0, CHARINDEX(\'-\', ['+fin_field+']))) ELSE CONVERT(DECIMAL(15,2), ['+fin_field+']) END AS ['+fin_field+'],\n')
+                        self.output_file.write('    CASE WHEN CHARINDEX(\'-\', ['+fin_field+']) > 0 THEN CONVERT(DECIMAL(16,3), SUBSTRING(['+fin_field+'], CHARINDEX(\'-\', ['+fin_field+']), LEN(['+fin_field+'])) + SUBSTRING(['+fin_field+'], 0, CHARINDEX(\'-\', ['+fin_field+']))) ELSE CONVERT(DECIMAL(16,3), ['+fin_field+']) END AS ['+fin_field+'],\n')
                     else:
                         self.output_file.write('    LTRIM(RTRIM(['+fin_field+'])) AS ['+fin_field+'],\n')
             
