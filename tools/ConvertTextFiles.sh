@@ -5,6 +5,9 @@
 #   01_delimiters - files with delimiters replaced
 #   02_encoding - converted to UTF-16
 
+extension='CSV'
+
+
 if [[ $# > 1 ]]; then
 	echo "Usage: ./ConvertTextFiles.sh [path/to/files/]"
 	exit
@@ -27,7 +30,7 @@ if [ ! -d "$DIRECTORY/01_delimiters" ] || [ ! -d "$DIRECTORY/02_encoding" ] ; th
 fi
 
 # Do the heavy lifting
-for file in *.csv; do
+for file in *."${extension}"; do
   sed -e "s/|/¦/g" -e "s/╬/|/g" "$file" > "./01_delimiters/$file"
   iconv -f utf-8 -t utf-16BE "./01_delimiters/$file" > "./02_encoding/$file"
 done
