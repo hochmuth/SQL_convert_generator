@@ -37,7 +37,7 @@ done
 # Second run for removing the leading 02_pipes
 for f in "${DIRECTORY}/"01_trimmed/*."${extension}"
 do
-	echo "Removing leadin 02_pipes of $(basename "$f") file..."
+	echo "Removing leading pipes of $(basename "$f") file..."
 	sed -e 's/^|//' "${f}"  > "${DIRECTORY}/02_pipes/$(basename "$f")"
 done
 
