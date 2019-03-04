@@ -5,7 +5,7 @@
 #   01_delimiters - files with delimiters replaced
 #   02_encoding - converted to UTF-16
 
-extension='CSV'
+extension='csv'
 
 
 if [[ $# > 1 ]]; then
@@ -30,7 +30,9 @@ if [ ! -d "$DIRECTORY/01_delimiters" ] || [ ! -d "$DIRECTORY/02_encoding" ] ; th
 fi
 
 # Delete the log files
-rm *.log
+if [ -f *.log ]; then
+	rm *.log
+fi
 
 # Rename the files
 rename 's/[0-9]+(_).{3}(_)//' *."${extension}"
