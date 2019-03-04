@@ -34,6 +34,6 @@ rename 's/[0-9]+(_).{3}(_)//' *."${extension}"
 
 # Replace delimiters and convert encoding
 for file in *."${extension}"; do
-	sed -e "s/╬/|/g" "$file" > "./01_delimiters/$file"
+	sed -e "s/|/¦/g" -e "s/╬/|/g" "$file" > "./01_delimiters/$file"
   	iconv -f utf-8 -t utf-16BE "./01_delimiters/$file" > "./02_encoding/$file"
 done
