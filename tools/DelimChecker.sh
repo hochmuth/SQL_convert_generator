@@ -1,9 +1,9 @@
 #!/bin/bash
 
 log_file=errors.log
-encoding='utf-16-le'
+encoding='utf-8'
 delim='|'
-extension='txt'
+extension='csv'
 
 if [[ $# > 1 ]] ; then
 	echo "Too many arguments. Usage: ./delim_checker.sh (path)"
@@ -34,6 +34,6 @@ do
 	echo >> $log_file
 done
 
-unix2dos errors.log
+unix2dos $log_file
 
 exit 
