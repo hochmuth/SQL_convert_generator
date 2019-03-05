@@ -1,44 +1,48 @@
-#	Replaces unicode delimiters in text files with pipes
-#	and then converts the resulting files into UTF-16 Big Endian.
+#	Accepts text files extracted from SAP with SmartExporter, and:
+#		- deletes the SE log files (folder clean-up)
+#		- renames the file names so that they match the table names (MSEG.csv etc.)
+#		- replaces the Unicode delimiters with pipes (|)
+#		- converts from UTF-8 to UTF-16 Big Endian
 #
-#	Directories created:
-#   01_delimiters - files with delimiters replaced
-#   02_encoding - converted to UTF-16
+#	Folders created:
+#   01_delimiters 	- files with replaced delimiters
+#   02_encoding 	- converted to UTF-16
 
 extension='csv'
 
-
+# Check args
 if [[ $# > 1 ]]; then
 	echo "Usage: ./ConvertTextFiles.sh [path/to/files/]"
 	exit
 fi
 
 if [[ $# = 0 ]]; then
-	DIRECTORY="."
+	directory="."
 else
-	DIRECTORY="${1}"
+	directory="${1}"
 fi
 
-if [ -d "$DIRECTORY/01_delimiters" ] || [ -d "$DIRECTORY/02_encoding" ] ; then
+# Create necessary folders
+if [ -d "$directory/01_delimiters" ] || [ -d "$directory/02_encoding" ] ; then
 	echo "Can't create folder. Folder already exists."
 	exit 1
 fi
 
-if [ ! -d "$DIRECTORY/01_delimiters" ] || [ ! -d "$DIRECTORY/02_encoding" ] ; then
-	mkdir "$DIRECTORY/01_delimiters"
-	mkdir "$DIRECTORY/02_encoding"
+if [ ! -d "$directory/01_delimiters" ] || [ ! -d "$directory/02_encoding" ] ; then
+	mkdir "$directory/01_delimiters"
+	mkdir "$directory/02_encoding"
 fi
 
-# Delete the log files
+# Delete the log files if any
 if [ -f *.log ]; then
 	rm *.log
 fi
 
 # Rename the files
-rename 's/[0-9]+(_).{3}(_)//' *."${extension}"
+rename 's/[0-9]{14}(_).{3}(_)//' "${directory}/"*."${extension}"
 
 # Replace delimiters and convert encoding
-for file in *."${extension}"; do
-	sed -e "s/|/¦/g" -e "s/╬/|/g" "$file" > "./01_delimiters/$file"
-  	iconv -f utf-8 -t utf-16BE "./01_delimiters/$file" > "./02_encoding/$file"
+for file in "${directory}/"*."${extension}"; do
+	sed -e "s/|/¦/g" -e "s/╬/|/g" "$file" > "${directory}/01_delimiters/$file"
+  	iconv -f utf-8 -t utf-16BE "${directory}/01_delimiters/$file" > "${directory}/02_encoding/$file"
 done
