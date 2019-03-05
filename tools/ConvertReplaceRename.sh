@@ -13,7 +13,7 @@ extension='csv'
 # Check args
 if [[ $# > 1 ]]; then
 	echo "Usage: ./ConvertTextFiles.sh [path/to/files/]"
-	exit
+	exit 1
 fi
 
 if [[ $# = 0 ]]; then
