@@ -46,7 +46,7 @@ dd03l_enc = 'utf_16_be'
 
 # Output files
 out_file_name = 'sql_import_files.sql'
-log_file_name = 'sql_log.txt'
+log_file_name = 'sql_log.log'
 out_file_enc = 'utf_8'
 
 # SAP datatypes we want to convert
