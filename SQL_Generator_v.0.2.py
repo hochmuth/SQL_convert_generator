@@ -36,7 +36,7 @@ import pandas as pd
 # PARAMETERS
 # Text files
 delim = '|'
-enc = 'utf-16'
+enc = 'utf-16'  
 filetype = 'csv'
 data_dir = r''
 
@@ -46,7 +46,7 @@ dd03l_enc = 'utf_16_be'
 
 # Output files
 out_file_name = 'sql_import_files.sql'
-log_file_name = 'sql_log.txt'
+log_file_name = 'sql_log.log'
 out_file_enc = 'utf_8'
 
 # SAP datatypes we want to convert
@@ -268,9 +268,8 @@ class ScriptGenerator:
                     self.output_file.write('    ['+fin_field+'] NVARCHAR(255),\n')
             
             self.output_file.write('\n'+'\n')
-            print(f'{table_list[0][0]:50}', 'Done')  
         
-        print('Create Table Statements Generated')
+        print('Done')
         print()
         return
     
@@ -355,9 +354,8 @@ class ScriptGenerator:
             self.output_file.write('FROM [00_'+fin_table+']\n')
             self.output_file.write('\n'+'\n')            
             self.log_file.write('\n'+'\n')
-            print(f'{fin_table:50}', 'Done')
             
-        print('Convert Table Statements Generated')
+        print('Done')
         print()
         return
     
