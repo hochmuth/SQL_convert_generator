@@ -48,5 +48,7 @@ if [ ! -d "$directory/joined_file" ] ; then
 fi
 
 
-
-array=( *.txt );head -1 ${array[0]} > all.txt; tail -n +2 -q ${array[@]:0} >> all.txt
+# Heavy lifting
+array=("${directory}/"*."${extension}" ) && 
+	head -1 ${array[0]} > "${directory}/joined_file/result.csv" &&
+       	tail -n +2 -q ${array[@]:0} >> "${directory}/joined_file/result.csv"
