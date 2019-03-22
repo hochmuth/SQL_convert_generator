@@ -12,6 +12,8 @@
 #	Open the file, remove the header, and copy (append) the rest into the output file
 
 
+# Should probably create a new folder to store the newly created file.
+
 
 # Ideas
 # First write the header (first line), then everything else 
