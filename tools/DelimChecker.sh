@@ -1,9 +1,9 @@
 #!/bin/bash
 
 log_file=errors.log
-encoding='utf-8'
+encoding='utf_16_le'
 delim='|'
-extension='csv'
+extension='txt'
 
 if [[ $# > 1 ]] ; then
 	echo "Too many arguments. Usage: ./delim_checker.sh (path)"

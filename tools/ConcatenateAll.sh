@@ -13,7 +13,7 @@
 # done
 
 # Parameters
-extension='txt'
+extension='csv'
 
 # Deal with arguments
 if [[ $# = 1 ]] || [[ $# > 2 ]]; then

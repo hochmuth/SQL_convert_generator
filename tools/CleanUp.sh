@@ -9,10 +9,18 @@ if [ -d "./02_encoding" ] ; then
 	rm -rf ./02_encoding
 fi
 
-if [ -f *.csv ] ; then
+if [ "$(ls -A | grep -i \\.csv\$)" ] ; then
 	rm *.csv
 fi
 
-if [ -f *.log ] ; then
+if [ "$(ls -A | grep -i \\.log\$)" ] ; then
 	rm *.log
+fi
+
+if [ "$(ls -A | grep -i \\.sql\$)" ] ; then
+	rm *.sql
+fi
+
+if [ "$(ls -A | grep -i \\.txt\$)" ] ; then
+	rm *.txt
 fi
