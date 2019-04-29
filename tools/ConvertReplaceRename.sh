@@ -29,18 +29,13 @@ if [[ -f *.log ]]; then
 	rm *.log
 fi
 
-# Rename the files
-#for old in "$directory/"*."$extension"; do
-#	new=$(echo $old | sed -e 's/[1-9]{14}(_).{3}(_)//')
-#	mv -v "$old" "$new"
-#done
-#
-
-rename 's/[0-9]{14}(_).{3}(_)//' "$directory/"*."$extension"
-
 # Main loop
 if [ "$(ls -A | grep -i \\.$extension\$)" ] ; then
-	# Create necessary folders
+
+	# Rename the files
+	rename 's/[0-9]{14}(_).{3}(_)//' "$directory/"*."$extension"
+
+	#  Create necessary folders
 	if [[ -d "$directory/01_delimiters" ]] || [[ -d "$directory/02_encoding" ]] ; then
 		echo "Can't create folder. Folder already exists."
 		exit 1
@@ -54,6 +49,7 @@ if [ "$(ls -A | grep -i \\.$extension\$)" ] ; then
 		sed -e "s/|/¦/g" -e "s/╬/|/g" "$file" > "${directory}/01_delimiters/$file"
   		iconv -f utf-8 -t utf-16BE "${directory}/01_delimiters/$file" > "${directory}/02_encoding/$file"
 	done
+
 else echo "No relevant files found."
 	exit 0
 fi
