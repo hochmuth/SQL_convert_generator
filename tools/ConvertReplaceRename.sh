@@ -8,6 +8,8 @@
 #   01_delimiters 	- files with replaced delimiters
 #   02_encoding 	- converted to UTF-16
 
+
+
 extension='csv'
 
 # Check args
@@ -22,27 +24,32 @@ else
 	directory="${1}"
 fi
 
-# Create necessary folders
-if [[ -d "$directory/01_delimiters" ]] || [[ -d "$directory/02_encoding" ]] ; then
-	echo "Can't create folder. Folder already exists."
-	exit 1
-fi
-
-if [[ ! -d "$directory/01_delimiters" ]] || [[ ! -d "$directory/02_encoding" ]] ; then
-	mkdir "$directory/01_delimiters"
-	mkdir "$directory/02_encoding"
-fi
-
 # Delete the log files if any
 if [[ -f *.log ]]; then
 	rm *.log
 fi
 
 # Rename the files
-rename 's/[0-9]{14}(_).{3}(_)//' "${directory}/"*."${extension}"
+#for old in "$directory/"*."$extension"; do
+#	new=$(echo $old | sed -e 's/[1-9]{14}(_).{3}(_)//')
+#	mv -v "$old" "$new"
+#done
+#
 
-# Replace delimiters and convert encoding
+rename 's/[0-9]{14}(_).{3}(_)//' "$directory/"*."$extension"
+
+# Main loop
 if [ "$(ls -A | grep -i \\.$extension\$)" ] ; then
+	# Create necessary folders
+	if [[ -d "$directory/01_delimiters" ]] || [[ -d "$directory/02_encoding" ]] ; then
+		echo "Can't create folder. Folder already exists."
+		exit 1
+	fi
+	if [[ ! -d "$directory/01_delimiters" ]] || [[ ! -d "$directory/02_encoding" ]] ; then
+		mkdir "$directory/01_delimiters"
+		mkdir "$directory/02_encoding"
+	fi
+	# Replace delimiters and convert encoding
 	for file in "${directory}/"*."${extension}"; do
 		sed -e "s/|/¦/g" -e "s/╬/|/g" "$file" > "${directory}/01_delimiters/$file"
   		iconv -f utf-8 -t utf-16BE "${directory}/01_delimiters/$file" > "${directory}/02_encoding/$file"
