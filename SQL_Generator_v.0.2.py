@@ -336,7 +336,7 @@ class ScriptGenerator:
                         self.output_file.write('    CASE ['+fin_field+'] WHEN \'00000000\' THEN NULL ELSE CONVERT(DATE, ['+fin_field+'], 101) END AS ['+fin_field+']\n')
                         break
                     elif fin_dtype in (decimals):
-                        self.output_file.write('    CASE WHEN CHARINDEX(\'-\', ['+fin_field+']) > 0 THEN CONVERT(DECIMAL(16,3), SUBSTRING(['+fin_field+'], CHARINDEX(\'-\', ['+fin_field+']), LEN(['+fin_field+'])) + SUBSTRING(['+fin_field+'], 0, CHARINDEX(\'-\', ['+fin_field+']))) ELSE CONVERT(DECIMAL(16,3), ['+fin_field+']) END AS ['+fin_field+']\n')
+                        self.output_file.write('    CASE WHEN ['+fin_field+'] LIKE \'%E%\' THEN CAST(['+fin_field+'] AS REAL) WHEN CHARINDEX(\'-\', ['+fin_field+']) > 0 THEN CONVERT(DECIMAL(16,3), SUBSTRING(['+fin_field+'], CHARINDEX(\'-\', ['+fin_field+']), LEN(['+fin_field+'])) + SUBSTRING(['+fin_field+'], 0, CHARINDEX(\'-\', ['+fin_field+']))) ELSE CONVERT(DECIMAL(16,3), ['+fin_field+']) END AS ['+fin_field+']\n')
                         break
                     else:
                         self.output_file.write('    LTRIM(RTRIM(['+fin_field+'])) AS ['+fin_field+']\n')
@@ -346,7 +346,7 @@ class ScriptGenerator:
                     if fin_dtype in (dates):
                         self.output_file.write('    CASE ['+fin_field+'] WHEN \'00000000\' THEN NULL ELSE CONVERT(DATE, ['+fin_field+'], 101) END AS ['+fin_field+'],\n')
                     elif fin_dtype in (decimals):
-                        self.output_file.write('    CASE WHEN CHARINDEX(\'-\', ['+fin_field+']) > 0 THEN CONVERT(DECIMAL(16,3), SUBSTRING(['+fin_field+'], CHARINDEX(\'-\', ['+fin_field+']), LEN(['+fin_field+'])) + SUBSTRING(['+fin_field+'], 0, CHARINDEX(\'-\', ['+fin_field+']))) ELSE CONVERT(DECIMAL(16,3), ['+fin_field+']) END AS ['+fin_field+'],\n')
+                        self.output_file.write('    CASE WHEN ['+fin_field+'] LIKE \'%E%\' THEN CAST(['+fin_field+'] AS REAL) WHEN CHARINDEX(\'-\', ['+fin_field+']) > 0 THEN CONVERT(DECIMAL(16,3), SUBSTRING(['+fin_field+'], CHARINDEX(\'-\', ['+fin_field+']), LEN(['+fin_field+'])) + SUBSTRING(['+fin_field+'], 0, CHARINDEX(\'-\', ['+fin_field+']))) ELSE CONVERT(DECIMAL(16,3), ['+fin_field+']) END AS ['+fin_field+'],\n')
                     else:
                         self.output_file.write('    LTRIM(RTRIM(['+fin_field+'])) AS ['+fin_field+'],\n')
             
