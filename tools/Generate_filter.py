@@ -17,11 +17,8 @@ def generate_filter(in_scope_args, out_file, field='BUKRS'):
         out_file.write('\n')
 
 if __name__ == '__main__':
-    in_scope_ekgrp = []
-    
-    in_scope_ekorg = []
+    in_scope_arguments = []
     
     out_file = open('filter.txt', 'w', encoding='utf8')
-    generate_filter(in_scope_ekgrp, out_file, field='EKGRP')
-    generate_filter(in_scope_ekorg, out_file, field='EKORG')
+    generate_filter(in_scope_arguments, out_file, field='WERKS')
     out_file.close()      
