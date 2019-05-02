@@ -36,12 +36,12 @@ import pandas as pd
 # PARAMETERS
 # Text files
 delim = '|'
-enc = 'utf-16'  
+enc = 'utf16'  
 filetype = 'csv'
-data_dir = r''
+data_dir = r'c:\temp_DATA\TMP'
 
 # DD03L
-dd03l_path = r''
+dd03l_path = r'c:\temp_DATA\Python_Parser\DD03L\MDLZ_ACL\DD03L.txt'
 dd03l_enc = 'utf_16_be'
 
 # Output files
@@ -299,6 +299,8 @@ class ScriptGenerator:
         print()
         return
     
+    
+    
     def convert_table(self):
         '''Generates the Bulk Insert statements.'''
         
@@ -333,22 +335,22 @@ class ScriptGenerator:
                 # If it's the last column, there shouldn't be a trailing comma.
                 if fin_field == last_field:
                     if fin_dtype in (dates):
-                        self.output_file.write('    CASE ['+fin_field+'] WHEN \'00000000\' THEN NULL ELSE CONVERT(DATE, ['+fin_field+'], 101) END AS ['+fin_field+']\n')
+                        self.output_file.write(self.convert_statement(fin_field, last_column=True, data_type='date'))
                         break
                     elif fin_dtype in (decimals):
-                        self.output_file.write('    CASE WHEN ['+fin_field+'] LIKE \'%E%\' THEN CAST(['+fin_field+'] AS REAL) WHEN CHARINDEX(\'-\', ['+fin_field+']) > 0 THEN CONVERT(DECIMAL(16,3), SUBSTRING(['+fin_field+'], CHARINDEX(\'-\', ['+fin_field+']), LEN(['+fin_field+'])) + SUBSTRING(['+fin_field+'], 0, CHARINDEX(\'-\', ['+fin_field+']))) ELSE CONVERT(DECIMAL(16,3), ['+fin_field+']) END AS ['+fin_field+']\n')
+                        self.output_file.write(self.convert_statement(fin_field, last_column=True, data_type='decimal'))
                         break
                     else:
-                        self.output_file.write('    LTRIM(RTRIM(['+fin_field+'])) AS ['+fin_field+']\n')
+                        self.output_file.write(self.convert_statement(fin_field, last_column=True))
                         break
                 # All columns except the last one have the trailing comma.
                 else:
                     if fin_dtype in (dates):
-                        self.output_file.write('    CASE ['+fin_field+'] WHEN \'00000000\' THEN NULL ELSE CONVERT(DATE, ['+fin_field+'], 101) END AS ['+fin_field+'],\n')
+                        self.output_file.write(self.convert_statement(fin_field, last_column=False, data_type='date'))
                     elif fin_dtype in (decimals):
-                        self.output_file.write('    CASE WHEN ['+fin_field+'] LIKE \'%E%\' THEN CAST(['+fin_field+'] AS REAL) WHEN CHARINDEX(\'-\', ['+fin_field+']) > 0 THEN CONVERT(DECIMAL(16,3), SUBSTRING(['+fin_field+'], CHARINDEX(\'-\', ['+fin_field+']), LEN(['+fin_field+'])) + SUBSTRING(['+fin_field+'], 0, CHARINDEX(\'-\', ['+fin_field+']))) ELSE CONVERT(DECIMAL(16,3), ['+fin_field+']) END AS ['+fin_field+'],\n')
+                        self.output_file.write(self.convert_statement(fin_field, last_column=False, data_type='decimal'))
                     else:
-                        self.output_file.write('    LTRIM(RTRIM(['+fin_field+'])) AS ['+fin_field+'],\n')
+                        self.output_file.write(self.convert_statement(fin_field, last_column=False))
             
             self.output_file.write('INTO ['+fin_table+']\n')
             self.output_file.write('FROM [00_'+fin_table+']\n')
@@ -371,6 +373,21 @@ class ScriptGenerator:
         print('Done')
         print()
         return
+    
+    def convert_statement(self, field, last_column, data_type='string'):
+        if data_type == 'decimal':
+            convert_string = str('    CASE WHEN ['+field+'] LIKE \'%E%\' THEN CAST(['+field+'] AS REAL) WHEN CHARINDEX(\'-\', ['+field+']) > 0 THEN CONVERT(DECIMAL(16,3), SUBSTRING(['+field+'], CHARINDEX(\'-\', ['+field+']), LEN(['+field+'])) + SUBSTRING(['+field+'], 0, CHARINDEX(\'-\', ['+field+']))) ELSE CONVERT(DECIMAL(16,3), ['+field+']) END AS ['+field+']')
+        elif data_type == 'date':
+            convert_string = str('    CASE ['+field+'] WHEN \'00000000\' THEN NULL ELSE CONVERT(DATE, ['+field+'], 101) END AS ['+field+']')
+        else:
+            convert_string = str('    LTRIM(RTRIM(['+field+'])) AS ['+field+']')
+            
+        if last_column == True:
+            return convert_string + '\n'
+        else:
+            return convert_string + ',\n'
+
+    
             
 def main():
     
