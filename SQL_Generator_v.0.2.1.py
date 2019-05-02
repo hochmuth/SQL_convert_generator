@@ -375,6 +375,12 @@ class ScriptGenerator:
         return
     
     def convert_statement(self, field, last_column, data_type='string'):
+        '''All convert statements in one place.
+            Arguments:
+                field -- string, field to convert
+                last_column -- Boolean, whether it is the last column of the table
+                data_type -- string (decimal, date), decides what type of convert to use. Default only trims the field.
+        '''
         if data_type == 'decimal':
             convert_string = str('    CASE WHEN ['+field+'] LIKE \'%E%\' THEN CAST(['+field+'] AS REAL) WHEN CHARINDEX(\'-\', ['+field+']) > 0 THEN CONVERT(DECIMAL(16,3), SUBSTRING(['+field+'], CHARINDEX(\'-\', ['+field+']), LEN(['+field+'])) + SUBSTRING(['+field+'], 0, CHARINDEX(\'-\', ['+field+']))) ELSE CONVERT(DECIMAL(16,3), ['+field+']) END AS ['+field+']')
         elif data_type == 'date':
