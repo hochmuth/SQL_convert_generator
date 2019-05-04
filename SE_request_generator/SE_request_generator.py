@@ -17,11 +17,12 @@ for child in root:
     print(child.tag, child.attrib)
     
 request = root.find('{http://www.audicon.net/DataRequest}Requests')[0]
-print(request)
-
-for child in request:
-    print(child.tag)
-    
+   
 tables = request.findall('{http://www.audicon.net/DataRequest}Table')
 for table in tables:
-    print(table[0].text)
+    print(table[0].text, type(table))
+    
+    
+
+# TO DO:
+    # Replace filters
