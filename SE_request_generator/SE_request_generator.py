@@ -10,6 +10,8 @@ import xml.etree.ElementTree as ET
 tree = ET.parse('TEST_02.xml')
 root = tree.getroot()
 
+ET.dump(root)
+
 print(root.tag)
 print(root.attrib)
 
@@ -26,6 +28,16 @@ for table in tables:
 for table in tables:
     if table[1].text == 'Filter':
         print(table[0].text, table[1].text)
+
+req = root.find('{http://www.audicon.net/DataRequest}Requests')
+ET.dump(req)
+req_inner = req.find('{http://www.audicon.net/DataRequest}Request')
+print(req_inner)
+ET.dump(req_inner)
+
+for item in root.iter('{http://www.audicon.net/DataRequest}Filter'):
+    ET.dump(item)
+
     
     
     
