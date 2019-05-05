@@ -20,7 +20,13 @@ request = root.find('{http://www.audicon.net/DataRequest}Requests')[0]
    
 tables = request.findall('{http://www.audicon.net/DataRequest}Table')
 for table in tables:
-    print(table[0].text, type(table))
+    print(table[0].text, table.tag, type(table))
+    print(table[1].tag)
+    
+for table in tables:
+    if table[1].text == 'Filter':
+        print(table[0].text, table[1].text)
+    
     
     
 
