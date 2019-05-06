@@ -13,11 +13,8 @@ root = tree.getroot()
 
 ET.dump(root)
 
-print(root.tag)
-print(root.attrib)
-
-for child in root:
-    print(child.tag, child.attrib)
+#print(root.tag)
+#print(root.attrib)
     
 request = root.find('{http://www.audicon.net/DataRequest}Requests')[0]
    
@@ -33,7 +30,7 @@ for table in tables:
 req = root.find('{http://www.audicon.net/DataRequest}Requests')
 ET.dump(req)
 req_inner = req.find('{http://www.audicon.net/DataRequest}Request')
-print(req_inner)
+#print(req_inner)
 ET.dump(req_inner)
 
 copies = []
@@ -41,8 +38,12 @@ for item in root.iter('{http://www.audicon.net/DataRequest}Filter'):
     ET.dump(item)
     copied = copy.deepcopy(item)
     copies.append(copied)
+    if item.find('{http://www.audicon.net/DataRequest}Name').text == 'BUKRS':
+        item.find('{http://www.audicon.net/DataRequest}Low').text = 'DDDD'
+    
+ET.dump(root)
 
-print(copies)
+
     
     
     
