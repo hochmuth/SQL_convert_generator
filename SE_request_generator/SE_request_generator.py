@@ -6,6 +6,7 @@ Created on Sat May  4 17:18:36 2019
 """
 
 import xml.etree.ElementTree as ET
+import copy
 
 tree = ET.parse('TEST_02.xml')
 root = tree.getroot()
@@ -35,9 +36,13 @@ req_inner = req.find('{http://www.audicon.net/DataRequest}Request')
 print(req_inner)
 ET.dump(req_inner)
 
+copies = []
 for item in root.iter('{http://www.audicon.net/DataRequest}Filter'):
     ET.dump(item)
+    copied = copy.deepcopy(item)
+    copies.append(copied)
 
+print(copies)
     
     
     
