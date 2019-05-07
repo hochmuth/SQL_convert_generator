@@ -1,0 +1,109 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<DataRequest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.audicon.net/DataRequest">
+<!--
+<FC51CF65-2086-426A-B9FE-31CC8E84A566>
+<ColumnDelimiter>|</ColumnDelimiter>
+<TextEncapsulator></TextEncapsulator>
+<ConvertFiltersOnserver>false</ConvertFiltersOnserver>
+<GenerateIndexXml>false</GenerateIndexXml>
+<AnalyzeCollationMode>0</AnalyzeCollationMode>
+<ReadMode>1</ReadMode>
+<NativeReadMode>1</NativeReadMode>
+</FC51CF65-2086-426A-B9FE-31CC8E84A566>
+-->
+  <Version>2.0</Version>
+  <Language>EN</Language>
+  <ERPSystem>SAP</ERPSystem>
+  <Client/>
+  <RequestedBy>
+    <Application/>
+    <User/>
+  </RequestedBy>
+  <Info>TEST_02</Info>
+  <Action>DataRequest</Action>
+  <FileFormat>VAR</FileFormat>
+  <InternalFileFormat>VAR_HD</InternalFileFormat>
+  <XMLColFormat>1</XMLColFormat>
+  <Requests>
+    <Request>
+      <ID>457337460AE54C13BD2E7B0FC88A9BB6</ID>
+      <TimeStamp>2019-05-04T17:10:03.7427256+02:00</TimeStamp>
+      <CompanyCode/>
+      <Period>
+        <FiscalYear>1900</FiscalYear>
+        <From>2019-05-04</From>
+        <To>2019-05-04</To>
+      </Period>
+      <Table>
+        <Name>EKKO</Name>
+        <Filter>
+          <Name>BUKRS</Name>
+          <Mandatory>false</Mandatory>
+          <Sign>I</Sign>
+          <Option>EQ</Option>
+          <Low>B003</Low>
+          <SmartExporterIgnore>false</SmartExporterIgnore>
+        </Filter><Filter>
+          <Name>BUKRS</Name>
+          <Mandatory>false</Mandatory>
+          <Sign>I</Sign>
+          <Option>EQ</Option>
+          <Low>B002</Low>
+          <SmartExporterIgnore>false</SmartExporterIgnore>
+        </Filter><Filter>
+          <Name>BUKRS</Name>
+          <Mandatory>false</Mandatory>
+          <Sign>I</Sign>
+          <Option>EQ</Option>
+          <Low>B001</Low>
+          <SmartExporterIgnore>false</SmartExporterIgnore>
+        </Filter>
+        
+        <Column>
+          <Name>MANDT</Name>
+        </Column>
+        <Column>
+          <Name>EBELN</Name>
+        </Column>
+        <Column>
+          <Name>BUKRS</Name>
+        </Column>
+      </Table>
+      <Table>
+        <Name>EKPO</Name>
+        <Column>
+          <Name>MANDT</Name>
+        </Column>
+        <Column>
+          <Name>EBELN</Name>
+        </Column>
+        <Column>
+          <Name>EBELP</Name>
+        </Column>
+        <Column>
+          <Name>BUKRS</Name>
+        </Column>
+      </Table>
+      <Table>
+        <Name>T023T</Name>
+        <Filter>
+          <Name>SPRAS</Name>
+          <Mandatory>false</Mandatory>
+          <Sign>I</Sign>
+          <Option>EQ</Option>
+          <Low>E</Low>
+          <SmartExporterIgnore>false</SmartExporterIgnore>
+        </Filter>
+        <Column>
+          <Name>MANDT</Name>
+        </Column>
+        <Column>
+          <Name>SPRAS</Name>
+        </Column>
+        <Column>
+          <Name>MATKL</Name>
+        </Column>
+      </Table>
+    </Request>
+  </Requests>
+</DataRequest>

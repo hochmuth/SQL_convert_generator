@@ -11,30 +11,35 @@ import copy
 BUKRS = ['B001', 'B002', 'B003']
 
 namespaces = {'ns0' : '{http://www.audicon.net/DataRequest}'}
+ns = '{http://www.audicon.net/DataRequest}'
 
 tree = ET.parse('TEST_02.xml')
 root = tree.getroot()
 
 # Look at what we've got
 ET.dump(root)
+print()
     
-request = root.find('{http://www.audicon.net/DataRequest}Requests').find('{http://www.audicon.net/DataRequest}Request')
-   
-tables = request.findall('{http://www.audicon.net/DataRequest}Table')
+#request = root.find(ns+'Requests').find(ns+'Request')   
+#tables = request.findall(ns+'Table')
 
-copies = []
-for item in root.iter('{http://www.audicon.net/DataRequest}Filter'):
-    print(item.find('..'))
+
+for item in root.iter(ns+'Filter'):
+#    print(item.find('..'))
         
-    if item.find('{http://www.audicon.net/DataRequest}Name').text == 'BUKRS':
+    if item.find(ns+'Name').text == 'BUKRS':
         for element in BUKRS:
             copied = copy.deepcopy(item)
-            copied.find('{http://www.audicon.net/DataRequest}Low').text = element
-#           copies.append(copied)
+            copied.find(ns+'Low').text = element
             item.addnext(copied)
+        parent = item.getparent()
+        parent.remove(item)
         
 
 ET.dump(root)
+
+output_tree = ET.ElementTree(root)
+output_tree.write('output.xml', pretty_print=True, xml_declaration=True, encoding="utf-8")
    
 #for copied in copies:
 #    ET.dump(copied)
