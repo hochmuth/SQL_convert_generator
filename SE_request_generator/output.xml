@@ -41,31 +41,32 @@
           <Mandatory>false</Mandatory>
           <Sign>I</Sign>
           <Option>EQ</Option>
-          <Low>B003</Low>
+          <Low>B001</Low>
           <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter><Filter>
+        </Filter>
+        <Filter>
           <Name>BUKRS</Name>
           <Mandatory>false</Mandatory>
           <Sign>I</Sign>
           <Option>EQ</Option>
           <Low>B002</Low>
           <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter><Filter>
+        </Filter>
+        <Filter>
           <Name>BUKRS</Name>
           <Mandatory>false</Mandatory>
           <Sign>I</Sign>
           <Option>EQ</Option>
-          <Low>B001</Low>
+          <Low>B003</Low>
           <SmartExporterIgnore>false</SmartExporterIgnore>
         </Filter>
-        
         <Filter>
           <Name>AEDAT</Name>
           <Mandatory>false</Mandatory>
           <Sign>I</Sign>
           <Option>BT</Option>
-          <Low>01-01-2018</Low>
-          <High>12-31-2018</High>
+          <Low>20180101</Low>
+          <High>20181231</High>
           <SmartExporterIgnore>false</SmartExporterIgnore>
         </Filter>
         <Column>

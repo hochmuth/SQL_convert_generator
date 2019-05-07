@@ -4,12 +4,12 @@ Created on Sat May  4 17:18:36 2019
 
 @author: ES579DX
 """
-import lxml.etree as ET
-#import xml.etree.ElementTree as ET
-import copy
 
-date_low = '01-01-2018'
-date_high = '12-31-2018'
+import copy
+import lxml.etree as ET
+
+date_low = '20180101'
+date_high = '20181231'
 BUKRS = ['B001', 'B002', 'B003']
 KKBER = ['KK01', 'KK02', 'KK03']
 VKORG = ['V001', 'V002', 'V003']
@@ -20,9 +20,6 @@ FILTER_NAMES = ['BUKRS', 'KKBER', 'VKORG', 'GJAHR']
 namespaces = {'ns0' : '{http://www.audicon.net/DataRequest}'}
 ns = '{http://www.audicon.net/DataRequest}'
 
-tree = ET.parse('TEST_02.xml')
-root = tree.getroot()
-
 def fill_out_filter(root_tree, filter_list, filter_names):
     for i, filter_field in enumerate(filter_list):
         if len(filter_field) > 0:
@@ -31,7 +28,7 @@ def fill_out_filter(root_tree, filter_list, filter_names):
                     for item in filter_field:
                         copied = copy.deepcopy(element)
                         copied.find(ns+'Low').text = item
-                        element.addnext(copied)
+                        element.addprevious(copied)
                     parent = element.getparent()
                     parent.remove(element)
     return root_tree
