@@ -42,12 +42,11 @@ def fill_out_dates(root_tree, date_low, date_high):
     return root_tree
 
 
-
-tree = ET.parse('TEST_03.xml')
-root = tree.getroot()
-                    
-output_tree = ET.ElementTree(fill_out_filter(fill_out_dates(root, date_low, date_high), FILTER_LIST, FILTER_NAMES))
-output_tree.write('output.xml', pretty_print=True, xml_declaration=True, encoding="utf-8")
+if __name__ == '__main__':
+    
+    tree = ET.parse('TEST_03.xml')
+    root = tree.getroot()
+                        
+    output_tree = ET.ElementTree(fill_out_filter(fill_out_dates(root, date_low, date_high), FILTER_LIST, FILTER_NAMES))
+    output_tree.write('output.xml', pretty_print=True, xml_declaration=True, encoding="utf-8")
    
-# TO DO:
-    # add VKORG, KKBER, GJAHR
