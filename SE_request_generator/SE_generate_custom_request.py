@@ -6,6 +6,7 @@ Created on Tue May  7 10:55:49 2019
 """
 import copy
 import lxml.etree as ET
+import pandas as pd
 
 tables = {
         'BKPF' : ['COL1', 'COL2', 'COL3'],
@@ -15,16 +16,11 @@ tables = {
 namespaces = {'ns0' : '{http://www.audicon.net/DataRequest}'}
 ns = '{http://www.audicon.net/DataRequest}'
 
-root = ET.parse('SAMPLE.xml').getroot()
-
-#sample_table = root.find(ns+'Requests').find(ns+'Request').find(ns+'Table')
-#sample_column = root.find(ns+'Requests').find(ns+'Request').find(ns+'Table').find(ns+'Column')
-#sample_filter = root.find(ns+'Requests').find(ns+'Request').find(ns+'Table').find(ns+'Filter')
 
 def populate_xml(root_tree, tables_dict):
     sample_table = root_tree.find(ns+'Requests').find(ns+'Request').find(ns+'Table')
     sample_column = root_tree.find(ns+'Requests').find(ns+'Request').find(ns+'Table').find(ns+'Column')
-    sample_filter = root_tree.find(ns+'Requests').find(ns+'Request').find(ns+'Table').find(ns+'Filter')
+    #sample_filter = root_tree.find(ns+'Requests').find(ns+'Request').find(ns+'Table').find(ns+'Filter')
     
     for key in tables_dict:
         copied_table = copy.deepcopy(sample_table)
@@ -44,13 +40,27 @@ def populate_xml(root_tree, tables_dict):
     
     return root_tree
 
-
-output_tree = populate_xml(root, tables)
-ET.dump(output_tree)
+if __name__ == '__main__':
+    
+    
+    excel = pd.read_excel('Tables_and_fields.xlsx', sheet_name='Final_List', header=0, names=['Table', 'Field'])
+    print(excel.head())
+    # Not the way to go
+    pivot = excel.reset_index().to_dict(orient='list')
+    
+    # Get all relevant table names
+    table_list = excel.Table.unique()
+    print(table_list)
+    
+    
+    root = ET.parse('SAMPLE.xml').getroot()    
+    output_tree = populate_xml(root, tables)
+#    ET.dump(output_tree)
 
 
 
 '''
     TO DO:
-        Generate two more tables with some sample columns, plus delete the first one.
+        Figure out how to get the list of field/tables.
+        Disregard the filters and joins for now.
 '''
