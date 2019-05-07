@@ -26,8 +26,8 @@
   <XMLColFormat>1</XMLColFormat>
   <Requests>
     <Request>
-      <ID>FAABB570F6064B12B799396C749442D2</ID>
-      <TimeStamp>2019-05-07T10:59:55.9763575+02:00</TimeStamp>
+      <ID>A412B2137D96414EAFF44D2CEF029D10</ID>
+      <TimeStamp>2019-05-07T12:17:00.4999366+02:00</TimeStamp>
       <CompanyCode />
       <Period>
         <FiscalYear>1900</FiscalYear>
@@ -46,9 +46,6 @@
         </Filter>
         <Column>
           <Name>MANDT</Name>
-        </Column>
-        <Column>
-          <Name>BUKRS</Name>
         </Column>
       </Table>
     </Request>
