@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='UTF-8'?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <DataRequest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.audicon.net/DataRequest">
 <!--
 <FC51CF65-2086-426A-B9FE-31CC8E84A566>
@@ -14,10 +14,10 @@
   <Version>2.0</Version>
   <Language>EN</Language>
   <ERPSystem>SAP</ERPSystem>
-  <Client/>
+  <Client />
   <RequestedBy>
-    <Application/>
-    <User/>
+    <Application />
+    <User />
   </RequestedBy>
   <Info>TEST_03</Info>
   <Action>DataRequest</Action>
@@ -28,7 +28,7 @@
     <Request>
       <ID>98A8D7FF709F45859E764BBEFB365051</ID>
       <TimeStamp>2019-05-07T09:59:44.3261065+02:00</TimeStamp>
-      <CompanyCode/>
+      <CompanyCode />
       <Period>
         <FiscalYear>1900</FiscalYear>
         <From>2019-05-07</From>
@@ -41,31 +41,16 @@
           <Mandatory>false</Mandatory>
           <Sign>I</Sign>
           <Option>EQ</Option>
-          <Low>B003</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter><Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>B002</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter><Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>B001</Low>
+          <Low>CCCC</Low>
           <SmartExporterIgnore>false</SmartExporterIgnore>
         </Filter>
-        
         <Filter>
           <Name>AEDAT</Name>
           <Mandatory>false</Mandatory>
           <Sign>I</Sign>
           <Option>BT</Option>
-          <Low>01-01-2018</Low>
-          <High>12-31-2018</High>
+          <Low>xxxxxxxx</Low>
+          <High>yyyyyyyy</High>
           <SmartExporterIgnore>false</SmartExporterIgnore>
         </Filter>
         <Column>
