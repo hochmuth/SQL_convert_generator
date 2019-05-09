@@ -14,7 +14,7 @@ namespaces = {'ns0' : '{http://www.audicon.net/DataRequest}'}
 ns = '{http://www.audicon.net/DataRequest}'
 
 
-def populate_xml(root_tree, tables_dict):
+def populate_xml(root_tree, tables_dict, filters=False):
     sample_table = root_tree.find(ns+'Requests').find(ns+'Request').find(ns+'Table')
     sample_column = root_tree.find(ns+'Requests').find(ns+'Request').find(ns+'Table').find(ns+'Column')
     #sample_filter = root_tree.find(ns+'Requests').find(ns+'Request').find(ns+'Table').find(ns+'Filter')
@@ -29,8 +29,11 @@ def populate_xml(root_tree, tables_dict):
             copied_column.find(ns+'Name').text = item
             # Append the new column        
             orig_column.addprevious(copied_column)
-        copied_table.remove(orig_column)    
-        sample_table.addprevious(copied_table)
+        copied_table.remove(orig_column)
+        if not filters:
+            copied_filter = copied_table.find(ns+'Filter')
+            copied_table.remove(copied_filter)
+        sample_table.addprevious(copied_table)    
         
     sample_parent = sample_table.getparent()
     sample_parent.remove(sample_table)
@@ -59,5 +62,5 @@ if __name__ == '__main__':
 
 '''
     TO DO:
-        Remove the filter for now.        
+        Test it.   
 '''

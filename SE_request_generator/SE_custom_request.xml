@@ -36,28 +36,12 @@
       </Period>
       <Table>
         <Name>ADR6</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>all</Name>
         </Column>
       </Table>
     <Table>
         <Name>AFKO</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>GSTRI</Name>
         </Column>
@@ -136,14 +120,6 @@
       </Table>
     <Table>
         <Name>AFPO</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>DWERK</Name>
         </Column>
@@ -201,98 +177,42 @@
       </Table>
     <Table>
         <Name>AGR_1251</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>all</Name>
         </Column>
       </Table>
     <Table>
         <Name>AGR_1252</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>all</Name>
         </Column>
       </Table>
     <Table>
         <Name>AGR_AGRS</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>all</Name>
         </Column>
       </Table>
     <Table>
         <Name>AGR_DEFINE</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>all</Name>
         </Column>
       </Table>
     <Table>
         <Name>AGR_PROF</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>all</Name>
         </Column>
       </Table>
     <Table>
         <Name>AGR_USERS</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>all</Name>
         </Column>
       </Table>
     <Table>
         <Name>ANAT</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>SPRAS</Name>
         </Column>
@@ -308,56 +228,24 @@
       </Table>
     <Table>
         <Name>ANEK</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>all</Name>
         </Column>
       </Table>
     <Table>
         <Name>ANEP</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>all</Name>
         </Column>
       </Table>
     <Table>
         <Name>ANEV </Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>all</Name>
         </Column>
       </Table>
     <Table>
         <Name>ANKT</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>SPRAS</Name>
         </Column>
@@ -382,14 +270,6 @@
       </Table>
     <Table>
         <Name>ANLA</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>ERDAT</Name>
         </Column>
@@ -468,14 +348,6 @@
       </Table>
     <Table>
         <Name>ANLB</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>BUKRS</Name>
         </Column>
@@ -500,14 +372,6 @@
       </Table>
     <Table>
         <Name>ANLC</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>BUKRS</Name>
         </Column>
@@ -610,28 +474,12 @@
       </Table>
     <Table>
         <Name>ANLH </Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>all</Name>
         </Column>
       </Table>
     <Table>
         <Name>AUFK</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>AUART</Name>
         </Column>
@@ -665,14 +513,6 @@
       </Table>
     <Table>
         <Name>BKPF</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>BUDAT</Name>
         </Column>
@@ -772,14 +612,6 @@
       </Table>
     <Table>
         <Name>BNKA</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>BANKA</Name>
         </Column>
@@ -846,14 +678,6 @@
       </Table>
     <Table>
         <Name>BSAD</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>BUKRS</Name>
         </Column>
@@ -962,14 +786,6 @@
       </Table>
     <Table>
         <Name>BSAK</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>BUDAT</Name>
         </Column>
@@ -1114,14 +930,6 @@
       </Table>
     <Table>
         <Name>BSEG</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>GJAHR</Name>
         </Column>
@@ -1203,14 +1011,6 @@
       </Table>
     <Table>
         <Name>BSID</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>BUKRS</Name>
         </Column>
@@ -1316,14 +1116,6 @@
       </Table>
     <Table>
         <Name>BSIK</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>BUDAT</Name>
         </Column>
@@ -1468,14 +1260,6 @@
       </Table>
     <Table>
         <Name>CDHDR</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>UDATE</Name>
         </Column>
@@ -1512,70 +1296,30 @@
       </Table>
     <Table>
         <Name>CDHDR_DEBI</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>all</Name>
         </Column>
       </Table>
     <Table>
         <Name>CDHDR_EINK</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>all</Name>
         </Column>
       </Table>
     <Table>
         <Name>CDHDR_KRED</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>all</Name>
         </Column>
       </Table>
     <Table>
         <Name>CDHDR_MATERIAL</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>all</Name>
         </Column>
       </Table>
     <Table>
         <Name>CDPOS</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>OBJECTCLAS</Name>
         </Column>
@@ -1609,70 +1353,30 @@
       </Table>
     <Table>
         <Name>CDPOS_DEBI</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>all</Name>
         </Column>
       </Table>
     <Table>
         <Name>CDPOS_EINK</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>all</Name>
         </Column>
       </Table>
     <Table>
         <Name>CDPOS_KRED</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>all</Name>
         </Column>
       </Table>
     <Table>
         <Name>CDPOS_MATERIAL</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>all</Name>
         </Column>
       </Table>
     <Table>
         <Name>DD02T</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>DDLANGUAGE</Name>
         </Column>
@@ -1688,14 +1392,6 @@
       </Table>
     <Table>
         <Name>DD03VT</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>DDLANGUAGE</Name>
         </Column>
@@ -1711,28 +1407,12 @@
       </Table>
     <Table>
         <Name>DD04T</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>SCRTEXT_S</Name>
         </Column>
       </Table>
     <Table>
         <Name>DD07V</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>APPVAL</Name>
         </Column>
@@ -1763,14 +1443,6 @@
       </Table>
     <Table>
         <Name>EBAN</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>EBELN</Name>
         </Column>
@@ -1828,14 +1500,6 @@
       </Table>
     <Table>
         <Name>EKBE</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>EBELN</Name>
         </Column>
@@ -1899,14 +1563,6 @@
       </Table>
     <Table>
         <Name>EKET</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>EBELN</Name>
         </Column>
@@ -1937,14 +1593,6 @@
       </Table>
     <Table>
         <Name>EKKO</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>AEDAT</Name>
         </Column>
@@ -2026,14 +1674,6 @@
       </Table>
     <Table>
         <Name>EKPO</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>EBELN</Name>
         </Column>
@@ -2142,14 +1782,6 @@
       </Table>
     <Table>
         <Name>EORD</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>BDATU</Name>
         </Column>
@@ -2186,14 +1818,6 @@
       </Table>
     <Table>
         <Name>KNA1</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>KUNNR</Name>
         </Column>
@@ -2320,14 +1944,6 @@
       </Table>
     <Table>
         <Name>KNB1</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>BUKRS</Name>
         </Column>
@@ -2409,14 +2025,6 @@
       </Table>
     <Table>
         <Name>KNBK</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>BANKL</Name>
         </Column>
@@ -2435,14 +2043,6 @@
       </Table>
     <Table>
         <Name>KNKK</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>KKBER</Name>
         </Column>
@@ -2506,14 +2106,6 @@
       </Table>
     <Table>
         <Name>KNVP</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>VKORG</Name>
         </Column>
@@ -2556,14 +2148,6 @@
       </Table>
     <Table>
         <Name>KNVV</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>VKORG</Name>
         </Column>
@@ -2588,14 +2172,6 @@
       </Table>
     <Table>
         <Name>KONA</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>MANDT</Name>
         </Column>
@@ -2785,14 +2361,6 @@
       </Table>
     <Table>
         <Name>KONH</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>KNUMV</Name>
         </Column>
@@ -2808,14 +2376,6 @@
       </Table>
     <Table>
         <Name>KONP</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>KNUMH</Name>
         </Column>
@@ -2837,14 +2397,6 @@
       </Table>
     <Table>
         <Name>KONV</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>KNUMV</Name>
         </Column>
@@ -2887,14 +2439,6 @@
       </Table>
     <Table>
         <Name>LFA1</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>KTOKK</Name>
         </Column>
@@ -3003,14 +2547,6 @@
       </Table>
     <Table>
         <Name>LFB1</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>BUKRS</Name>
         </Column>
@@ -3077,14 +2613,6 @@
       </Table>
     <Table>
         <Name>LFBK</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>BANKL</Name>
         </Column>
@@ -3103,14 +2631,6 @@
       </Table>
     <Table>
         <Name>LFC1</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>LIFNR</Name>
         </Column>
@@ -3276,14 +2796,6 @@
       </Table>
     <Table>
         <Name>LFM1</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>LIFNR</Name>
         </Column>
@@ -3323,14 +2835,6 @@
       </Table>
     <Table>
         <Name>LIKP</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>VKORG</Name>
         </Column>
@@ -3409,14 +2913,6 @@
       </Table>
     <Table>
         <Name>LIPS</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>ERDAT</Name>
         </Column>
@@ -3471,14 +2967,6 @@
       </Table>
     <Table>
         <Name>MAKT</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>SPRAS</Name>
         </Column>
@@ -3497,14 +2985,6 @@
       </Table>
     <Table>
         <Name>MARA</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>AENAM</Name>
         </Column>
@@ -3676,14 +3156,6 @@
       </Table>
     <Table>
         <Name>MARC</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>AUSDT</Name>
         </Column>
@@ -3834,14 +3306,6 @@
       </Table>
     <Table>
         <Name>MARD</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>WERKS</Name>
         </Column>
@@ -3890,14 +3354,6 @@
       </Table>
     <Table>
         <Name>MARDH</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>all</Name>
         </Column>
@@ -3946,28 +3402,12 @@
       </Table>
     <Table>
         <Name>MAST</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>all</Name>
         </Column>
       </Table>
     <Table>
         <Name>MBEW</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>BKLAS</Name>
         </Column>
@@ -4028,14 +3468,6 @@
       </Table>
     <Table>
         <Name>MCH1</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>ERSDA</Name>
         </Column>
@@ -4054,14 +3486,6 @@
       </Table>
     <Table>
         <Name>MCHA</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>ZUSTD</Name>
         </Column>
@@ -4137,14 +3561,6 @@
       </Table>
     <Table>
         <Name>MCHB</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>CEINM</Name>
         </Column>
@@ -4175,14 +3591,6 @@
       </Table>
     <Table>
         <Name>MKPF</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>BUDAT</Name>
         </Column>
@@ -4231,14 +3639,6 @@
       </Table>
     <Table>
         <Name>MSEG</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>AUFNR</Name>
         </Column>
@@ -4413,14 +3813,6 @@
       </Table>
     <Table>
         <Name>MSKU</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>MANDT</Name>
         </Column>
@@ -4502,14 +3894,6 @@
       </Table>
     <Table>
         <Name>MSLB</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>MANDT</Name>
         </Column>
@@ -4591,14 +3975,6 @@
       </Table>
     <Table>
         <Name>QALS</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>ART</Name>
         </Column>
@@ -4620,14 +3996,6 @@
       </Table>
     <Table>
         <Name>QAMB</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>MANDANT</Name>
         </Column>
@@ -4658,14 +4026,6 @@
       </Table>
     <Table>
         <Name>QAVE</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>QKENNZAHL</Name>
         </Column>
@@ -4687,14 +4047,6 @@
       </Table>
     <Table>
         <Name>QMAT</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>WERKS</Name>
         </Column>
@@ -4785,14 +4137,6 @@
       </Table>
     <Table>
         <Name>QPCT</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>CODE</Name>
         </Column>
@@ -4814,14 +4158,6 @@
       </Table>
     <Table>
         <Name>RBKP</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>BELNR</Name>
         </Column>
@@ -4936,14 +4272,6 @@
       </Table>
     <Table>
         <Name>RSEG</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>BELNR</Name>
         </Column>
@@ -5019,28 +4347,12 @@
       </Table>
     <Table>
         <Name>S060</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>all</Name>
         </Column>
       </Table>
     <Table>
         <Name>S066</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>KKBER</Name>
         </Column>
@@ -5053,14 +4365,6 @@
       </Table>
     <Table>
         <Name>S067</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>KKBER</Name>
         </Column>
@@ -5076,14 +4380,6 @@
       </Table>
     <Table>
         <Name>SKA1</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>GVTYP</Name>
         </Column>
@@ -5138,14 +4434,6 @@
       </Table>
     <Table>
         <Name>SKAT</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>SPRAS</Name>
         </Column>
@@ -5173,14 +4461,6 @@
       </Table>
     <Table>
         <Name>SKB1</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>BUKRS</Name>
         </Column>
@@ -5307,28 +4587,12 @@
       </Table>
     <Table>
         <Name>STAS</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>all</Name>
         </Column>
       </Table>
     <Table>
         <Name>STKO</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>STLTY</Name>
         </Column>
@@ -5377,14 +4641,6 @@
       </Table>
     <Table>
         <Name>STPO</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>STLTY</Name>
         </Column>
@@ -5463,14 +4719,6 @@
       </Table>
     <Table>
         <Name>T001</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>BUKRS</Name>
         </Column>
@@ -5501,14 +4749,6 @@
       </Table>
     <Table>
         <Name>T001B</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>BKONT</Name>
         </Column>
@@ -5569,14 +4809,6 @@
       </Table>
     <Table>
         <Name>T001K</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>BUKRS</Name>
         </Column>
@@ -5589,14 +4821,6 @@
       </Table>
     <Table>
         <Name>T001L</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>LGOBE</Name>
         </Column>
@@ -5666,14 +4890,6 @@
       </Table>
     <Table>
         <Name>T001W</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>NAME1</Name>
         </Column>
@@ -5701,14 +4917,6 @@
       </Table>
     <Table>
         <Name>T003T</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>SPRAS</Name>
         </Column>
@@ -5721,14 +4929,6 @@
       </Table>
     <Table>
         <Name>T004T</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>SPRAS</Name>
         </Column>
@@ -5744,14 +4944,6 @@
       </Table>
     <Table>
         <Name>T005T</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>SPRAS</Name>
         </Column>
@@ -5767,28 +4959,12 @@
       </Table>
     <Table>
         <Name>T006</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>MSEHI</Name>
         </Column>
       </Table>
     <Table>
         <Name>T006A</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>SPRAS</Name>
         </Column>
@@ -5822,14 +4998,6 @@
       </Table>
     <Table>
         <Name>T007K</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>MANDT</Name>
         </Column>
@@ -5857,14 +5025,6 @@
       </Table>
     <Table>
         <Name>T014</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>KKBER</Name>
         </Column>
@@ -5892,28 +5052,12 @@
       </Table>
     <Table>
         <Name>T023T</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>all</Name>
         </Column>
       </Table>
     <Table>
         <Name>T024</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>MANDT</Name>
         </Column>
@@ -5926,56 +5070,24 @@
       </Table>
     <Table>
         <Name>T024E</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>all</Name>
         </Column>
       </Table>
     <Table>
         <Name>T025T</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>all</Name>
         </Column>
       </Table>
     <Table>
         <Name>T030</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>all</Name>
         </Column>
       </Table>
     <Table>
         <Name>T042Z</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>LAND1</Name>
         </Column>
@@ -5988,14 +5100,6 @@
       </Table>
     <Table>
         <Name>T052</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>ZMONA</Name>
         </Column>
@@ -6038,84 +5142,36 @@
       </Table>
     <Table>
         <Name>T052U</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>all</Name>
         </Column>
       </Table>
     <Table>
         <Name>T055F</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>all</Name>
         </Column>
       </Table>
     <Table>
         <Name>T077X</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>all</Name>
         </Column>
       </Table>
     <Table>
         <Name>T077Y</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>all</Name>
         </Column>
       </Table>
     <Table>
         <Name>T095A</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>all</Name>
         </Column>
       </Table>
     <Table>
         <Name>T134T</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>SPRAS</Name>
         </Column>
@@ -6128,42 +5184,18 @@
       </Table>
     <Table>
         <Name>T141T</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>all</Name>
         </Column>
       </Table>
     <Table>
         <Name>T143T</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>all</Name>
         </Column>
       </Table>
     <Table>
         <Name>T156</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>BWART</Name>
         </Column>
@@ -6173,28 +5205,12 @@
       </Table>
     <Table>
         <Name>T156T</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>all</Name>
         </Column>
       </Table>
     <Table>
         <Name>T158W</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>SPRAS</Name>
         </Column>
@@ -6207,14 +5223,6 @@
       </Table>
     <Table>
         <Name>T161S</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>MANDT</Name>
         </Column>
@@ -6242,28 +5250,12 @@
       </Table>
     <Table>
         <Name>T161T</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>all</Name>
         </Column>
       </Table>
     <Table>
         <Name>T163C</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>SPRAS</Name>
         </Column>
@@ -6279,84 +5271,36 @@
       </Table>
     <Table>
         <Name>T163K</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>all</Name>
         </Column>
       </Table>
     <Table>
         <Name>T438T</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>all</Name>
         </Column>
       </Table>
     <Table>
         <Name>T681</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>all</Name>
         </Column>
       </Table>
     <Table>
         <Name>T681B</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>all</Name>
         </Column>
       </Table>
     <Table>
         <Name>T681W</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>all</Name>
         </Column>
       </Table>
     <Table>
         <Name>T685T</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>KAPPL</Name>
         </Column>
@@ -6378,14 +5322,6 @@
       </Table>
     <Table>
         <Name>T691T</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>CTLPC</Name>
         </Column>
@@ -6404,84 +5340,36 @@
       </Table>
     <Table>
         <Name>T6B1T</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>all</Name>
         </Column>
       </Table>
     <Table>
         <Name>T6B2T</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>all</Name>
         </Column>
       </Table>
     <Table>
         <Name>TABW</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>all</Name>
         </Column>
       </Table>
     <Table>
         <Name>TACTZ</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>all</Name>
         </Column>
       </Table>
     <Table>
         <Name>TBSLT</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>all</Name>
         </Column>
       </Table>
     <Table>
         <Name>TOBJ</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>OBJCT</Name>
         </Column>
@@ -6536,84 +5424,36 @@
       </Table>
     <Table>
         <Name>TOBJT</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>all</Name>
         </Column>
       </Table>
     <Table>
         <Name>TSTCT</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>all</Name>
         </Column>
       </Table>
     <Table>
         <Name>TVAGT</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>all</Name>
         </Column>
       </Table>
     <Table>
         <Name>TVAKT</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>all</Name>
         </Column>
       </Table>
     <Table>
         <Name>TVFKT</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>all</Name>
         </Column>
       </Table>
     <Table>
         <Name>TVKO</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>ADRNR</Name>
         </Column>
@@ -6653,14 +5493,6 @@
       </Table>
     <Table>
         <Name>TVKOT</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>SPRAS</Name>
         </Column>
@@ -6673,182 +5505,78 @@
       </Table>
     <Table>
         <Name>TVZBT</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>all</Name>
         </Column>
       </Table>
     <Table>
         <Name>USOBT_C</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>all</Name>
         </Column>
       </Table>
     <Table>
         <Name>USOBTX_C</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>all</Name>
         </Column>
       </Table>
     <Table>
         <Name>USR02</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>all</Name>
         </Column>
       </Table>
     <Table>
         <Name>USR10</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>all</Name>
         </Column>
       </Table>
     <Table>
         <Name>USR11</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>all</Name>
         </Column>
       </Table>
     <Table>
         <Name>USR13</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>all</Name>
         </Column>
       </Table>
     <Table>
         <Name>USR21</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>all</Name>
         </Column>
       </Table>
     <Table>
         <Name>UST04</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>all</Name>
         </Column>
       </Table>
     <Table>
         <Name>UST10C</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>all</Name>
         </Column>
       </Table>
     <Table>
         <Name>UST10S</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>all</Name>
         </Column>
       </Table>
     <Table>
         <Name>UST12</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>all</Name>
         </Column>
       </Table>
     <Table>
         <Name>V_USERNAME</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>BNAME</Name>
         </Column>
@@ -6879,14 +5607,6 @@
       </Table>
     <Table>
         <Name>VBAK</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>AEDAT</Name>
         </Column>
@@ -7028,14 +5748,6 @@
       </Table>
     <Table>
         <Name>VBAP</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>ERDAT</Name>
         </Column>
@@ -7192,14 +5904,6 @@
       </Table>
     <Table>
         <Name>VBFA</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>VBELV</Name>
         </Column>
@@ -7218,14 +5922,6 @@
       </Table>
     <Table>
         <Name>VBKD</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>VBELN</Name>
         </Column>
@@ -7244,14 +5940,6 @@
       </Table>
     <Table>
         <Name>VBRK</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>VKORG</Name>
         </Column>
@@ -7327,14 +6015,6 @@
       </Table>
     <Table>
         <Name>VBRP</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>ERDAT</Name>
         </Column>
@@ -7464,14 +6144,6 @@
       </Table>
     <Table>
         <Name>VBSEGK</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>BELNR</Name>
         </Column>
@@ -7517,14 +6189,6 @@
       </Table>
     <Table>
         <Name>VBSEGS</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>GJAHR</Name>
         </Column>
@@ -7558,14 +6222,6 @@
       </Table>
     <Table>
         <Name>VBUK</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>VBELN</Name>
         </Column>
@@ -7644,14 +6300,6 @@
       </Table>
     <Table>
         <Name>VBUP</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>VBELN</Name>
         </Column>
@@ -7715,14 +6363,6 @@
       </Table>
     <Table>
         <Name>VBKPF</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         <Column>
           <Name>BLART</Name>
         </Column>
@@ -7780,14 +6420,6 @@
       </Table>
     <Table>
         <Name>nan</Name>
-        <Filter>
-          <Name>BUKRS</Name>
-          <Mandatory>false</Mandatory>
-          <Sign>I</Sign>
-          <Option>EQ</Option>
-          <Low>BBBB</Low>
-          <SmartExporterIgnore>false</SmartExporterIgnore>
-        </Filter>
         </Table>
     </Request>
   </Requests>
