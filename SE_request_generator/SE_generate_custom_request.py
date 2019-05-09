@@ -8,10 +8,7 @@ import copy
 import lxml.etree as ET
 import pandas as pd
 
-tables_dict = {
-        'BKPF' : ['COL1', 'COL2', 'COL3'],
-        'BSEG' : ['COL1', 'COL2', 'COL3', 'COL4']
-        }
+out_file_name = 'SE_custom_request'
 
 namespaces = {'ns0' : '{http://www.audicon.net/DataRequest}'}
 ns = '{http://www.audicon.net/DataRequest}'
@@ -40,8 +37,9 @@ def populate_xml(root_tree, tables_dict):
     
     return root_tree
 
-if __name__ == '__main__':    
-    
+if __name__ == '__main__':
+
+    tables_dict = {}    
     excel = pd.read_excel('Tables_and_fields.xlsx', sheet_name='Final_List', header=0, names=['Table', 'Field'])
     
     # Get all relevant table names and populate the dictionary
@@ -52,18 +50,14 @@ if __name__ == '__main__':
         for relevant_field in relevant_fields.Field.unique():
             field_list.append(str(relevant_field).strip())
         tables_dict[str(table)] = field_list
-    print(tables_dict)
+        
     
-    
-    
+    # Generate the new xml file and save into a file
     root = ET.parse('SAMPLE.xml').getroot()    
-    output_tree = populate_xml(root, tables_dict)
-#    ET.dump(output_tree)
-
-
+    output_tree = ET.ElementTree(populate_xml(root, tables_dict))
+    output_tree.write(out_file_name+'.xml', pretty_print=True, xml_declaration=True, encoding="utf-8")
 
 '''
     TO DO:
-        Figure out how to get the list of field/tables.
-        Disregard the filters and joins for now.
+        Remove the filter for now.        
 '''
