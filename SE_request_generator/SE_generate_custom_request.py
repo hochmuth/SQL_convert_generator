@@ -8,7 +8,7 @@ import copy
 import lxml.etree as ET
 import pandas as pd
 
-tables = {
+tables_dict = {
         'BKPF' : ['COL1', 'COL2', 'COL3'],
         'BSEG' : ['COL1', 'COL2', 'COL3', 'COL4']
         }
@@ -40,21 +40,24 @@ def populate_xml(root_tree, tables_dict):
     
     return root_tree
 
-if __name__ == '__main__':
-    
+if __name__ == '__main__':    
     
     excel = pd.read_excel('Tables_and_fields.xlsx', sheet_name='Final_List', header=0, names=['Table', 'Field'])
-    print(excel.head())
-    # Not the way to go
-    pivot = excel.reset_index().to_dict(orient='list')
     
-    # Get all relevant table names
+    # Get all relevant table names and populate the dictionary
     table_list = excel.Table.unique()
-    print(table_list)
+    for table in table_list:        
+        relevant_fields = excel.loc[excel['Table'] == table]
+        field_list = []
+        for relevant_field in relevant_fields.Field.unique():
+            field_list.append(str(relevant_field).strip())
+        tables_dict[str(table)] = field_list
+    print(tables_dict)
+    
     
     
     root = ET.parse('SAMPLE.xml').getroot()    
-    output_tree = populate_xml(root, tables)
+    output_tree = populate_xml(root, tables_dict)
 #    ET.dump(output_tree)
 
 
