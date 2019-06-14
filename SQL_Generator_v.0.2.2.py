@@ -40,10 +40,10 @@ import pandas as pd
 delim = '|'
 enc = 'utf_16'  
 filetype = 'csv'
-data_dir = r''
+data_dir = r'c:\temp_DATA\TMP'
 
 # DD03L
-dd03l_path = r''
+dd03l_path = r'C:\temp_DATA\Python_Parser\DD03L\KH_FULL\DD03L.csv'
 dd03l_enc = 'utf_16_be'
 
 # Output files
@@ -264,7 +264,7 @@ class ScriptGenerator:
             # Go through the fields       
             for field_list in table_list:
                 fin_field = field_list[1] + '_' + field_list[2]
-                fin_dleng = field_list[4].lstrip('0') if (using_various_lengths and field_list[4] != '') else '255'
+                fin_dleng = field_list[4].lstrip('0') if (using_various_lengths and field_list[3] != 'DATS' and field_list[4] != '') else '255'
                 
                 # If it's the last column, there shouldn't be a trailing comma.
                 if fin_field == last_field:
