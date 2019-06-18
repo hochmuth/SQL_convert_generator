@@ -11,6 +11,7 @@
 
 
 extension='csv'
+delimiter='╬'
 
 # Check args
 if [[ $# > 1 ]]; then
@@ -46,7 +47,7 @@ if [ "$(ls -A | grep -i \\.$extension\$)" ] ; then
 	fi
 	# Replace delimiters and convert encoding
 	for file in "${directory}/"*."${extension}"; do
-		sed -e "s/|/¦/g" -e "s/╬/|/g" "$file" > "${directory}/01_delimiters/$file"
+		sed -e "s/|/¦/g" -e "s/$delimiter/|/g" "$file" > "${directory}/01_delimiters/$file"
   		iconv -f utf-8 -t utf-16BE "${directory}/01_delimiters/$file" > "${directory}/02_encoding/$file"
 	done
 
