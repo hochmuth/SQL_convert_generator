@@ -8,12 +8,12 @@ Created on Sat May  4 17:18:36 2019
 import copy
 import lxml.etree as ET
 
-date_low = '20180101'
-date_high = '20181231'
-BUKRS = ['B001', 'B002', 'B003']
+date_low = '20190101'
+date_high = '20190331'
+BUKRS = ['U001']
 KKBER = ['KK01', 'KK02', 'KK03']
 VKORG = ['V001', 'V002', 'V003']
-GJAHR = ['2017', '2018']
+GJAHR = ['2019']
 FILTER_LIST = [BUKRS, KKBER, VKORG, GJAHR]
 FILTER_NAMES = ['BUKRS', 'KKBER', 'VKORG', 'GJAHR']
 
@@ -44,7 +44,7 @@ def fill_out_dates(root_tree, date_low, date_high):
 
 if __name__ == '__main__':
     
-    tree = ET.parse('TEST_03.xml')
+    tree = ET.parse('Risk_Navigator_Transactional.xml')
     root = tree.getroot()
                         
     output_tree = ET.ElementTree(fill_out_filter(fill_out_dates(root, date_low, date_high), FILTER_LIST, FILTER_NAMES))

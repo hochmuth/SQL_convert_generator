@@ -40,7 +40,7 @@ import pandas as pd
 delim = '|'
 enc = 'utf_16'  
 filetype = 'csv'
-data_dir = r'c:\temp_DATA\TMP'
+data_dir = r'c:\temp_DATA\KraftHeinz\Risk_navigator\Data_Q1_PTP\Clean'
 
 # DD03L
 dd03l_path = r'C:\temp_DATA\Python_Parser\DD03L\KH_FULL\DD03L.csv'
@@ -264,7 +264,10 @@ class ScriptGenerator:
             # Go through the fields       
             for field_list in table_list:
                 fin_field = field_list[1] + '_' + field_list[2]
-                fin_dleng = field_list[4].lstrip('0') if (using_various_lengths and field_list[3] != 'DATS' and field_list[4] != '') else '255'
+                fin_dleng = field_list[4].lstrip('0') if (using_various_lengths 
+                                                          and field_list[3] not in dates 
+                                                          and field_list[3] not in decimals 
+                                                          and field_list[4] != '') else '255'
                 
                 # If it's the last column, there shouldn't be a trailing comma.
                 if fin_field == last_field:
@@ -389,7 +392,7 @@ class ScriptGenerator:
                 data_type -- string (decimal, date), decides what type of convert to use. Default only trims the field.
         '''
         if data_type == 'decimal':
-            convert_string = str('    CASE WHEN ['+field+'] LIKE \'%E%\' THEN CAST(['+field+'] AS REAL) WHEN CHARINDEX(\'-\', ['+field+']) > 0 THEN CONVERT(DECIMAL(16,3), SUBSTRING(['+field+'], CHARINDEX(\'-\', ['+field+']), LEN(['+field+'])) + SUBSTRING(['+field+'], 0, CHARINDEX(\'-\', ['+field+']))) ELSE CONVERT(DECIMAL(16,3), ['+field+']) END AS ['+field+']')
+            convert_string = str('    CASE WHEN ['+field+'] LIKE \'%E%\' THEN CAST(CAST(['+field+'] AS FLOAT) AS DECIMAL (16,3)) WHEN CHARINDEX(\'-\', ['+field+']) > 0 THEN CONVERT(DECIMAL(16,3), SUBSTRING(['+field+'], CHARINDEX(\'-\', ['+field+']), LEN(['+field+'])) + SUBSTRING(['+field+'], 0, CHARINDEX(\'-\', ['+field+']))) ELSE CONVERT(DECIMAL(16,3), ['+field+']) END AS ['+field+']')
         elif data_type == 'date':
             convert_string = str('    CASE ['+field+'] WHEN \'00000000\' THEN NULL ELSE CONVERT(DATE, ['+field+'], 101) END AS ['+field+']')
         else:
